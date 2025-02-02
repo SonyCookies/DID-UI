@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ᗡiD</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+    .animate-slide-in { animation: slideIn 0.5s ease-out; }
+  </style>
+
+  <style>
+    .slider-container {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 800px;
+      height: 300px;
+      margin: auto;
+    }
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    .slide {
+      min-width: 100%;
+      background: #2d3748;
+      color: white;
+      text-align: center;
+      padding: 50px;
+      border-radius: 10px;
+    }
+    .slider-buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+    .slider-buttons button {
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+  </style>
+
+  <style>
+    .slider2-container {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 800px;
+      height: 300px;
+      margin: auto;
+    }
+    .slider2 {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    .slide2 {
+      min-width: 100%;
+      background: #2d3748;
+      color: white;
+      text-align: center;
+      padding: 50px;
+      border-radius: 10px;
+    }
+    .slider2-buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+    .slider2-buttons button {
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+  </style>
+
+</head>
+<body class="bg-gray-900 text-white font-sans">
+  <!-- Navigation -->
+  <nav class="bg-black p-6 fixed w-full z-50">
+    <div class="container mx-auto flex justify-between items-center">
+      <a href="#" class="text-2xl font-bold text-red-600">ᗡiD</a>
+      <ul class="flex space-x-6">
+        <li><a href="#home" class="hover:text-red-600">Home</a></li>
+        <li><a href="#about" class="hover:text-red-600">About</a></li>
+        <li><a href="#team" class="hover:text-red-600">Team</a></li>
+        <li><a href="#projects" class="hover:text-red-600">Projects</a></li>
+        <li><a href="#join" class="hover:text-red-600">Be a Member</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Home Section -->
+  <section id="home" class="h-screen flex items-center justify-center bg-gray-800 p-8 pt-28">
+    <div class="container mx-auto text-center pt-28">
+      <h1 class="text-4xl font-bold text-red-600 animate-slide-in">Welcome to Dedicated IT Developers (ᗡiD)</h1>
+      <p class="mt-4 text-xl text-gray-300">Innovating the future of technology</p>
+
+      <!-- Slider -->
+      <div class="mt-12 relative overflow-hidden h-96">
+        <div class="absolute inset-0 flex transition-transform duration-500 ease-in-out slider" id="slider">
+          <div class="w-full flex-shrink-0 bg-gray-700 p-8 rounded-lg slide">
+            <h2 class="text-3xl font-bold text-red-600">Slide 1</h2>
+            <p class="mt-4 text-gray-300">We build cutting-edge solutions for modern problems.</p>
+          </div>
+          <div class="w-full flex-shrink-0 bg-gray-700 p-8 rounded-lg slide">
+            <h2 class="text-3xl font-bold text-red-600">Slide 2</h2>
+            <p class="mt-4 text-gray-300">Our team is dedicated to excellence and innovation.</p>
+          </div>
+          <div class="w-full flex-shrink-0 bg-gray-700 p-8 rounded-lg slide">
+            <h2 class="text-3xl font-bold text-red-600">Slide 3</h2>
+            <p class="mt-4 text-gray-300">Join us and be part of the future.</p>
+          </div>
+        </div>
+        <div class="slider-buttons">
+            <button id="prevBtn">&#10094;</button>
+            <button id="nextBtn">&#10095;</button>
+          </div>
+      </div>
+
+      <script>
+        const slider = document.getElementById('slider');
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let index = 0;
+    
+        function showSlide(newIndex) {
+          if (newIndex < 0) {
+            index = totalSlides - 1;
+          } else if (newIndex >= totalSlides) {
+            index = 0;
+          } else {
+            index = newIndex;
+          }
+          slider.style.transform = `translateX(-${index * 100}%)`;
+        }
+    
+        document.getElementById('prevBtn').addEventListener('click', () => showSlide(index - 1));
+        document.getElementById('nextBtn').addEventListener('click', () => showSlide(index + 1));
+    
+        setInterval(() => showSlide(index + 1), 3000); // Auto slide every 3 seconds
+      </script>
+
+      <!-- Goals Cards -->
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-gray-700 p-6 rounded-lg hover:bg-red-600 transition duration-300">
+          <h3 class="text-2xl font-bold">Innovation</h3>
+          <p class="mt-2 text-gray-300">We push boundaries to create new solutions.</p>
+        </div>
+        <div class="bg-gray-700 p-6 rounded-lg hover:bg-red-600 transition duration-300">
+          <h3 class="text-2xl font-bold">Collaboration</h3>
+          <p class="mt-2 text-gray-300">Teamwork is at the heart of our success.</p>
+        </div>
+        <div class="bg-gray-700 p-6 rounded-lg hover:bg-red-600 transition duration-300">
+          <h3 class="text-2xl font-bold">Excellence</h3>
+          <p class="mt-2 text-gray-300">We strive for the highest standards in everything we do.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  
+
+  <!-- About Section -->
+  <section id="about" class="py-20 bg-gray-800 pt-28">
+    <div class="container mx-auto px-6">
+      <h2 class="text-4xl font-bold text-red-600 text-center">About Us</h2>
+      <p class="mt-4 text-gray-300 text-center max-w-2xl mx-auto">
+        We are a team of passionate IT professionals dedicated to solving complex problems with innovative solutions. Our mission is to empower businesses and individuals through technology.
+      </p>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="py-20 bg-gray-900">
+    <div class="container mx-auto px-6">
+      <h2 class="text-4xl font-bold text-red-600 text-center">Our Team</h2>
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Team Member 1 -->
+        <div class="bg-gray-700 p-6 rounded-lg text-center hover:bg-red-600 transition duration-300">
+          <img src="https://via.placeholder.com/150" alt="Team Member" class="w-32 h-32 rounded-full mx-auto">
+          <h3 class="text-2xl font-bold mt-4">John Doe</h3>
+          <p class="mt-2 text-gray-300">CEO & Founder</p>
+          <a href="#portfolio" class="mt-4 inline-block text-red-600 hover:text-white">View Portfolio</a>
+        </div>
+        <!-- Team Member 2 -->
+        <div class="bg-gray-700 p-6 rounded-lg text-center hover:bg-red-600 transition duration-300">
+          <img src="https://via.placeholder.com/150" alt="Team Member" class="w-32 h-32 rounded-full mx-auto">
+          <h3 class="text-2xl font-bold mt-4">Jane Smith</h3>
+          <p class="mt-2 text-gray-300">CTO</p>
+          <a href="#portfolio" class="mt-4 inline-block text-red-600 hover:text-white">View Portfolio</a>
+        </div>
+        <!-- Team Member 3 -->
+        <div class="bg-gray-700 p-6 rounded-lg text-center hover:bg-red-600 transition duration-300">
+          <img src="https://via.placeholder.com/150" alt="Team Member" class="w-32 h-32 rounded-full mx-auto">
+          <h3 class="text-2xl font-bold mt-4">Mike Johnson</h3>
+          <p class="mt-2 text-gray-300">Lead Developer</p>
+          <a href="#portfolio" class="mt-4 inline-block text-red-600 hover:text-white">View Portfolio</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section 
+    Hiwalay na page - pag ni click yung view portfolio 
+    -->
+  
+  <section id="portfolio" class="py-20 bg-gray-800">
+    <div class="container mx-auto px-6">
+      <h2 class="text-4xl font-bold text-red-600 text-center">Portfolio</h2>
+      <div class="mt-12">
+        <h3 class="text-2xl font-bold">John Doe</h3>
+        <p class="mt-2 text-gray-300">CEO & Founder</p>
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-gray-700 p-6 rounded-lg">
+            <h4 class="text-xl font-bold">Project Alpha</h4>
+            <p class="mt-2 text-gray-300">A revolutionary AI-powered platform.</p>
+          </div>
+          <div class="bg-gray-700 p-6 rounded-lg">
+            <h4 class="text-xl font-bold">Project Beta</h4>
+            <p class="mt-2 text-gray-300">An advanced blockchain solution.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-20 bg-gray-900">
+    <div class="container mx-auto px-6">
+      <h2 class="text-4xl font-bold text-red-600 text-center">Our Projects</h2>
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Project 1 -->
+        <div class="bg-gray-700 p-6 rounded-lg hover:bg-red-600 transition duration-300">
+          <img src="https://via.placeholder.com/300" alt="Project" class="w-full h-48 object-cover rounded-lg">
+          <h3 class="text-2xl font-bold mt-4">Project Alpha</h3>
+          <p class="mt-2 text-gray-300">A revolutionary AI-powered platform.</p>
+        </div>
+        <!-- Project 2 -->
+        <div class="bg-gray-700 p-6 rounded-lg hover:bg-red-600 transition duration-300">
+          <img src="https://via.placeholder.com/300" alt="Project" class="w-full h-48 object-cover rounded-lg">
+          <h3 class="text-2xl font-bold mt-4">Project Beta</h3>
+          <p class="mt-2 text-gray-300">An advanced blockchain solution.</p>
+        </div>
+        <!-- Project 3 -->
+        <div class="bg-gray-700 p-6 rounded-lg hover:bg-red-600 transition duration-300">
+          <img src="https://via.placeholder.com/300" alt="Project" class="w-full h-48 object-cover rounded-lg">
+          <h3 class="text-2xl font-bold mt-4">Project Gamma</h3>
+          <p class="mt-2 text-gray-300">A cutting-edge IoT system.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Greetings/Congratulatory/Featured Section -->
+  <section id="featured" class="py-20 bg-gray-900">
+    <div class="container mx-auto px-6">
+      <h2 class="text-4xl font-bold text-red-600 text-center">Featured</h2>
+      <div class="mt-12">
+        <!-- Featured Carousel -->
+        <div class="relative overflow-hidden h-96">
+          <div class="absolute inset-0 flex transition-transform duration-500 ease-in-out slider2" id="slider2">
+            <!-- Slide 1 -->
+            <div class="w-full flex-shrink-0 bg-gray-700 p-8 rounded-lg text-center slide2">
+              <h3 class="text-3xl font-bold text-red-600">Project Launch!</h3>
+              <p class="mt-4 text-gray-300">We are proud to announce the launch of our new AI-powered platform.</p>
+              <button class="mt-6 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700">Learn More</button>
+            </div>
+            <!-- Slide 2 -->
+            <div class="w-full flex-shrink-0 bg-gray-700 p-8 rounded-lg text-center slide2">
+              <h3 class="text-3xl font-bold text-red-600">Team Achievement</h3>
+              <p class="mt-4 text-gray-300">Our team won the "Best Innovation Award" at the Tech Summit 2023.</p>
+              <button class="mt-6 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700">Read More</button>
+            </div>
+            <!-- Slide 3 -->
+            <div class="w-full flex-shrink-0 bg-gray-700 p-8 rounded-lg text-center slide2">
+              <h3 class="text-3xl font-bold text-red-600">New Member Welcome</h3>
+              <p class="mt-4 text-gray-300">Welcome our newest team member, Jane Doe, who joins us as a Senior Developer.</p>
+              <button class="mt-6 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700">Meet Jane</button>
+            </div>
+          </div>
+          <div class="slider2-buttons">
+            <button id="prevBtn2">&#10094;</button>
+            <button id="nextBtn2">&#10095;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const slider2 = document.getElementById('slider2');
+    const slides2 = document.querySelectorAll('.slide2');
+    const totalSlides2 = slides2.length;
+    let index2 = 0;
+
+    function showSlide2(newIndex) {
+      if (newIndex < 0) {
+        index2 = totalSlides2 - 1;
+      } else if (newIndex >= totalSlides2) {
+        index2 = 0;
+      } else {
+        index2 = newIndex;
+      }
+      slider2.style.transform = `translateX(-${index2 * 100}%)`;
+    }
+
+    document.getElementById('prevBtn2').addEventListener('click', () => showSlide2(index2 - 1));
+    document.getElementById('nextBtn2').addEventListener('click', () => showSlide2(index2 + 1));
+
+    setInterval(() => showSlide2(index2 + 1), 3000); // Auto slide every 3 seconds
+  </script>
+
+  
+
+  <!-- Be a Member Section -->
+  <section id="join" class="py-20 bg-gray-800">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold text-red-600">Be a Member</h2>
+      <p class="mt-4 text-gray-300">Join our team and help shape the future of technology.</p>
+      <form class="mt-8 max-w-2xl mx-auto">
+        <input type="text" placeholder="Your Name" class="w-full p-3 rounded-lg bg-gray-700 text-white">
+        <input type="email" placeholder="Your Email" class="w-full p-3 rounded-lg bg-gray-700 text-white mt-4">
+        <textarea placeholder="Why do you want to join us?" class="w-full p-3 rounded-lg bg-gray-700 text-white mt-4"></textarea>
+        <button type="submit" class="mt-6 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700">Submit</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black py-6">
+    <div class="container mx-auto text-center">
+      <p class="text-gray-300">&copy; 2024 ᗡiD. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
