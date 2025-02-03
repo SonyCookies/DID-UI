@@ -90,6 +90,12 @@
             bottom: 0;
             right: 25%;
         }
+
+        .active {
+            color: white !important;
+            font-weight: bold;
+            border-bottom: 2px solid red;
+        }
     </style>
 </head>
 <body class="bg-black text-white min-h-screen overflow-hidden">
@@ -109,17 +115,18 @@
         
             <!-- Desktop Menu (Left) -->
             <div class="hidden md:flex space-x-8 order-3">
-                <a href="#" class="text-md text-gray-400 hover:text-white">Home</a>
-                <a href="#" class="text-md text-gray-400 hover:text-white">About</a>
-                <a href="#" class="text-md text-gray-400 hover:text-white">Team</a>
-                <a href="#" class="text-md text-gray-400 hover:text-white">Projects</a>
+                <a href="main.html" class="text-md text-gray-400 hover:text-white active">Home</a>
+                <a href="about.html" class="text-md text-gray-400 hover:text-white">About</a>
+                <a href="team.html" class="text-md text-gray-400 hover:text-white">Team</a>
+                <a href="projects.html" class="text-md text-gray-400 hover:text-white">Projects</a>
             </div>
+
         
             <!-- Desktop Menu (Right) -->
             <div class="hidden md:flex space-x-8 order-4">
-                <a href="#" class="text-md text-gray-400 hover:text-white">Portfolio</a>
-                <a href="#" class="text-md text-gray-400 hover:text-white">Gallery</a>
-                <a href="#" class="text-md text-gray-400 hover:text-white">How to Join?</a>
+                <a href="portfolio.html" class="text-md text-gray-400 hover:text-white">Portfolio</a>
+                <a href="gallery.html" class="text-md text-gray-400 hover:text-white">Gallery</a>
+                <a href="join.html" class="text-md text-gray-400 hover:text-white">How to Join?</a>
             </div>
         
             <!-- Right -->
@@ -131,6 +138,28 @@
         </div>
         
     </nav>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll("nav a");
+    
+            links.forEach(link => {
+                link.addEventListener("click", function () {
+                    links.forEach(l => l.classList.remove("active"));
+                    this.classList.add("active");
+                });
+            });
+    
+            // Optional: Set active based on URL
+            const currentPath = window.location.pathname;
+            links.forEach(link => {
+                if (link.href.includes(currentPath)) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
+    
 
     <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
