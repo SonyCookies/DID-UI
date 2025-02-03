@@ -18,7 +18,7 @@
             position: absolute;
             width: 80px;
             height: 1px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 1);
         }
 
         .annotation-line-left::before {
@@ -48,114 +48,88 @@
             transform: scale(1.1);
         }
 
-        /* New styles for background fades */
-        .background-fades {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+        /* Updated and additional styles for background effects */
+        .bg-effect {
+            position: relative;
             overflow: hidden;
         }
 
-        .fade {
+        .bg-effect::before,
+        .bg-effect::after,
+        .bg-effect .gradient-1,
+        .bg-effect .gradient-2 {
+            content: '';
             position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.1; /* Updated opacity */
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.3;
+            filter: blur(30px);
+            pointer-events: none;
         }
 
-        #fade1 {
-            width: 800px;
-            height: 800px;
-            background-color: rgba(255, 255, 255, 0.05);
-            top: -400px;
-            left: -400px;
-            animation: moveFade 30s infinite alternate;
+        .bg-effect::before {
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+            top: -50%;
+            left: -50%;
         }
 
-        #fade2 {
-            width: 600px;
-            height: 600px;
-            background-color: rgba(255, 255, 255, 0.03);
-            bottom: -300px;
-            right: -300px;
-            animation: moveFade 25s infinite alternate-reverse;
+        .bg-effect::after {
+            background: radial-gradient(circle, rgba(255,0,0,0.4) 0%, rgba(255,0,0,0) 70%);
+            bottom: -50%;
+            right: -50%;
         }
 
-        #fade3 {
-            width: 500px;
-            height: 500px;
-            background-color: rgba(255, 255, 255, 0.02);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulseFade 20s infinite;
+        .bg-effect .gradient-1 {
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+            top: 0;
+            left: 25%;
         }
 
-        @keyframes moveFade {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(200px, 200px); }
-        }
-
-        @keyframes pulseFade {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.02; }
-            50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.05; }
+        .bg-effect .gradient-2 {
+            background: radial-gradient(circle, rgba(255,0,0,0.3) 0%, rgba(255,0,0,0) 70%);
+            bottom: 0;
+            right: 25%;
         }
     </style>
 </head>
 <body class="bg-black text-white min-h-screen overflow-hidden">
     
-    <div class="background-fades">
-        <div id="fade1" class="fade"></div>
-        <div id="fade2" class="fade"></div>
-        <div id="fade3" class="fade"></div>
-    </div>
-
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 px-8 py-4 bg-black">
-        <div class="flex justify-between items-center">
-            <!-- Left  -->
-            <div class="flex items-center gap-4">
-                <div class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center">
-                    🌎
-                </div>
-                <i class="fas fa-shopping-bag"></i>
-                <i class="fas fa-user"></i>
-                <i class="fas fa-search"></i>
+    <nav class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8">
+        <div class="flex justify-between items-center w-full">
+            <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
+            <div class="text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2">
+                <span style="display: inline-block; transform: scaleX(-1);">D</span>iD
             </div>
-
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-8">
+        
+            <!-- Left -->
+            <div class="flex items-center gap-4 order-2">
+                <!-- Mobile Left Section -->
+            </div>
+        
+            <!-- Desktop Menu (Left) -->
+            <div class="hidden md:flex space-x-8 order-3">
                 <a href="#" class="text-md text-gray-400 hover:text-white">Home</a>
                 <a href="#" class="text-md text-gray-400 hover:text-white">About</a>
                 <a href="#" class="text-md text-gray-400 hover:text-white">Team</a>
                 <a href="#" class="text-md text-gray-400 hover:text-white">Projects</a>
             </div>
-
-            <!-- Logo -->
-            <div class="text-5xl font-bold text-red-500 animate-pulse-slow">
-                <span style="display: inline-block; transform: scaleX(-1);">D</span>iD
-            </div>
-
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-8">
+        
+            <!-- Desktop Menu (Right) -->
+            <div class="hidden md:flex space-x-8 order-4">
                 <a href="#" class="text-md text-gray-400 hover:text-white">Portfolio</a>
                 <a href="#" class="text-md text-gray-400 hover:text-white">Gallery</a>
                 <a href="#" class="text-md text-gray-400 hover:text-white">How to Join?</a>
             </div>
-
-            <!-- Right  -->
-            <div class="flex items-center gap-4">
-                <i class="fab fa-youtube"></i>
-                <i class="fab fa-instagram"></i>
-                <!-- Mobile Menu Button -->
+        
+            <!-- Right -->
+            <div class="flex items-center gap-4 order-5">
                 <button id="mobile-menu-btn" class="md:hidden text-white text-2xl">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
+        
     </nav>
 
     <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
@@ -217,8 +191,12 @@
     </div>
 
     <!-- main -->
-    <div class="h-screen relative flex items-center justify-center">
+    <div class="h-screen relative flex items-center justify-center bg-effect">
       <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+
+      <!-- Add these new gradient elements -->
+      <div class="gradient-1"></div>
+      <div class="gradient-2"></div>
 
      <!-- DID Text -->
     <div class="absolute inset-0 flex items-center justify-center">
@@ -369,4 +347,3 @@
 </body>
 
 </html>
-
