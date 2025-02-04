@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DID - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .writing-mode-vertical {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        transform: rotate(180deg);
+      }
+
+      .annotation-line::before {
+        content: "";
+        position: absolute;
+        width: 80px;
+        height: 1px;
+        background: rgba(255, 255, 255, 1);
+      }
+
+      .annotation-line-left::before {
+        right: 100%;
+        top: 50%;
+      }
+
+      .annotation-line-right::before {
+        left: 100%;
+        top: 50%;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .animate-fade-in {
+        animation: fadeIn 1s ease-out forwards;
+      }
+
+      .hover-scale {
+        transition: transform 0.2s;
+      }
+
+      .hover-scale:hover {
+        transform: scale(1.1);
+      }
+
+      /* Updated and additional styles for background effects */
+      .bg-effect {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .bg-effect::before,
+      .bg-effect::after,
+      .bg-effect .gradient-1,
+      .bg-effect .gradient-2 {
+        content: "";
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        opacity: 0.3;
+        filter: blur(30px);
+        pointer-events: none;
+      }
+
+      .bg-effect::before {
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.4) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        top: -50%;
+        left: -50%;
+      }
+
+      .bg-effect::after {
+        background: radial-gradient(
+          circle,
+          rgba(255, 0, 0, 0.4) 0%,
+          rgba(255, 0, 0, 0) 70%
+        );
+        bottom: -50%;
+        right: -50%;
+      }
+
+      .bg-effect .gradient-1 {
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        top: 0;
+        left: 25%;
+      }
+
+      .bg-effect .gradient-2 {
+        background: radial-gradient(
+          circle,
+          rgba(255, 0, 0, 0.3) 0%,
+          rgba(255, 0, 0, 0) 70%
+        );
+        bottom: 0;
+        right: 25%;
+      }
+
+      .active {
+        color: white !important;
+        font-weight: bold;
+        border-bottom: 2px solid red;
+      }
+    </style>
+  </head>
+  <body class="bg-black text-white min-h-screen overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8">
+      <div class="flex justify-between items-center w-full">
+        <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
+        <div
+          class="text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2"
+        >
+          <span style="display: inline-block; transform: scaleX(-1);">D</span>iD
+        </div>
+
+        <!-- Left -->
+        <div class="flex items-center gap-4 order-2">
+          <!-- Mobile Left Section -->
+        </div>
+
+        <!-- Desktop Menu (Left) -->
+        <div class="hidden md:flex space-x-8 order-3">
+          <a href="main.html" class="text-md text-gray-400 hover:text-white"
+            >Home</a
+          >
+          <a href="about.html" class="text-md text-gray-400 hover:text-white"
+            >About</a
+          >
+          <a href="team.html" class="text-md text-gray-400 hover:text-white"
+            >Team</a
+          >
+          <a
+            href="projects.html"
+            class="text-md text-gray-400 hover:text-white active"
+            >Projects</a
+          >
+        </div>
+
+        <!-- Desktop Menu (Right) -->
+        <div class="hidden md:flex space-x-8 order-4">
+          <a
+            href="portfolio.html"
+            class="text-md text-gray-400 hover:text-white"
+            >Portfolio</a
+          >
+          <a href="gallery.html" class="text-md text-gray-400 hover:text-white"
+            >Gallery</a
+          >
+          <a href="join.html" class="text-md text-gray-400 hover:text-white"
+            >How to Join?</a
+          >
+        </div>
+
+        <!-- Right -->
+        <div class="flex items-center gap-4 order-5">
+          <button id="mobile-menu-btn" class="md:hidden text-white text-2xl">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+    <!-- Mobile Sidebar -->
+    <div
+      id="mobile-sidebar"
+      class="fixed inset-y-0 left-0 w-64 bg-black text-white z-50 transform -translate-x-full transition-transform duration-300 md:hidden"
+    >
+      <div class="p-6">
+        <button
+          id="close-sidebar"
+          class="text-2xl text-white absolute top-4 right-4"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+        <nav class="mt-10 flex flex-col space-y-4">
+          <a href="main.html" class="text-lg text-gray-400 hover:text-white"
+            >Home</a
+          >
+          <a href="about.html" class="text-lg text-gray-400 hover:text-white"
+            >About</a
+          >
+          <a href="team.html" class="text-lg text-gray-400 hover:text-white"
+            >Team</a
+          >
+          <a href="projects.html" class="text-lg text-gray-400 hover:text-white"
+            >Projects</a
+          >
+          <a
+            href="portfolio.html"
+            class="text-lg text-gray-400 hover:text-white"
+            >Portfolio</a
+          >
+          <a href="gallery.html" class="text-lg text-gray-400 hover:text-white"
+            >Gallery</a
+          >
+          <a href="join.html" class="text-lg text-gray-400 hover:text-white"
+            >How to Join?</a
+          >
+        </nav>
+      </div>
+    </div>
+
+    <!-- Left info -->
+    <div class="fixed left-8 top-1/2 -translate-y-1/2 z-40">
+      <div class="flex flex-col gap-20 animate-fade-in">
+        <div
+          class="writing-mode-vertical text-red-600 text-2xl font-bold tracking-widest"
+        >
+          2025-2026
+        </div>
+        <div
+          class="writing-mode-vertical text-gray-600 uppercase tracking-widest space-y-8"
+        >
+          <span>Dedicated</span>
+          <span>IT</span>
+          <span>Developers</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-20 px-4 md:px-8 bg-effect min-h-screen">
+      <h1 class="text-4xl font-bold text-center mb-12">Our Team Projects</h1>
+
+      <!-- Team Projects Grid -->
+      <div
+        id="team-grid"
+        class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+      >
+        <!-- Team projects will be dynamically added here -->
+        <div class="col-span-1 bg-gray-900 rounded-lg h-600px] overflow-hidden">
+          <!-- image -->
+          <div class="h-48 bg-red-500">
+            asdas
+          </div>
+          <!-- content -->
+          <div class="p-4 flex flex-col gap-8">
+            <!-- title and subtitle -->
+            <div class="flex flex-col">
+              <div class="font-semibold text-2xl">
+                Title
+              </div>
+              <span class="text-gray-500">Subtitle</span>
+            </div>
+            <!-- description -->
+            <p class="text-gray-400">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro rem
+              delectus similique assumenda magni molestias, eum neque blanditiis
+              aperiam quibusdam iure earum consectetur repellendus, totam veniam
+              numquam pariatur recusandae voluptas.
+            </p>
+
+            <!-- technologies -->
+            <div class="flex flex-col gap-1">
+              <div class="font-medium">Technology used</div>
+              <div class="flex items-center gap-1">
+                <div
+                  class="text-xs px-4 py-1 rounded-full bg-green-500 text-white"
+                >
+                  NodeJs
+                </div>
+                <div
+                  class="text-xs px-4 py-1 rounded-full bg-sky-500 text-white"
+                >
+                  React
+                </div>
+              </div>
+            </div>
+
+            <!-- links to project -->
+            <div class="flex items-center justify-center gap-2">
+              <div class="p-4 rounded-full bg-red-500"></div>
+              <div class="p-4 rounded-full bg-blue-500"></div>
+              <div class="p-4 rounded-full bg-pink-500"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <script>
+      // Navigation active state
+      document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll("nav a");
+
+        links.forEach((link) => {
+          link.addEventListener("click", function () {
+            links.forEach((l) => l.classList.remove("active"));
+            this.classList.add("active");
+          });
+        });
+
+        // Optional: Set active based on URL
+        const currentPath = window.location.pathname;
+        links.forEach((link) => {
+          if (link.href.includes(currentPath)) {
+            link.classList.add("active");
+          }
+        });
+      });
+
+      // Mobile menu functionality
+      const menuBtn = document.getElementById("mobile-menu-btn");
+      const sidebar = document.getElementById("mobile-sidebar");
+      const closeBtn = document.getElementById("close-sidebar");
+      const overlay = document.getElementById("overlay");
+
+      menuBtn.addEventListener("click", function () {
+        sidebar.classList.remove("-translate-x-full");
+        overlay.classList.remove("hidden");
+      });
+
+      closeBtn.addEventListener("click", function () {
+        sidebar.classList.add("-translate-x-full");
+        overlay.classList.add("hidden");
+      });
+
+      overlay.addEventListener("click", function () {
+        sidebar.classList.add("-translate-x-full");
+        overlay.classList.add("hidden");
+      });
+    </script>
+  </body>
+</html>
