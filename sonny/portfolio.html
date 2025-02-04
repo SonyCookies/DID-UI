@@ -1,400 +1,641 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DID - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <style>
-        .writing-mode-vertical {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            transform: rotate(180deg);
-        }
+      .writing-mode-vertical {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        transform: rotate(180deg);
+      }
 
-        .annotation-line::before {
-            content: '';
-            position: absolute;
-            width: 80px;
-            height: 1px;
-            background: rgba(255, 255, 255, 1);
-        }
+      .annotation-line::before {
+        content: "";
+        position: absolute;
+        width: 80px;
+        height: 1px;
+        background: rgba(255, 255, 255, 1);
+      }
 
-        .annotation-line-left::before {
-            right: 100%;
-            top: 50%;
-        }
+      .annotation-line-left::before {
+        right: 100%;
+        top: 50%;
+      }
 
-        .annotation-line-right::before {
-            left: 100%;
-            top: 50%;
-        }
+      .annotation-line-right::before {
+        left: 100%;
+        top: 50%;
+      }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
         }
+        to {
+          opacity: 1;
+        }
+      }
 
-        .animate-fade-in {
-            animation: fadeIn 1s ease-out forwards;
-        }
+      .animate-fade-in {
+        animation: fadeIn 1s ease-out forwards;
+      }
 
-        .hover-scale {
-            transition: transform 0.2s;
-        }
+      .hover-scale {
+        transition: transform 0.2s;
+      }
 
-        .hover-scale:hover {
-            transform: scale(1.1);
-        }
+      .hover-scale:hover {
+        transform: scale(1.1);
+      }
 
-        /* Updated and additional styles for background effects */
-        .bg-effect {
-            position: relative;
-            overflow: hidden;
-        }
+      /* Updated and additional styles for background effects */
+      .bg-effect {
+        position: relative;
+        overflow: hidden;
+      }
 
-        .bg-effect::before,
-        .bg-effect::after,
-        .bg-effect .gradient-1,
-        .bg-effect .gradient-2 {
-            content: '';
-            position: absolute;
-            width: 100vw;
-            height: 100vh;
-            opacity: 0.3;
-            filter: blur(30px);
-            pointer-events: none;
-        }
+      .bg-effect::before,
+      .bg-effect::after,
+      .bg-effect .gradient-1,
+      .bg-effect .gradient-2 {
+        content: "";
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        opacity: 0.3;
+        filter: blur(30px);
+        pointer-events: none;
+      }
 
-        .bg-effect::before {
-            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
-            top: -50%;
-            left: -50%;
-        }
+      .bg-effect::before {
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.4) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        top: -50%;
+        left: -50%;
+      }
 
-        .bg-effect::after {
-            background: radial-gradient(circle, rgba(255,0,0,0.4) 0%, rgba(255,0,0,0) 70%);
-            bottom: -50%;
-            right: -50%;
-        }
+      .bg-effect::after {
+        background: radial-gradient(
+          circle,
+          rgba(255, 0, 0, 0.4) 0%,
+          rgba(255, 0, 0, 0) 70%
+        );
+        bottom: -50%;
+        right: -50%;
+      }
 
-        .bg-effect .gradient-1 {
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-            top: 0;
-            left: 25%;
-        }
+      .bg-effect .gradient-1 {
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        top: 0;
+        left: 25%;
+      }
 
-        .bg-effect .gradient-2 {
-            background: radial-gradient(circle, rgba(255,0,0,0.3) 0%, rgba(255,0,0,0) 70%);
-            bottom: 0;
-            right: 25%;
-        }
-        .active {
-            color: white !important;
-            font-weight: bold;
-            border-bottom: 2px solid red;
-        }
+      .bg-effect .gradient-2 {
+        background: radial-gradient(
+          circle,
+          rgba(255, 0, 0, 0.3) 0%,
+          rgba(255, 0, 0, 0) 70%
+        );
+        bottom: 0;
+        right: 25%;
+      }
 
-        /* Add new styles for the circular navigation */
-        .circular-nav {
-            position: fixed;
-            right: 40px; /* Moved slightly more right to accommodate the curve */
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100px;
-            height: 400px; /* Increased height for more thumbnails */
-            z-index: 60;
-            pointer-events: all;
-        }
+      .active {
+        color: white !important;
+        font-weight: bold;
+        border-bottom: 2px solid red;
+      }
 
-        .circular-nav::before {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            width: 150px;
-            height: 300px;
-            background: radial-gradient(ellipse at right, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-            transform: translateY(-50%);
-            z-index: -1;
-        }
+      /* Add new styles for the circular navigation */
+      .circular-nav {
+        position: fixed;
+        right: 40px; /* Moved slightly more right to accommodate the curve */
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100px;
+        height: 400px; /* Increased height for more thumbnails */
+        z-index: 60;
+        pointer-events: all;
+      }
 
-        .circular-nav .thumbnail {
-            position: absolute;
-            right: 0;
-            width: 80px;
-            height: 80px;
-            transition: all 0.3s ease-out;
-        }
+      .circular-nav::before {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 150px;
+        height: 300px;
+        background: radial-gradient(
+          ellipse at right,
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        transform: translateY(-50%);
+        z-index: -1;
+      }
 
-        .circular-nav .thumbnail:hover {
-            transform: scale(1.1) translateX(-10px);
-        }
+      .circular-nav .thumbnail {
+        position: absolute;
+        right: 0;
+        width: 80px;
+        height: 80px;
+        transition: all 0.3s ease-out;
+      }
 
-        .thumbnail img {
-            border: 2px solid rgb(185, 28, 28);
-            border-radius: 50%;
-        }
+      .circular-nav .thumbnail:hover {
+        transform: scale(1.1) translateX(-10px);
+      }
 
+      .thumbnail img {
+        border: 2px solid rgb(185, 28, 28);
+        border-radius: 50%;
+      }
+
+      @keyframes extractContent {
+        0% {
+          clip-path: circle(0% at 100% 50%);
+          transform: translateX(50px);
+          opacity: 0;
+        }
+        100% {
+          clip-path: circle(150% at 100% 50%);
+          transform: translateX(-150px);
+          opacity: 1;
+        }
+      }
+
+      .animate-extractContent {
+        animation: extractContent 1s ease-out forwards;
+      }
+
+      .hover-scale {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-scale:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+    }
+
+    .team-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .team-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 0, 0, 0.1),
+        transparent
+      );
+      transition: transform 0.6s ease;
+      transform: skewX(-20deg);
+    }
+
+    .team-card:hover::before {
+      transform: translateX(100%) skewX(-20deg);
+    }
+
+    .card-content {
+      position: relative;
+      background: linear-gradient(
+        135deg,
+        rgba(31, 41, 55, 0.95),
+        rgba(17, 24, 39, 0.98)
+      );
+    }
+
+    .card-content::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, transparent 50%, rgb(185, 28, 28) 50%);
     </style>
-</head>
-<body class="bg-black text-white min-h-screen overflow-x-hidden">
-    
+  </head>
+  <body class="bg-black text-white min-h-screen overflow-x-hidden">
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8">
-        <div class="flex justify-between items-center w-full">
-            <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
-            <div class="text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2">
-                <span style="display: inline-block; transform: scaleX(-1);">D</span>iD
-            </div>
-        
-            <!-- Left -->
-            <div class="flex items-center gap-4 order-2">
-                <!-- Mobile Left Section -->
-            </div>
-        
-            <!-- Desktop Menu (Left) -->
-            <div class="hidden md:flex space-x-8 order-3">
-                <a href="main.html" class="text-md text-gray-400 hover:text-white">Home</a>
-                <a href="about.html" class="text-md text-gray-400 hover:text-white">About</a>
-                <a href="team.html" class="text-md text-gray-400 hover:text-white">Team</a>
-                <a href="projects.html" class="text-md text-gray-400 hover:text-white">Projects</a>
-            </div>
-
-        
-            <!-- Desktop Menu (Right) -->
-            <div class="hidden md:flex space-x-8 order-4">
-                <a href="portfolio.html" class="text-md text-gray-400 hover:text-white active">Portfolio</a>
-                <a href="gallery.html" class="text-md text-gray-400 hover:text-white">Gallery</a>
-                <a href="join.html" class="text-md text-gray-400 hover:text-white">How to Join?</a>
-            </div>
-        
-            <!-- Right -->
-            <div class="flex items-center gap-4 order-5">
-                <button id="mobile-menu-btn" class="md:hidden text-white text-2xl">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
+      <div class="flex justify-between items-center w-full">
+        <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
+        <div
+          class="text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2"
+        >
+          <span style="display: inline-block; transform: scaleX(-1)">D</span>iD
         </div>
+
+        <!-- Left -->
+        <div class="flex items-center gap-4 order-2">
+          <!-- Mobile Left Section -->
+        </div>
+
+        <!-- Desktop Menu (Left) -->
+        <div class="hidden md:flex space-x-8 order-3">
+          <a href="main.html" class="text-md text-gray-400 hover:text-white"
+            >Home</a
+          >
+          <a href="about.html" class="text-md text-gray-400 hover:text-white"
+            >About</a
+          >
+          <a href="team.html" class="text-md text-gray-400 hover:text-white"
+            >Team</a
+          >
+          <a href="projects.html" class="text-md text-gray-400 hover:text-white"
+            >Projects</a
+          >
+        </div>
+
+        <!-- Desktop Menu (Right) -->
+        <div class="hidden md:flex space-x-8 order-4">
+          <a
+            href="portfolio.html"
+            class="text-md text-gray-400 hover:text-white active"
+            >Portfolio</a
+          >
+          <a href="gallery.html" class="text-md text-gray-400 hover:text-white"
+            >Gallery</a
+          >
+          <a href="join.html" class="text-md text-gray-400 hover:text-white"
+            >How to Join?</a
+          >
+        </div>
+
+        <!-- Right -->
+        <div class="flex items-center gap-4 order-5">
+          <button id="mobile-menu-btn" class="md:hidden text-white text-2xl">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
     </nav>
 
     <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
     <!-- Mobile Sidebar -->
-    <div id="mobile-sidebar" class="fixed inset-y-0 left-0 w-64 bg-black text-white z-50 transform -translate-x-full transition-transform duration-300 md:hidden">
-        <div class="p-6">
-            <button id="close-sidebar" class="text-2xl text-white absolute top-4 right-4">
-                <i class="fas fa-times"></i>
-            </button>
-            <nav class="mt-10 flex flex-col space-y-4">
-                <a href="main.html" class="text-lg text-gray-400 hover:text-white">Home</a>
-                <a href="about.html" class="text-lg text-gray-400 hover:text-white">About</a>
-                <a href="team.html" class="text-lg text-gray-400 hover:text-white">Team</a>
-                <a href="projects.html" class="text-lg text-gray-400 hover:text-white">Projects</a>
-                <a href="portfolio.html" class="text-lg text-gray-400 hover:text-white">Portfolio</a>
-                <a href="gallery.html" class="text-lg text-gray-400 hover:text-white">Gallery</a>
-                <a href="join.html" class="text-lg text-gray-400 hover:text-white">How to Join?</a>
-            </nav>
-        </div>
+    <div
+      id="mobile-sidebar"
+      class="fixed inset-y-0 left-0 w-64 bg-black text-white z-50 transform -translate-x-full transition-transform duration-300 md:hidden"
+    >
+      <div class="p-6">
+        <button
+          id="close-sidebar"
+          class="text-2xl text-white absolute top-4 right-4"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+        <nav class="mt-10 flex flex-col space-y-4">
+          <a href="main.html" class="text-lg text-gray-400 hover:text-white"
+            >Home</a
+          >
+          <a href="about.html" class="text-lg text-gray-400 hover:text-white"
+            >About</a
+          >
+          <a href="team.html" class="text-lg text-gray-400 hover:text-white"
+            >Team</a
+          >
+          <a href="projects.html" class="text-lg text-gray-400 hover:text-white"
+            >Projects</a
+          >
+          <a
+            href="portfolio.html"
+            class="text-lg text-gray-400 hover:text-white"
+            >Portfolio</a
+          >
+          <a href="gallery.html" class="text-lg text-gray-400 hover:text-white"
+            >Gallery</a
+          >
+          <a href="join.html" class="text-lg text-gray-400 hover:text-white"
+            >How to Join?</a
+          >
+        </nav>
+      </div>
     </div>
 
     <!-- Left info -->
-    <div class="fixed left-8 top-1/2 -translate-y-1/2 z-40">
-        <div class="flex flex-col gap-20 animate-fade-in">
-            <div class="writing-mode-vertical text-red-600 text-2xl font-bold tracking-widest">
-                2025-2026
-            </div>
-            <div class="writing-mode-vertical text-gray-600 uppercase tracking-widest space-y-8">
-                <span>Dedicated</span>
-                <span>IT</span>
-                <span>Developers</span>
-            </div>
+    <div class="fixed left-8 top-1/2 z-50 -translate-y-1/2 z-40">
+      <div class="flex flex-col gap-20 animate-fade-in">
+        <div
+          class="writing-mode-vertical text-red-600 text-2xl font-bold tracking-widest"
+        >
+          2025-2026
         </div>
+        <div
+          class="writing-mode-vertical text-gray-600 uppercase tracking-widest space-y-8"
+        >
+          <span>Dedicated</span>
+          <span>IT</span>
+          <span>Developers</span>
+        </div>
+      </div>
     </div>
 
     <!-- Main Content -->
-    <main class="pt-24 pb-20 px-4 md:px-8 bg-effect min-h-screen">
-      <h1 class="text-4xl font-bold text-center mb-12">Our Team Portfolio</h1>
-      
-      <!-- Team Members Grid -->
-      <div id="team-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          <!-- Team members will be dynamically added here -->
-      </div>
+    <main class="pt-24 pb-20 px-4 md:px-8 bg-effect min-h-screen bg-effect">
+      <!-- Add these new gradient elements -->
+      <div class="gradient-1"></div>
+      <div class="gradient-2"></div>
 
-      <!-- Individual Portfolio Modal -->
-      <div id="portfolio-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50">
-          <div class="bg-gray-900 p-8 rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto relative">
-              <button id="close-modal" class="absolute top-4 right-4 text-2xl">&times;</button>
-              <div id="portfolio-content">
-                  <!-- Individual portfolio content will be dynamically added here -->
-              </div>
+      <h1 class="text-4xl font-bold text-center mb-12">Our Team Portfolio</h1>
+
+      <div
+        id="team-container"
+        class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 p-8"
+      ></div>
+
+      <!-- Individual Portfolio Section (NOT a Modal) -->
+      <div
+        id="portfolio-section"
+        class="fixed inset-0 bg-black/60 backdrop-blur-md hidden z-40 flex items-center justify-center p-8"
+      >
+        <div
+          class="bg-black bg-opacity-0 p-8 md:p-12 rounded-lg max-w-6xl w-full"
+        >
+          <div id="portfolio-content" class="text-white">
+            <!-- Portfolio content dynamically added here -->
           </div>
-          <!-- Circular Navigation -->
-          <div class="circular-nav hidden">
-              <!-- Thumbnails will be dynamically added here -->
-          </div>
+        </div>
+
+        <!-- Circular Navigation -->
+        <div class="circular-nav hidden"></div>
       </div>
     </main>
 
     <script>
-        // Navigation active state
-        document.addEventListener("DOMContentLoaded", function () {
-            const links = document.querySelectorAll("nav a");
-    
-            links.forEach(link => {
-                link.addEventListener("click", function () {
-                    links.forEach(l => l.classList.remove("active"));
-                    this.classList.add("active");
-                });
-            });
-    
-            // Optional: Set active based on URL
-            const currentPath = window.location.pathname;
-            links.forEach(link => {
-                if (link.href.includes(currentPath)) {
-                    link.classList.add("active");
-                }
-            });
+      // Navigation active state
+      document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll("nav a");
+
+        links.forEach((link) => {
+          link.addEventListener("click", function () {
+            links.forEach((l) => l.classList.remove("active"));
+            this.classList.add("active");
+          });
         });
 
-        // Mobile menu functionality
-        const menuBtn = document.getElementById("mobile-menu-btn");
-        const sidebar = document.getElementById("mobile-sidebar");
-        const closeBtn = document.getElementById("close-sidebar");
-        const overlay = document.getElementById("overlay");
-
-        menuBtn.addEventListener("click", function () {
-            sidebar.classList.remove("-translate-x-full");
-            overlay.classList.remove("hidden");
+        // Optional: Set active based on URL
+        const currentPath = window.location.pathname;
+        links.forEach((link) => {
+          if (link.href.includes(currentPath)) {
+            link.classList.add("active");
+          }
         });
+      });
 
-        closeBtn.addEventListener("click", function () {
-            sidebar.classList.add("-translate-x-full");
-            overlay.classList.add("hidden");
-        });
+      // Mobile menu functionality
+      const menuBtn = document.getElementById("mobile-menu-btn");
+      const sidebar = document.getElementById("mobile-sidebar");
+      const closeBtn = document.getElementById("close-sidebar");
+      const overlay = document.getElementById("overlay");
 
-        overlay.addEventListener("click", function () {
-            sidebar.classList.add("-translate-x-full");
-            overlay.classList.add("hidden");
-        });
+      menuBtn.addEventListener("click", function () {
+        sidebar.classList.remove("-translate-x-full");
+        overlay.classList.remove("hidden");
+      });
 
-        // Team members data
-        const teamMembers = [
-            { id: 1, name: "John Doe", role: "Frontend Developer", image: "/placeholder.svg?height=300&width=300" },
-            { id: 2, name: "Jane Smith", role: "Backend Developer", image: "/placeholder.svg?height=300&width=300" },
-            { id: 3, name: "Mike Johnson", role: "UI/UX Designer", image: "/placeholder.svg?height=300&width=300" },
-            { id: 4, name: "Emily Brown", role: "Project Manager", image: "/placeholder.svg?height=300&width=300" },
-            { id: 5, name: "Chris Lee", role: "Full Stack Developer", image: "/placeholder.svg?height=300&width=300" },
-            { id: 6, name: "Sarah Wilson", role: "Data Scientist", image: "/placeholder.svg?height=300&width=300" },
-        ];
+      closeBtn.addEventListener("click", function () {
+        sidebar.classList.add("-translate-x-full");
+        overlay.classList.add("hidden");
+      });
 
-        // Function to create team member cards
-        function createTeamMemberCard(member) {
-            return `
-                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover-scale cursor-pointer" data-member-id="${member.id}">
-                    <img src="${member.image}" alt="${member.name}" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold">${member.name}</h3>
-                        <p class="text-gray-400">${member.role}</p>
-                    </div>
-                </div>
-            `;
+      overlay.addEventListener("click", function () {
+        sidebar.classList.add("-translate-x-full");
+        overlay.classList.add("hidden");
+      });
+
+      // Team members data
+      const teamMembers = [
+        {
+          id: 1,
+          name: "John Doe",
+          role: "Frontend Developer",
+          image: "../images/person1.jpg",
+        },
+        {
+          id: 2,
+          name: "Jane Smith",
+          role: "Backend Developer",
+          image: "../images/person2.jpg",
+        },
+        {
+          id: 3,
+          name: "Mike Johnson",
+          role: "UI/UX Designer",
+          image: "../images/person3.jpg",
+        },
+        {
+          id: 4,
+          name: "Emily Brown",
+          role: "Project Manager",
+          image: "../images/person4.jpg",
+        },
+        {
+          id: 5,
+          name: "Chris Lee",
+          role: "Full Stack Developer",
+          image: "../images/person5.jpg",
+        },
+        {
+          id: 6,
+          name: "Sarah Wilson",
+          role: "Data Scientist",
+          image: "../images/person6.jpg",
+        },
+      ];
+
+      function createTeamMemberCard(member) {
+        return `
+          <div class="team-card bg-gray-800 rounded-lg overflow-hidden shadow-lg hover-scale cursor-pointer" data-member-id="${member.id}">
+            <div class="relative">
+              <img src="${member.image}" alt="${member.name}" class="w-full h-48 object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            </div>
+            <div class="card-content p-4">
+              <h3 class="text-xl font-semibold text-white">${member.name}</h3>
+              <p class="text-gray-400">${member.role}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      // Function to render team members in the container
+      function renderTeamMembers() {
+        const teamContainer = document.getElementById("team-container"); // Make sure this element exists in your HTML
+        if (!teamContainer) {
+          console.error("Error: #team-container not found!");
+          return;
         }
 
-        // Modified function to show individual portfolio
-        function showPortfolio(memberId) {
-            const member = teamMembers.find(m => m.id === memberId);
-            const portfolioContent = `
-                <h2 class="text-2xl font-bold mb-4">${member.name}</h2>
-                <p class="text-gray-400 mb-4">${member.role}</p>
-                <img src="${member.image}" alt="${member.name}" class="w-full h-64 object-cover mb-4 rounded">
-                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <h3 class="text-xl font-semibold mb-2">Projects</h3>
-                <ul class="list-disc list-inside mb-4">
-                    <li>Project 1</li>
-                    <li>Project 2</li>
-                    <li>Project 3</li>
-                </ul>
-                <h3 class="text-xl font-semibold mb-2">Skills</h3>
-                <div class="flex flex-wrap gap-2">
-                    <span class="bg-gray-700 px-2 py-1 rounded">Skill 1</span>
-                    <span class="bg-gray-700 px-2 py-1 rounded">Skill 2</span>
-                    <span class="bg-gray-700 px-2 py-1 rounded">Skill 3</span>
-                </div>
-            `;
-            document.getElementById('portfolio-content').innerHTML = portfolioContent;
-            document.getElementById('portfolio-modal').classList.remove('hidden');
-            updateCircularNav(memberId);
+        teamContainer.innerHTML = teamMembers
+          .map(createTeamMemberCard)
+          .join("");
+
+        // Attach event listeners to each team member card
+        document.querySelectorAll("[data-member-id]").forEach((card) => {
+          card.addEventListener("click", function () {
+            const memberId = parseInt(this.getAttribute("data-member-id"));
+            showPortfolio(memberId);
+          });
+        });
+      }
+
+      // Call the function after the DOM loads
+      document.addEventListener("DOMContentLoaded", renderTeamMembers);
+
+      function showPortfolio(memberId) {
+        const member = teamMembers.find((m) => m.id === memberId);
+        if (!member) {
+          console.error(`Error: No team member found with ID ${memberId}`);
+          return;
         }
 
-       // Updated function to update circular navigation
-        function updateCircularNav(currentMemberId) {
-            const circularNav = document.querySelector('.circular-nav');
-            circularNav.innerHTML = '';
-            circularNav.classList.remove('hidden');
+        const portfolioSection = document.getElementById("portfolio-section");
+        const portfolioContent = document.getElementById("portfolio-content");
 
-            const currentIndex = teamMembers.findIndex(m => m.id === currentMemberId);
-            
-            // Limit to 5 members centered around the current member
-            const totalMembers = Math.min(5, teamMembers.length);
-            const offset = Math.floor(totalMembers / 2);
-            const memberIndices = [];
+        portfolioContent.innerHTML = `
+    <div class="relative w-full h-full bg-gray-50/5 backdrop-blur-sm p-8 shadow-2xl animate-extractContent" style="transform: translate-x(-150px)">
+      <!-- Close Button -->
+      <button id="close-portfolio"
+          class="absolute top-4 right-4 text-4xl text-gray-400 hover:text-white transition-transform transform hover:scale-110">
+          &times;
+      </button>
 
-            for (let i = -offset; i <= offset; i++) {
-                let index = (currentIndex + i + teamMembers.length) % teamMembers.length;
-                memberIndices.push(index);
-            }
+      <!-- Grid Layout for Profile -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-center">
+          <!-- Profile Image -->
+          <div class="flex justify-center">
+              <img src="${member.image}" alt="${member.name}"
+                  class="w-60 h-60 md:w-80 md:h-80 object-cover rounded-full border-4 border-red-500 shadow-xl">
+          </div>
 
-            const members = memberIndices.map(i => teamMembers[i]);
-            
-            const totalHeight = 350; // Reduced height for better curve
-            const radius = 130; // Increased radius for better spacing
+          <!-- Profile Info (Spanning 2 Columns on Medium Screens) -->
+          <div class="md:col-span-2">
+              <h2 class="text-5xl font-extrabold text-white mb-3">${member.name}</h2>
+              <p class="text-lg text-red-400 font-semibold mb-5">${member.role}</p>
+              <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </p>
 
-            members.forEach((member, index) => {
-                const thumbnail = document.createElement('div');
-                thumbnail.className = 'thumbnail';
-                thumbnail.innerHTML = `<img src="${member.image}" alt="${member.name}" class="w-full h-full rounded-full object-cover">`;
-                thumbnail.addEventListener('click', () => showPortfolio(member.id));
+              <!-- Projects Section -->
+              <h3 class="text-3xl font-semibold text-white mb-4">Projects</h3>
+              <ul class="list-none space-y-3 mb-6">
+                  <li class="text-gray-300 flex items-center">
+                      <span class="w-3 h-3 bg-red-500 rounded-full inline-block mr-3"></span> Project 1
+                  </li>
+                  <li class="text-gray-300 flex items-center">
+                      <span class="w-3 h-3 bg-red-500 rounded-full inline-block mr-3"></span> Project 2
+                  </li>
+                  <li class="text-gray-300 flex items-center">
+                      <span class="w-3 h-3 bg-red-500 rounded-full inline-block mr-3"></span> Project 3
+                  </li>
+              </ul>
 
-                // Improved arc positioning for a smooth left-facing parenthesis
-                const progress = index / (members.length - 1); // 0 to 1
-                const angle = (progress - 0.5) * Math.PI; // -π/2 to π/2
+              <!-- Skills Section -->
+              <h3 class="text-3xl font-semibold text-white mb-4">Skills</h3>
+              <div class="flex flex-wrap gap-3">
+                  <span class="bg-red-600 text-white px-4 py-2 rounded-lg text-lg font-medium shadow-md">Skill 1</span>
+                  <span class="bg-red-600 text-white px-4 py-2 rounded-lg text-lg font-medium shadow-md">Skill 2</span>
+                  <span class="bg-red-600 text-white px-4 py-2 rounded-lg text-lg font-medium shadow-md">Skill 3</span>
+              </div>
+          </div>
+      </div>
+    </div>
+  `;
 
-                // Calculate x and y positions with smoother distribution
-                const x = Math.cos(angle) * radius * -1.2; // Negative to face left
-                const y = Math.sin(angle) * totalHeight * 0.5 + totalHeight / 2;
+        // Show the portfolio section
+        portfolioSection.classList.remove("hidden");
+        portfolioSection.classList.add("flex");
 
-                thumbnail.style.transform = `translate(${x - 120}px, ${y - 60}px)`;
-                circularNav.appendChild(thumbnail);
-            });
+        updateCircularNav(memberId);
+
+        // Attach event listener to the close button
+        document
+          .getElementById("close-portfolio")
+          .addEventListener("click", function () {
+            portfolioSection.classList.add("hidden");
+            portfolioSection.classList.remove("flex");
+          });
+      }
+
+      function updateCircularNav(currentMemberId) {
+        const circularNav = document.querySelector(".circular-nav");
+        circularNav.innerHTML = "";
+        circularNav.classList.remove("hidden");
+
+        const currentIndex = teamMembers.findIndex(
+          (m) => m.id === currentMemberId
+        );
+
+        // Limit to 5 members centered around the current member
+        const totalMembers = Math.min(5, teamMembers.length);
+        const offset = Math.floor(totalMembers / 2);
+        const memberIndices = [];
+
+        for (let i = -offset; i <= offset; i++) {
+          let index =
+            (currentIndex + i + teamMembers.length) % teamMembers.length;
+          memberIndices.push(index);
         }
 
-        // Close modal and hide circular navigation
-        document.getElementById('close-modal').addEventListener('click', () => {
-            document.getElementById('portfolio-modal').classList.add('hidden');
-            document.querySelector('.circular-nav').classList.add('hidden');
-        });
+        const members = memberIndices.map((i) => teamMembers[i]);
 
-        // Populate team members grid
-        const teamGrid = document.getElementById('team-grid');
-        teamMembers.forEach(member => {
-            teamGrid.innerHTML += createTeamMemberCard(member);
-        });
+        const totalHeight = 350; // Reduced height for better curve
+        const radius = 130; // Increased radius for better spacing
 
-        // Add click event listeners to team member cards
-        teamGrid.addEventListener('click', (e) => {
-            const card = e.target.closest('[data-member-id]');
-            if (card) {
-                const memberId = parseInt(card.dataset.memberId);
-                showPortfolio(memberId);
-            }
-        });
+        members.forEach((member, index) => {
+          const thumbnail = document.createElement("div");
+          thumbnail.className = "thumbnail";
+          thumbnail.innerHTML = `<img src="${member.image}" alt="${member.name}" class="w-full h-full rounded-full object-cover">`;
+          thumbnail.addEventListener("click", () => showPortfolio(member.id));
 
-        // Close modal
-        document.getElementById('close-modal').addEventListener('click', () => {
-            document.getElementById('portfolio-modal').classList.add('hidden');
+          // Improved arc positioning for a smooth left-facing parenthesis
+          const progress = index / (members.length - 1); // 0 to 1
+          const angle = (progress - 0.5) * Math.PI; // -π/2 to π/2
+
+          // Calculate x and y positions with smoother distribution
+          const x = Math.cos(angle) * radius * -1.2; // Negative to face left
+          const y = Math.sin(angle) * totalHeight * 0.5 + totalHeight / 2;
+
+          thumbnail.style.transform = `translate(${x - 120}px, ${y - 0}px)`;
+          circularNav.appendChild(thumbnail);
         });
+      }
+
+      const teamGrid = document.getElementById("team-grid");
+      teamMembers.forEach((member) => {
+        teamGrid.innerHTML += createTeamMemberCard(member);
+      });
+
+      teamGrid.addEventListener("click", (e) => {
+        const card = e.target.closest("[data-member-id]");
+        if (card) {
+          const memberId = parseInt(card.dataset.memberId);
+          showPortfolio(memberId);
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
+
