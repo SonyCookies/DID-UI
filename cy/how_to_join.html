@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DID - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 100%;
+        }
+        main {
+            min-height: 100vh;
+        } 
+
+        .writing-mode-vertical {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+        }
+
+        .annotation-line::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 1px;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .annotation-line-left::before {
+            right: 100%;
+            top: 50%;
+        }
+
+        .annotation-line-right::before {
+            left: 100%;
+            top: 50%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .hover-scale {
+            transition: transform 0.2s;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.1);
+        }
+
+        /* Updated and additional styles for background effects */
+        .bg-effect {
+            position: fixed; /* Make it persist across all sections */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* Push it behind content */
+        }
+
+
+        .bg-effect::before,
+        .bg-effect::after,
+        .bg-effect .gradient-1,
+        .bg-effect .gradient-2 {
+            content: '';
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.3;
+            filter: blur(30px);
+            pointer-events: none;
+        }
+
+        .bg-effect::before {
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+            top: -50%;
+            left: -50%;
+        }
+
+        .bg-effect::after {
+            background: radial-gradient(circle, rgba(255,0,0,0.4) 0%, rgba(255,0,0,0) 70%);
+            bottom: -50%;
+            right: -50%;
+        }
+
+        .bg-effect .gradient-1 {
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+            top: 0;
+            left: 25%;
+        }
+
+        .bg-effect .gradient-2 {
+            background: radial-gradient(circle, rgba(255,0,0,0.3) 0%, rgba(255,0,0,0) 70%);
+            bottom: 0;
+            right: 25%;
+        }
+        .active {
+            color: white !important;
+            font-weight: bold;
+            border-bottom: 2px solid red;
+        }
+
+        /* Add new styles for the circular navigation */
+        .circular-nav {
+            position: fixed;
+            right: 40px; /* Moved slightly more right to accommodate the curve */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100px;
+            height: 400px; /* Increased height for more thumbnails */
+            z-index: 60;
+            pointer-events: all;
+        }
+
+        .circular-nav::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 150px;
+            height: 300px;
+            background: radial-gradient(ellipse at right, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: translateY(-50%);
+            z-index: -1;
+        }
+
+        .circular-nav .thumbnail {
+            position: absolute;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            transition: all 0.3s ease-out;
+        }
+
+        .circular-nav .thumbnail:hover {
+            transform: scale(1.1) translateX(-10px);
+        }
+
+        .thumbnail img {
+            border: 2px solid rgb(185, 28, 28);
+            border-radius: 50%;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: #E31C25; }
+        }
+        .typing {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 10px solid #E31C25;
+            width: 0;
+            animation: typing 2s steps(40, end) forwards, blink 0.75s step-end infinite;
+        }
+        .no-cursor {
+            border-right: none;
+        }
+        .typing-container {
+            font-size: 4rem;
+        }
+        .section-1, .section-2, .section-3, .section-4 {
+            height: 52.8rem;
+        }
+        .section-5 {
+            height: 45rem;
+        }
+
+    </style>
+    
+</head>
+<body class="bg-black text-white bg-effect overflow-auto" style="overflow-x: hidden;">
+
+        <!-- Navigation -->
+        <nav id="navbar" class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8 transition-all duration-300">
+            <div class="flex justify-between items-center w-full">
+                <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
+                <div class="text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2">
+                    <span style="display: inline-block; transform: scaleX(-1);">D</span>iD
+                </div>
+            
+                <!-- Left -->
+                <div class="flex items-center gap-4 order-2">
+                    <!-- Mobile Left Section -->
+                </div>
+            
+                <!-- Desktop Menu (Left) -->
+                <div class="hidden md:flex space-x-8 order-3">
+                    <a href="main.html" class="text-md text-gray-400 hover:text-white">Home</a>
+                    <a href="about.html" class="text-md text-gray-400 hover:text-white">About</a>
+                    <a href="team.html" class="text-md text-gray-400 hover:text-white">Team</a>
+                    <a href="projects.html" class="text-md text-gray-400 hover:text-white">Projects</a>
+                </div>
+        
+                <!-- Desktop Menu (Right) -->
+                <div class="hidden md:flex space-x-8 order-4">
+                    <a href="portfolio.html" class="text-md text-gray-400 hover:text-white">Portfolio</a>
+                    <a href="gallery.html" class="text-md text-gray-400 hover:text-white">Gallery</a>
+                    <a href="join.html" class="text-md text-gray-400 hover:text-white active">How to Join?</a>
+                </div>
+            
+                <!-- Right -->
+                <div class="flex items-center gap-4 order-5">
+                    <button id="mobile-menu-btn" class="md:hidden text-white text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+        <!-- Mobile Sidebar -->
+        <div id="mobile-sidebar" class="fixed inset-y-0 left-0 w-64 bg-black text-white z-50 transform -translate-x-full transition-transform duration-300 md:hidden">
+            <div class="p-6">
+                <button id="close-sidebar" class="text-2xl text-white absolute top-4 right-4">
+                    <i class="fas fa-times"></i>
+                </button>
+                <nav class="mt-10 flex flex-col space-y-4">
+                    <a href="main.html" class="text-lg text-gray-400 hover:text-white">Home</a>
+                    <a href="about.html" class="text-lg text-gray-400 hover:text-white">About</a>
+                    <a href="team.html" class="text-lg text-gray-400 hover:text-white">Team</a>
+                    <a href="projects.html" class="text-lg text-gray-400 hover:text-white">Projects</a>
+                    <a href="portfolio.html" class="text-lg text-gray-400 hover:text-white">Portfolio</a>
+                    <a href="gallery.html" class="text-lg text-gray-400 hover:text-white">Gallery</a>
+                    <a href="join.html" class="text-lg text-gray-400 hover:text-white">How to Join?</a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Left info -->
+        <div class="fixed left-8 top-1/2 -translate-y-1/2 z-40">
+            <div class="flex flex-col gap-20 animate-fade-in">
+                <div class="writing-mode-vertical text-red-600 text-2xl font-bold tracking-widest">
+                    2025-2026
+                </div>
+                <div class="writing-mode-vertical text-gray-600 uppercase tracking-widest space-y-8">
+                    <span>Dedicated</span>
+                    <span>IT</span>
+                    <span>Developers</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="px-4 md:px-8 flex items-center justify-center flex-col">
+            <section class="w-full mx-auto flex items-center justify-center section-1">
+                <div class="flex justify-center items-center">
+                    <div class="w-11/12 sm:w-10/12 md:w-8/12 p-6 sm:p-10 md:p-12">
+                        <div class="flex justify-center items-center">
+                            <div id="typing-container" class="text-center text-white"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="bg-transparent w-full section-2 py-16 px-32 flex items-center justify-center">
+                <!-- <h1 class="text-3xl text-center">Section 2 Content Here</h1> -->
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-6 shadow-lg w-full h-full">
+                    <h1 class="text-center text-3xl font-bold text-red-500 mb-4">Qualifications</h1>
+                    <ul class="space-y-3 text-white">
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-code text-red-400"></i> Skilled and passionate about programming.
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check-circle text-green-400"></i> Responsible, with a strong sense of accountability.
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-user-shield text-blue-400"></i> Possesses good moral character and integrity.
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-brain text-yellow-400"></i> Willing to learn and adapt to new technologies and challenges.
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-users text-purple-400"></i> Able to work effectively in a team and collaborate with others.
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-hand-holding-heart text-pink-400"></i> Dedicated to contributing time and effort to projects that benefit the university.
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-share text-indigo-400"></i> Open to sharing knowledge and mentoring peers.
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-book-open text-orange-400"></i> Enthusiastic about continuous personal and professional development.
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-balance-scale text-teal-400"></i> Committed to upholding the ethical standards of the organization and its members.
+                        </li>
+                    </ul>
+                </div>
+                
+            </section>
+
+            <section class="section-3 bg-transparent w-full py-16 px-32 flex items-center justify-center">
+
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-6 shadow-lg w-full h-full">
+                    <h1 class="text-center text-3xl font-bold text-red-500 mb-4">Membership Form</h1>
+                    <div class="flex flex-row justify-between items-center">
+                        <img src="../images/did.png" alt="" style="height: 25rem;">
+
+                        <form action="">
+
+                        </form>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="section-4 bg-transparent w-full py-16 px-32 flex items-center justify-center">
+
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-6 shadow-lg w-full h-full">
+                    <h1 class="text-center text-3xl font-bold text-red-500 mb-4">Get Your Organizational Shirt</h1>
+                    <div class="flex flex-row justify-between items-center">
+                        <form action="">
+
+                        </form>
+                        <div class="flex">
+                            <img src="../images/shirt-front.png" alt="" style="height: 25rem;">
+                            <img src="../images/shirt-back.png" alt="" style="height: 25rem;">
+                        </div>
+                    
+                    </div>
+                </div>
+
+            </section>
+
+            <footer class="section-5 flex items-end w-full py-16 px-32">
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20  rounded-lg p-6 shadow-lg w-full h-full">
+                    <h1 class="text-center text-3xl font-bold text-red-500 mb-4">Contact Us</h1>
+
+                </div>
+            </footer>
+        </main>
+    
+
+        <script>
+            // Navigation active state
+            document.addEventListener("DOMContentLoaded", function () {
+                const links = document.querySelectorAll("nav a");
+        
+                links.forEach(link => {
+                    link.addEventListener("click", function () {
+                        links.forEach(l => l.classList.remove("active"));
+                        this.classList.add("active");
+                    });
+                });
+        
+                // Optional: Set active based on URL
+                const currentPath = window.location.pathname;
+                links.forEach(link => {
+                    if (link.href.includes(currentPath)) {
+                        link.classList.add("active");
+                    }
+                });
+            });
+    
+            // Mobile menu functionality
+            const menuBtn = document.getElementById("mobile-menu-btn");
+            const sidebar = document.getElementById("mobile-sidebar");
+            const closeBtn = document.getElementById("close-sidebar");
+            const overlay = document.getElementById("overlay");
+    
+            menuBtn.addEventListener("click", function () {
+                sidebar.classList.remove("-translate-x-full");
+                overlay.classList.remove("hidden");
+            });
+    
+            closeBtn.addEventListener("click", function () {
+                sidebar.classList.add("-translate-x-full");
+                overlay.classList.add("hidden");
+            });
+    
+            overlay.addEventListener("click", function () {
+                sidebar.classList.add("-translate-x-full");
+                overlay.classList.add("hidden");
+            });
+    
+            document.addEventListener("DOMContentLoaded", function () {
+                const texts = [
+                    "Are you a passionate coder?",
+                    "Do you want to contribute your skills and\nknowledge while working on real-world projects?",
+                    "This is your chance to be part of an elite group of\nIT professionals and developers at our university!"
+                ];
+    
+                let container = document.getElementById("typing-container");
+                let index = 0;
+    
+                function typeNext() {
+                    container.innerHTML = "";
+                    const parts = texts[index].split("\n");
+                    let delay = 0;
+                    
+                    parts.forEach((line, i) => {
+                        setTimeout(() => {
+                            let p = document.createElement("p");
+                            p.classList.add("text-white", "font-bold", "typing", "typing-container");
+                            p.textContent = line;
+                            
+                            if (i === 0 && parts.length > 1) {
+                                setTimeout(() => p.classList.add("no-cursor"), 2200); // Remove cursor after first line
+                            }
+    
+                            container.appendChild(p);
+                        }, delay);
+    
+                        delay += 2200; // Delay before showing next line
+                    });
+    
+                    setTimeout(() => {
+                        index = (index + 1) % texts.length; // Loop to the next text
+                        setTimeout(typeNext, 1500); // Pause before the next text starts
+                    }, delay + 2000);
+                }
+    
+                typeNext();
+            });
+            
+
+        </script>
+</body>
+</html>
