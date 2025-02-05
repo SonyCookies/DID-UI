@@ -114,7 +114,7 @@
         right: 25%;
       }
 
-      .active {
+      nav .active {
         color: white !important;
         font-weight: bold;
         border-bottom: 2px solid red;
@@ -161,9 +161,21 @@
       }
 
       .thumbnail img {
-        border: 2px solid rgb(185, 28, 28);
-        border-radius: 50%;
+        text-decoration: none; /* Remove text underline */
+        border: none; /* Ensure no border is applied */
       }
+
+      .thumbnail.active img {
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.9); /* Strong red glow */
+        border: 3px solid red; /* Red border around active image */
+      }
+
+      .thumbnail.active {
+        transform: scale(1.3); /* Larger scale effect */
+        transition: all 0.3s ease-in-out;
+      }
+
+
 
       @keyframes extractContent {
         0% {
@@ -243,7 +255,10 @@
   </head>
   <body class="bg-black text-white min-h-screen overflow-x-hidden">
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8">
+    <nav
+      id="navbar"
+      class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8 transition-all duration-300"
+    >
       <div class="flex justify-between items-center w-full">
         <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
         <div
@@ -265,9 +280,6 @@
           <a href="about.html" class="text-md text-gray-400 hover:text-white"
             >About</a
           >
-          <a href="team.html" class="text-md text-gray-400 hover:text-white"
-            >Team</a
-          >
           <a href="projects.html" class="text-md text-gray-400 hover:text-white"
             >Projects</a
           >
@@ -276,9 +288,9 @@
         <!-- Desktop Menu (Right) -->
         <div class="hidden md:flex space-x-8 order-4">
           <a
-            href="portfolio.html"
+            href="team.html"
             class="text-md text-gray-400 hover:text-white active"
-            >Portfolio</a
+            >Team</a
           >
           <a href="gallery.html" class="text-md text-gray-400 hover:text-white"
             >Gallery</a
@@ -296,6 +308,29 @@
         </div>
       </div>
     </nav>
+
+    <!-- Script for navigation -->
+    <script>
+      window.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+
+        if (window.scrollY > 50) {
+          navbar.classList.add(
+            "bg-black",
+            "bg-opacity-20",
+            "backdrop-blur-md",
+            "shadow-lg"
+          );
+        } else {
+          navbar.classList.remove(
+            "bg-black",
+            "bg-opacity-20",
+            "backdrop-blur-md",
+            "shadow-lg"
+          );
+        }
+      });
+    </script>
 
     <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
@@ -340,7 +375,7 @@
     </div>
 
     <!-- Left info -->
-    <div class="fixed left-8 top-1/2 z-50 -translate-y-1/2 z-40">
+    <div class="fixed left-8 top-1/2 z-50 -translate-y-1/2">
       <div class="flex flex-col gap-20 animate-fade-in">
         <div
           class="writing-mode-vertical text-red-600 text-2xl font-bold tracking-widest"
@@ -359,11 +394,19 @@
 
     <!-- Main Content -->
     <main class="pt-24 pb-20 px-4 md:px-8 bg-effect min-h-screen bg-effect">
+
       <!-- Add these new gradient elements -->
       <div class="gradient-1"></div>
       <div class="gradient-2"></div>
 
-      <h1 class="text-4xl font-bold text-center mt-8 mb-12">PORTFOLIO</h1>
+      <h1 class="text-4xl font-bold text-center mt-8 mb-12">Our Team</h1>
+      <p class="text-lg text-center text-gray-300 max-w-3xl mx-auto mb-8">
+        Meet the minds behind
+        <span class="text-red-400 font-semibold">DID</span>! Our team is
+        composed of passionate developers, designers, and innovators who bring
+        ideas to life. Explore our members, their expertise, and the projects
+        shaping the future of technology.
+      </p>
 
       <div
         id="team-container"
@@ -472,15 +515,22 @@
 
       function createTeamMemberCard(member) {
         return `
-          <div class="team-card bg-gray-800 rounded-lg overflow-hidden shadow-lg hover-scale cursor-pointer" data-member-id="${member.id}">
+          <div class="team-card relative bg-black/30 backdrop-blur-xl border border-red-500/30 shadow-lg rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.05] hover:shadow-red-500/30" data-member-id="${member.id}">
+            
+            <!-- Profile Image -->
             <div class="relative">
-              <img src="${member.image}" alt="${member.name}" class="w-full h-48 object-cover">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <img src="${member.image}" alt="${member.name}" class="w-full h-100 object-cover transition-transform duration-500 hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
             </div>
-            <div class="card-content p-4">
-              <h3 class="text-xl font-semibold text-white">${member.name}</h3>
-              <p class="text-gray-400">${member.role}</p>
+
+            <!-- Card Content with Red Accent Border -->
+            <div class="absolute bottom-0 w-full p-6 bg-black/60 backdrop-blur-lg border-t-2 border-red-500/50 rounded-b-2xl transition-all duration-300">
+              <h3 class="text-3xl font-extrabold text-white tracking-wide drop-shadow-lg">${member.name}</h3>
+              <p class="text-lg font-medium text-red-400 drop-shadow-md">${member.role}</p>
             </div>
+
+            <!-- Animated Red Glow on Hover -->
+            <div class="absolute inset-0 border border-transparent rounded-2xl transition-all duration-300 group-hover:border-red-500/60"></div>
           </div>
         `;
       }
@@ -589,9 +639,7 @@
         circularNav.innerHTML = "";
         circularNav.classList.remove("hidden");
 
-        const currentIndex = teamMembers.findIndex(
-          (m) => m.id === currentMemberId
-        );
+        const currentIndex = teamMembers.findIndex((m) => m.id === currentMemberId);
 
         // Limit to 5 members centered around the current member
         const totalMembers = Math.min(5, teamMembers.length);
@@ -599,34 +647,48 @@
         const memberIndices = [];
 
         for (let i = -offset; i <= offset; i++) {
-          let index =
-            (currentIndex + i + teamMembers.length) % teamMembers.length;
+          let index = (currentIndex + i + teamMembers.length) % teamMembers.length;
           memberIndices.push(index);
         }
 
         const members = memberIndices.map((i) => teamMembers[i]);
 
-        const totalHeight = 350; // Reduced height for better curve
-        const radius = 130; // Increased radius for better spacing
+        const totalHeight = 350;
+        const radius = 130;
 
         members.forEach((member, index) => {
           const thumbnail = document.createElement("div");
-          thumbnail.className = "thumbnail";
-          thumbnail.innerHTML = `<img src="${member.image}" alt="${member.name}" class="w-full h-full rounded-full object-cover">`;
+          thumbnail.className = "thumbnail transition-all duration-300 ease-in-out";
+
+          const isActive = member.id === currentMemberId;
+          const opacityClass = isActive ? "" : "opacity-50";
+
+          thumbnail.innerHTML = `
+            <img 
+              src="${member.image}" 
+              alt="${member.name}" 
+              class="w-full h-full border-none rounded-full object-cover ${opacityClass}"
+            >
+          `;
+
+          // Add the 'active' class if this member is currently active
+          if (isActive) {
+            thumbnail.classList.add("active");
+          }
+
           thumbnail.addEventListener("click", () => showPortfolio(member.id));
 
-          // Improved arc positioning for a smooth left-facing parenthesis
-          const progress = index / (members.length - 1); // 0 to 1
-          const angle = (progress - 0.5) * Math.PI; // -π/2 to π/2
+          const progress = index / (members.length - 1);
+          const angle = (progress - 0.5) * Math.PI;
 
-          // Calculate x and y positions with smoother distribution
-          const x = Math.cos(angle) * radius * -1.2; // Negative to face left
+          const x = Math.cos(angle) * radius * -1.2;
           const y = Math.sin(angle) * totalHeight * 0.5 + totalHeight / 2;
 
-          thumbnail.style.transform = `translate(${x - 120}px, ${y - 0}px)`;
+          thumbnail.style.transform = `translate(${x - 120}px, ${y}px)`;
           circularNav.appendChild(thumbnail);
         });
       }
+
 
       const teamGrid = document.getElementById("team-grid");
       teamMembers.forEach((member) => {
