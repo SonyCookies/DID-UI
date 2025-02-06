@@ -10,12 +10,14 @@
       rel="stylesheet"
     />
     <style>
+      /* === Vertical Text === */
       .writing-mode-vertical {
         writing-mode: vertical-rl;
         text-orientation: mixed;
         transform: rotate(180deg);
       }
 
+      /* === Annotation Line === */
       .annotation-line::before {
         content: "";
         position: absolute;
@@ -34,6 +36,7 @@
         top: 50%;
       }
 
+      /* === Fade In Animation === */
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -47,24 +50,24 @@
         animation: fadeIn 1s ease-out forwards;
       }
 
+      /* === Hover Scale Effect === */
       .hover-scale {
-        transition: transform 0.2s;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
 
       .hover-scale:hover {
-        transform: scale(1.1);
+        transform: scale(1.02);
+        box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
       }
 
-      /* Updated and additional styles for background effects */
+      /* === Background Effect === */
       .bg-effect {
         position: relative;
         overflow: hidden;
       }
 
       .bg-effect::before,
-      .bg-effect::after,
-      .bg-effect .gradient-1,
-      .bg-effect .gradient-2 {
+      .bg-effect::after {
         content: "";
         position: absolute;
         width: 100vw;
@@ -94,58 +97,23 @@
         right: -50%;
       }
 
-      .bg-effect .gradient-1 {
-        background: radial-gradient(
-          circle,
-          rgba(255, 255, 255, 0.3) 0%,
-          rgba(255, 255, 255, 0) 70%
-        );
-        top: 0;
-        left: 25%;
-      }
-
-      .bg-effect .gradient-2 {
-        background: radial-gradient(
-          circle,
-          rgba(255, 0, 0, 0.3) 0%,
-          rgba(255, 0, 0, 0) 70%
-        );
-        bottom: 0;
-        right: 25%;
-      }
-
+      /* === Active Navigation Link === */
       nav .active {
         color: white !important;
         font-weight: bold;
         border-bottom: 2px solid red;
       }
 
-      /* Add new styles for the circular navigation */
+      /* === Circular Navigation (Desktop) === */
       .circular-nav {
         position: fixed;
-        right: 40px; /* Moved slightly more right to accommodate the curve */
+        right: 40px;
         top: 50%;
         transform: translateY(-50%);
         width: 100px;
-        height: 400px; /* Increased height for more thumbnails */
+        height: 400px;
         z-index: 60;
         pointer-events: all;
-      }
-
-      .circular-nav::before {
-        content: "";
-        position: absolute;
-        right: 0;
-        top: 50%;
-        width: 150px;
-        height: 300px;
-        background: radial-gradient(
-          ellipse at right,
-          rgba(255, 255, 255, 0.1) 0%,
-          rgba(255, 255, 255, 0) 70%
-        );
-        transform: translateY(-50%);
-        z-index: -1;
       }
 
       .circular-nav .thumbnail {
@@ -161,48 +129,90 @@
       }
 
       .thumbnail img {
-        text-decoration: none; /* Remove text underline */
-        border: none; /* Ensure no border is applied */
+        text-decoration: none;
+        border: none;
       }
 
       .thumbnail.active img {
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.9); /* Strong red glow */
-        border: 3px solid red; /* Red border around active image */
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.9);
+        border: 3px solid red;
       }
 
       .thumbnail.active {
-        transform: scale(1.3); /* Larger scale effect */
+        transform: scale(1.3);
         transition: all 0.3s ease-in-out;
       }
 
+      /* === Mobile Adjustments (Horizontal Bar) === */
+      @media (max-width: 768px) {
+        .circular-nav {
+          position: fixed;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 90%;
+          height: auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+        }
 
+        .circular-nav::before {
+          display: none;
+        }
 
-      @keyframes extractContent {
+        .circular-nav .thumbnail {
+          position: static;
+          width: 60px;
+          height: 60px;
+          flex-shrink: 0;
+        }
+
+        .thumbnail img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+      }
+
+      /* === Extract Content Animation for Desktop === */
+      @keyframes extractContentDesktop {
         0% {
           clip-path: circle(0% at 100% 50%);
-          transform: translateX(50px);
+          transform: translateX(150px);
           opacity: 0;
         }
         100% {
           clip-path: circle(150% at 100% 50%);
-          transform: translateX(-150px);
+          transform: translateX(0px);
           opacity: 1;
         }
       }
 
-      .animate-extractContent {
-        animation: extractContent 1s ease-out forwards;
+      /* === Extract Content Animation for Mobile and Medium === */
+      @keyframes extractContentMobile {
+        0% {
+          clip-path: circle(0% at 50% 100%);
+          transform: translateY(150px);
+          opacity: 0;
+        }
+        100% {
+          clip-path: circle(150% at 50% 100%);
+          transform: translateY(0px);
+          opacity: 1;
+        }
       }
 
-      .hover-scale {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      .animate-extractContentDesktop {
+        animation: extractContentDesktop 0.5s ease-out forwards;
       }
 
-      .hover-scale:hover {
-        transform: scale(1.02);
-        box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+      .animate-extractContentMobile {
+        animation: extractContentMobile 0.5s ease-out forwards;
       }
 
+      /* === Team Card Hover Effect === */
       .team-card {
         position: relative;
         overflow: hidden;
@@ -229,6 +239,7 @@
         transform: translateX(100%) skewX(-20deg);
       }
 
+      /* === Card Content Background === */
       .card-content {
         position: relative;
         background: linear-gradient(
@@ -252,6 +263,7 @@
         );
       }
     </style>
+    
   </head>
   <body class="bg-black text-white min-h-screen overflow-x-hidden">
     <!-- Navigation -->
@@ -262,7 +274,7 @@
       <div class="flex justify-between items-center w-full">
         <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
         <div
-          class="text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2"
+          class="text-6xl font-bold text-red-500 animate-pulse-slow order-1 lg:absolute md:left-1/2 lg:-translate-x-1/2"
         >
           <span style="display: inline-block; transform: scaleX(-1)">D</span>iD
         </div>
@@ -273,7 +285,7 @@
         </div>
 
         <!-- Desktop Menu (Left) -->
-        <div class="hidden md:flex space-x-8 order-3">
+        <div class="hidden lg:flex space-x-8 order-3">
           <a href="main.html" class="text-md text-gray-400 hover:text-white"
             >Home</a
           >
@@ -286,7 +298,7 @@
         </div>
 
         <!-- Desktop Menu (Right) -->
-        <div class="hidden md:flex space-x-8 order-4">
+        <div class="hidden lg:flex space-x-8 order-4">
           <a
             href="team.html"
             class="text-md text-gray-400 hover:text-white active"
@@ -302,42 +314,19 @@
 
         <!-- Right -->
         <div class="flex items-center gap-4 order-5">
-          <button id="mobile-menu-btn" class="md:hidden text-white text-2xl">
+          <button id="mobile-menu-btn" class="lg:hidden text-white text-2xl">
             <i class="fas fa-bars"></i>
           </button>
         </div>
       </div>
     </nav>
 
-    <!-- Script for navigation -->
-    <script>
-      window.addEventListener("scroll", function () {
-        const navbar = document.getElementById("navbar");
-
-        if (window.scrollY > 50) {
-          navbar.classList.add(
-            "bg-black",
-            "bg-opacity-20",
-            "backdrop-blur-md",
-            "shadow-lg"
-          );
-        } else {
-          navbar.classList.remove(
-            "bg-black",
-            "bg-opacity-20",
-            "backdrop-blur-md",
-            "shadow-lg"
-          );
-        }
-      });
-    </script>
-
     <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
     <!-- Mobile Sidebar -->
     <div
       id="mobile-sidebar"
-      class="fixed inset-y-0 left-0 w-64 bg-black text-white z-50 transform -translate-x-full transition-transform duration-300 md:hidden"
+      class="fixed inset-y-0 left-0 w-64 bg-black text-white z-50 transform -translate-x-full transition-transform duration-300 lg:hidden"
     >
       <div class="p-6">
         <button
@@ -375,7 +364,7 @@
     </div>
 
     <!-- Left info -->
-    <div class="fixed left-8 top-1/2 z-50 -translate-y-1/2">
+    <div class="fixed left-8 top-1/2 z-50 -translate-y-1/2 hidden lg:block">
       <div class="flex flex-col gap-20 animate-fade-in">
         <div
           class="writing-mode-vertical text-red-600 text-2xl font-bold tracking-widest"
@@ -394,7 +383,6 @@
 
     <!-- Main Content -->
     <main class="pt-24 pb-20 px-4 md:px-8 bg-effect min-h-screen bg-effect">
-
       <!-- Add these new gradient elements -->
       <div class="gradient-1"></div>
       <div class="gradient-2"></div>
@@ -410,7 +398,7 @@
 
       <div
         id="team-container"
-        class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 p-8"
+        class="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 p-4 sm:p-8"
       ></div>
 
       <!-- Individual Portfolio Section (NOT a Modal) -->
@@ -431,277 +419,322 @@
       </div>
     </main>
 
-    <script>
-      // Navigation active state
-      document.addEventListener("DOMContentLoaded", function () {
-        const links = document.querySelectorAll("nav a");
+  <script>
+      // Navigation and Mobile Menu Functionality
+    document.addEventListener("DOMContentLoaded", function () {
+      const links = document.querySelectorAll("nav a");
 
-        links.forEach((link) => {
-          link.addEventListener("click", function () {
-            links.forEach((l) => l.classList.remove("active"));
-            this.classList.add("active");
-          });
-        });
-
-        // Optional: Set active based on URL
-        const currentPath = window.location.pathname;
-        links.forEach((link) => {
-          if (link.href.includes(currentPath)) {
-            link.classList.add("active");
-          }
+      links.forEach((link) => {
+        link.addEventListener("click", function () {
+          links.forEach((l) => l.classList.remove("active"));
+          this.classList.add("active");
         });
       });
 
-      // Mobile menu functionality
-      const menuBtn = document.getElementById("mobile-menu-btn");
-      const sidebar = document.getElementById("mobile-sidebar");
-      const closeBtn = document.getElementById("close-sidebar");
-      const overlay = document.getElementById("overlay");
-
-      menuBtn.addEventListener("click", function () {
-        sidebar.classList.remove("-translate-x-full");
-        overlay.classList.remove("hidden");
+      const currentPath = window.location.pathname;
+      links.forEach((link) => {
+        if (link.href.includes(currentPath)) {
+          link.classList.add("active");
+        }
       });
+    });
 
-      closeBtn.addEventListener("click", function () {
-        sidebar.classList.add("-translate-x-full");
-        overlay.classList.add("hidden");
-      });
+    const menuBtn = document.getElementById("mobile-menu-btn");
+    const sidebar = document.getElementById("mobile-sidebar");
+    const closeBtn = document.getElementById("close-sidebar");
+    const overlay = document.getElementById("overlay");
 
-      overlay.addEventListener("click", function () {
-        sidebar.classList.add("-translate-x-full");
-        overlay.classList.add("hidden");
-      });
+    menuBtn.addEventListener("click", function () {
+      sidebar.classList.remove("-translate-x-full");
+      overlay.classList.remove("hidden");
+    });
 
-      // Team members data
-      const teamMembers = [
-        {
-          id: 1,
-          name: "John Doe",
-          role: "Frontend Developer",
-          image: "../images/person1.jpg",
-        },
-        {
-          id: 2,
-          name: "Jane Smith",
-          role: "Backend Developer",
-          image: "../images/person2.jpg",
-        },
-        {
-          id: 3,
-          name: "Mike Johnson",
-          role: "UI/UX Designer",
-          image: "../images/person3.jpg",
-        },
-        {
-          id: 4,
-          name: "Emily Brown",
-          role: "Project Manager",
-          image: "../images/person4.jpg",
-        },
-        {
-          id: 5,
-          name: "Chris Lee",
-          role: "Full Stack Developer",
-          image: "../images/person5.jpg",
-        },
-        {
-          id: 6,
-          name: "Sarah Wilson",
-          role: "Data Scientist",
-          image: "../images/person6.jpg",
-        },
-      ];
+    closeBtn.addEventListener("click", function () {
+      sidebar.classList.add("-translate-x-full");
+      overlay.classList.add("hidden");
+    });
 
-      function createTeamMemberCard(member) {
-        return `
-          <div class="team-card relative bg-black/30 backdrop-blur-xl border border-red-500/30 shadow-lg rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.05] hover:shadow-red-500/30" data-member-id="${member.id}">
-            
-            <!-- Profile Image -->
-            <div class="relative">
-              <img src="${member.image}" alt="${member.name}" class="w-full h-100 object-cover transition-transform duration-500 hover:scale-105">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
-            </div>
+    overlay.addEventListener("click", function () {
+      sidebar.classList.add("-translate-x-full");
+      overlay.classList.add("hidden");
+    });
 
-            <!-- Card Content with Red Accent Border -->
-            <div class="absolute bottom-0 w-full p-6 bg-black/60 backdrop-blur-lg border-t-2 border-red-500/50 rounded-b-2xl transition-all duration-300">
-              <h3 class="text-3xl font-extrabold text-white tracking-wide drop-shadow-lg">${member.name}</h3>
-              <p class="text-lg font-medium text-red-400 drop-shadow-md">${member.role}</p>
-            </div>
+    // Team Members Data and Rendering
+    const teamMembers = [
+      {
+        id: 1,
+        name: "John Doe",
+        role: "Frontend Developer",
+        image: "../images/person1.jpg",
+      },
+      {
+        id: 2,
+        name: "Jane Smith",
+        role: "Backend Developer",
+        image: "../images/person2.jpg",
+      },
+      {
+        id: 3,
+        name: "Mike Johnson",
+        role: "UI/UX Designer",
+        image: "../images/person3.jpg",
+      },
+      {
+        id: 4,
+        name: "Emily Brown",
+        role: "Project Manager",
+        image: "../images/person4.jpg",
+      },
+      {
+        id: 5,
+        name: "Chris Lee",
+        role: "Full Stack Developer",
+        image: "../images/person5.jpg",
+      },
+      {
+        id: 6,
+        name: "Sarah Wilson",
+        role: "Data Scientist",
+        image: "../images/person6.jpg",
+      },
+    ];
 
-            <!-- Animated Red Glow on Hover -->
-            <div class="absolute inset-0 border border-transparent rounded-2xl transition-all duration-300 group-hover:border-red-500/60"></div>
+    function createTeamMemberCard(member) {
+      return `
+        <div class="team-card relative bg-black/30 backdrop-blur-xl border border-red-500/30 shadow-lg rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.05] hover:shadow-red-500/30" data-member-id="${member.id}">
+          
+          <!-- Profile Image -->
+          <div class="relative">
+            <img src="${member.image}" alt="${member.name}" class="w-full h-48 sm:h-56 md:h-64 object-cover transition-transform duration-500 hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
           </div>
-        `;
-      }
 
-      // Function to render team members in the container
-      function renderTeamMembers() {
-        const teamContainer = document.getElementById("team-container"); // Make sure this element exists in your HTML
-        if (!teamContainer) {
-          console.error("Error: #team-container not found!");
-          return;
-        }
-
-        teamContainer.innerHTML = teamMembers
-          .map(createTeamMemberCard)
-          .join("");
-
-        // Attach event listeners to each team member card
-        document.querySelectorAll("[data-member-id]").forEach((card) => {
-          card.addEventListener("click", function () {
-            const memberId = parseInt(this.getAttribute("data-member-id"));
-            showPortfolio(memberId);
-          });
-        });
-      }
-
-      // Call the function after the DOM loads
-      document.addEventListener("DOMContentLoaded", renderTeamMembers);
-
-      function showPortfolio(memberId) {
-        const member = teamMembers.find((m) => m.id === memberId);
-        if (!member) {
-          console.error(`Error: No team member found with ID ${memberId}`);
-          return;
-        }
-
-        const portfolioSection = document.getElementById("portfolio-section");
-        const portfolioContent = document.getElementById("portfolio-content");
-
-        portfolioContent.innerHTML = `
-          <div class="relative w-full h-full bg-gray-50/5 backdrop-blur-sm p-8 shadow-2xl animate-extractContent" style="transform: translate-x(-150px)">
-            <!-- Close Button -->
-            <button id="close-portfolio"
-                class="absolute top-4 right-4 text-4xl text-gray-400 hover:text-white transition-transform transform hover:scale-110">
-                &times;
-            </button>
-
-            <!-- Grid Layout for Profile -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-center">
-                <!-- Profile Image -->
-                <div class="flex justify-center">
-                    <img src="${member.image}" alt="${member.name}"
-                        class="w-60 h-60 md:w-80 md:h-80 object-cover rounded-full border-4 border-red-500 shadow-xl">
-                </div>
-
-                <!-- Profile Info (Spanning 2 Columns on Medium Screens) -->
-                <div class="md:col-span-2">
-                    <h2 class="text-5xl font-extrabold text-white mb-3">${member.name}</h2>
-                    <p class="text-lg text-red-400 font-semibold mb-5">${member.role}</p>
-                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-
-                    <!-- Projects Section -->
-                    <h3 class="text-3xl font-semibold text-white mb-4">Projects</h3>
-                    <ul class="list-none space-y-3 mb-6">
-                        <li class="text-gray-300 flex items-center">
-                            <span class="w-3 h-3 bg-red-500 rounded-full inline-block mr-3"></span> Project 1
-                        </li>
-                        <li class="text-gray-300 flex items-center">
-                            <span class="w-3 h-3 bg-red-500 rounded-full inline-block mr-3"></span> Project 2
-                        </li>
-                        <li class="text-gray-300 flex items-center">
-                            <span class="w-3 h-3 bg-red-500 rounded-full inline-block mr-3"></span> Project 3
-                        </li>
-                    </ul>
-
-                    <!-- Skills Section -->
-                    <h3 class="text-3xl font-semibold text-white mb-4">Skills</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="bg-red-600 text-white px-4 py-2 rounded-lg text-lg font-medium shadow-md">Skill 1</span>
-                        <span class="bg-red-600 text-white px-4 py-2 rounded-lg text-lg font-medium shadow-md">Skill 2</span>
-                        <span class="bg-red-600 text-white px-4 py-2 rounded-lg text-lg font-medium shadow-md">Skill 3</span>
-                    </div>
-                </div>
-            </div>
+          <!-- Card Content with Red Accent Border -->
+          <div class="absolute bottom-0 w-full p-4 sm:p-6 bg-black/60 backdrop-blur-lg border-t-2 border-red-500/50 rounded-b-2xl transition-all duration-300">
+            <h3 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-wide drop-shadow-lg">${member.name}</h3>
+            <p class="text-sm sm:text-base md:text-lg font-medium text-red-400 drop-shadow-md">${member.role}</p>
           </div>
-        `;
 
-        // Show the portfolio section
-        portfolioSection.classList.remove("hidden");
-        portfolioSection.classList.add("flex");
+          <!-- Animated Red Glow on Hover -->
+          <div class="absolute inset-0 border border-transparent rounded-2xl transition-all duration-300 group-hover:border-red-500/60"></div>
+        </div>
+      `;
+    }
 
-        updateCircularNav(memberId);
-
-        // Attach event listener to the close button
-        document
-          .getElementById("close-portfolio")
-          .addEventListener("click", function () {
-            portfolioSection.classList.add("hidden");
-            portfolioSection.classList.remove("flex");
-          });
+    function renderTeamMembers() {
+      const teamContainer = document.getElementById("team-container");
+      if (!teamContainer) {
+        console.error("Error: #team-container not found!");
+        return;
       }
 
-      function updateCircularNav(currentMemberId) {
-        const circularNav = document.querySelector(".circular-nav");
-        circularNav.innerHTML = "";
-        circularNav.classList.remove("hidden");
+      teamContainer.innerHTML = teamMembers.map(createTeamMemberCard).join("");
 
-        const currentIndex = teamMembers.findIndex((m) => m.id === currentMemberId);
+      document.querySelectorAll("[data-member-id]").forEach((card) => {
+        card.addEventListener("click", function () {
+          const memberId = parseInt(this.getAttribute("data-member-id"));
+          showPortfolio(memberId);
+        });
+      });
+    }
 
-        // Limit to 5 members centered around the current member
-        const totalMembers = Math.min(5, teamMembers.length);
-        const offset = Math.floor(totalMembers / 2);
-        const memberIndices = [];
+    document.addEventListener("DOMContentLoaded", renderTeamMembers);
 
-        for (let i = -offset; i <= offset; i++) {
-          let index = (currentIndex + i + teamMembers.length) % teamMembers.length;
-          memberIndices.push(index);
+    // Portfolio Display
+    function showPortfolio(memberId) {
+      const member = teamMembers.find((m) => m.id === memberId);
+      if (!member) {
+        console.error(`Error: No team member found with ID ${memberId}`);
+        return;
+      }
+
+      const portfolioSection = document.getElementById("portfolio-section");
+      const portfolioContent = document.getElementById("portfolio-content");
+
+      // Determine the screen size
+      const isSmallOrMedium = window.innerWidth < 1024;
+
+      // Set the appropriate animation class
+      const animationClass = isSmallOrMedium ? 'animate-extractContentMobile' : 'animate-extractContentDesktop';
+
+      portfolioContent.innerHTML = `
+        <div class="relative w-full h-full bg-gray-50/5 backdrop-blur-sm p-4 sm:p-6 md:p-8 shadow-2xl ${animationClass}">
+          <!-- Close Button -->
+          <button id="close-portfolio"
+              class="absolute top-2 right-2 sm:top-4 sm:right-4 text-3xl sm:text-4xl text-gray-400 hover:text-white transition-transform transform hover:scale-110">
+              &times;
+          </button>
+
+          <!-- Grid Layout for Profile -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 items-center">
+              <!-- Profile Image -->
+              <div class="flex justify-center md:col-span-1">
+                  <img src="${member.image}" alt="${member.name}"
+                      class="w-40 h-40 sm:w-60 sm:h-60 md:w-80 md:h-80 object-cover rounded-full border-4 border-red-500 shadow-xl">
+              </div>
+
+              <!-- Profile Info (Spanning 2 Columns on Medium Screens) -->
+              <div class="md:col-span-2">
+                  <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-2 sm:mb-3">${member.name}</h2>
+                  <p class="text-base sm:text-lg text-red-400 font-semibold mb-3 sm:mb-5">${member.role}</p>
+                  <p class="text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed mb-4 sm:mb-6">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  </p>
+
+                  <!-- Projects Section -->
+                  <h3 class="text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-2 sm:mb-4">Projects</h3>
+                  <ul class="list-none space-y-2 sm:space-y-3 mb-4 sm:mb-6">
+                      <li class="text-sm sm:text-base text-gray-300 flex items-center">
+                          <span class="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full inline-block mr-2 sm:mr-3"></span> Project 1
+                      </li>
+                      <li class="text-sm sm:text-base text-gray-300 flex items-center">
+                          <span class="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full inline-block mr-2 sm:mr-3"></span> Project 2
+                      </li>
+                      <li class="text-sm sm:text-base text-gray-300 flex items-center">
+                          <span class="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full inline-block mr-2 sm:mr-3"></span> Project 3
+                      </li>
+                  </ul>
+
+                  <!-- Skills Section -->
+                  <h3 class="text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-2 sm:mb-4">Skills</h3>
+                  <div class="flex flex-wrap gap-2 sm:gap-3">
+                      <span class="bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-lg text-sm sm:text-base md:text-lg font-medium shadow-md">Skill 1</span>
+                      <span class="bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-lg text-sm sm:text-base md:text-lg font-medium shadow-md">Skill 2</span>
+                      <span class="bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-lg text-sm sm:text-base md:text-lg font-medium shadow-md">Skill 3</span>
+                  </div>
+              </div>
+          </div>
+        </div>
+      `;
+
+      portfolioSection.classList.remove("hidden");
+      portfolioSection.classList.add("flex");
+
+      updateCircularNav(memberId);
+
+      document
+        .getElementById("close-portfolio")
+        .addEventListener("click", function () {
+          portfolioSection.classList.add("hidden");
+          portfolioSection.classList.remove("flex");
+        });
+    }
+
+    // Circular Navigation
+    let currentMemberIdGlobal = null;
+
+    function updateCircularNav(currentMemberId) {
+      const circularNav = document.querySelector(".circular-nav");
+      if (!circularNav) return;
+
+      circularNav.innerHTML = "";
+      circularNav.classList.remove("hidden");
+
+      currentMemberIdGlobal = currentMemberId;
+
+      const currentIndex = teamMembers.findIndex(
+        (m) => m.id === currentMemberId
+      );
+
+      const totalMembers = Math.min(5, teamMembers.length);
+      const offset = Math.floor(totalMembers / 2);
+      const memberIndices = [];
+
+      for (let i = -offset; i <= offset; i++) {
+        let index =
+          (currentIndex + i + teamMembers.length) % teamMembers.length;
+        memberIndices.push(index);
+      }
+
+      const members = memberIndices.map((i) => teamMembers[i]);
+      const isSmallOrMedium = window.innerWidth < 1024; // Considers screens smaller than 1024px as small or medium
+
+      if (isSmallOrMedium) {
+        circularNav.classList.add(
+          "flex",
+          "overflow-x-auto",
+          "justify-center",
+          "gap-4",
+          "mt-80"
+        );
+      } else {
+        circularNav.classList.remove(
+          "flex",
+          "overflow-x-auto",
+          "justify-center",
+          "gap-4",
+          "mt-80"
+        );
+      }
+
+      members.forEach((member, index) => {
+        const thumbnail = document.createElement("div");
+        thumbnail.className =
+          "thumbnail transition-all duration-300 ease-in-out";
+
+        const isActive = member.id === currentMemberId;
+        const opacityClass = isActive ? "opacity-100" : "opacity-50";
+
+        thumbnail.innerHTML = `
+          <img 
+            src="${member.image}" 
+            alt="${member.name}" 
+            class="w-full h-full border-none rounded-full object-cover transition-opacity duration-300 ${opacityClass}"
+          >
+        `;
+
+        if (isActive) {
+          thumbnail.classList.add("active");
         }
 
-        const members = memberIndices.map((i) => teamMembers[i]);
+        thumbnail.addEventListener("click", () => showPortfolio(member.id));
 
-        const totalHeight = 350;
-        const radius = 130;
-
-        members.forEach((member, index) => {
-          const thumbnail = document.createElement("div");
-          thumbnail.className = "thumbnail transition-all duration-300 ease-in-out";
-
-          const isActive = member.id === currentMemberId;
-          const opacityClass = isActive ? "" : "opacity-50";
-
-          thumbnail.innerHTML = `
-            <img 
-              src="${member.image}" 
-              alt="${member.name}" 
-              class="w-full h-full border-none rounded-full object-cover ${opacityClass}"
-            >
-          `;
-
-          // Add the 'active' class if this member is currently active
-          if (isActive) {
-            thumbnail.classList.add("active");
-          }
-
-          thumbnail.addEventListener("click", () => showPortfolio(member.id));
-
+        if (isSmallOrMedium) {
+          thumbnail.style.transform = "none";
+        } else {
+          const totalHeight = 350;
+          const radius = 130;
           const progress = index / (members.length - 1);
           const angle = (progress - 0.5) * Math.PI;
 
           const x = Math.cos(angle) * radius * -1.2;
           const y = Math.sin(angle) * totalHeight * 0.5 + totalHeight / 2;
 
-          thumbnail.style.transform = `translate(${x - 120}px, ${y}px)`;
-          circularNav.appendChild(thumbnail);
-        });
-      }
-
-
-      const teamGrid = document.getElementById("team-grid");
-      teamMembers.forEach((member) => {
-        teamGrid.innerHTML += createTeamMemberCard(member);
-      });
-
-      teamGrid.addEventListener("click", (e) => {
-        const card = e.target.closest("[data-member-id]");
-        if (card) {
-          const memberId = parseInt(card.dataset.memberId);
-          showPortfolio(memberId);
+          thumbnail.style.transform = `translate(${x - 20}px, ${y}px)`;
         }
+
+        circularNav.appendChild(thumbnail);
       });
-    </script>
+    }
+
+    window.addEventListener("resize", () => {
+      if (currentMemberIdGlobal !== null) {
+        updateCircularNav(currentMemberIdGlobal);
+        showPortfolio(currentMemberIdGlobal);
+      }
+    });
+
+    
+    // Navbar Scroll Effect
+    window.addEventListener("scroll", function () {
+    const navbar = document.getElementById("navbar");
+
+    if (window.scrollY > 50) {
+      navbar.classList.add(
+        "bg-black",
+        "bg-opacity-20",
+        "backdrop-blur-md",
+        "shadow-lg"
+      );
+    } else {
+      navbar.classList.remove(
+        "bg-black",
+        "bg-opacity-20",
+        "backdrop-blur-md",
+        "shadow-lg"
+      );
+    }
+  });
+  </script>
   </body>
 </html>
