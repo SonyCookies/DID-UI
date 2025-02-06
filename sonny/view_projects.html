@@ -198,17 +198,116 @@
       .animate-fade-in {
         animation: fadeIn 1s ease-out forwards;
       }
+
+      /* Add these new styles for the gallery and circular/horizontal nav */
+      .gallery-section {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Circular Navigation (Desktop) */
+      .circular-nav {
+        position: fixed;
+        right: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100px;
+        height: 400px;
+        z-index: 60;
+        pointer-events: all;
+      }
+
+      .circular-nav .thumbnail {
+        position: absolute;
+        right: 0;
+        width: 80px;
+        height: 80px;
+        transition: all 0.3s ease-out;
+        border-radius: 50%;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      .circular-nav .thumbnail:hover {
+        transform: scale(1.1) translateX(-10px);
+      }
+
+      .thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: none;
+      }
+
+      .thumbnail.active img {
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.9);
+        border: 3px solid red;
+      }
+
+      .thumbnail.active {
+        transform: scale(1.3);
+        transition: all 0.3s ease-in-out;
+      }
+
+      /* Mobile Adjustments (Horizontal Bar) */
+      @media (max-width: 768px) {
+        .circular-nav {
+          position: fixed;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 90%;
+          height: auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .circular-nav .thumbnail {
+          position: static;
+          width: 60px;
+          height: 60px;
+          flex-shrink: 0;
+        }
+      }
+
+      .animate-extractContentDesktop {
+        animation: extractContentDesktop 0.5s ease-out forwards;
+      }
+
+      @keyframes extractContentDesktop {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
     </style>
   </head>
   <body class="bg-black text-white min-h-screen overflow-x-hidden">
     <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8">
-      <div class="flex justify-between items-center w-full bg-ed-500">
+    <nav
+      id="navbar"
+      class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8 transition-all duration-300"
+    >
+      <div class="flex justify-between items-center w-full">
         <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
         <div
-          class="text-4xl md:text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2"
+          class="text-5xl md:text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2"
         >
-          <span style="display: inline-block; transform: scaleX(-1);">D</span>iD
+          <span style="display: inline-block; transform: scaleX(-1)">D</span>iD
         </div>
 
         <!-- Left -->
@@ -224,9 +323,6 @@
           <a href="about.html" class="text-md text-gray-400 hover:text-white"
             >About</a
           >
-          <a href="team.html" class="text-md text-gray-400 hover:text-white"
-            >Team</a
-          >
           <a
             href="projects.html"
             class="text-md text-gray-400 hover:text-white active"
@@ -236,10 +332,8 @@
 
         <!-- Desktop Menu (Right) -->
         <div class="hidden lg:flex space-x-8 order-4">
-          <a
-            href="portfolio.html"
-            class="text-md text-gray-400 hover:text-white"
-            >Portfolio</a
+          <a href="team.html" class="text-md text-gray-400 hover:text-white"
+            >Team</a
           >
           <a href="gallery.html" class="text-md text-gray-400 hover:text-white"
             >Gallery</a
@@ -258,7 +352,7 @@
       </div>
     </nav>
 
-    <div id="overlay" class="fixed inset-0 bg-black/50 z-50 hidden"></div>
+    <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
     <!-- Mobile Sidebar -->
     <div
@@ -279,16 +373,13 @@
           <a href="about.html" class="text-lg text-gray-400 hover:text-white"
             >About</a
           >
-          <a href="team.html" class="text-lg text-gray-400 hover:text-white"
-            >Team</a
-          >
-          <a href="projects.html" class="text-lg text-gray-400 hover:text-white active"
+          <a
+            href="projects.html"
+            class="text-lg text-gray-400 hover:text-white active"
             >Projects</a
           >
-          <a
-            href="portfolio.html"
-            class="text-lg text-gray-400 hover:text-white"
-            >Portfolio</a
+          <a href="team.html" class="text-lg text-gray-400 hover:text-white"
+            >Team</a
           >
           <a href="gallery.html" class="text-lg text-gray-400 hover:text-white"
             >Gallery</a
@@ -301,7 +392,7 @@
     </div>
 
     <!-- Left info -->
-    <div class="fixed left-8 top-1/2 -translate-y-1/2 xl:z-40">
+    <div class="fixed left-8 top-1/2 z-50 -translate-y-1/2 hidden lg:block">
       <div class="flex flex-col gap-20 animate-fade-in">
         <div
           class="writing-mode-vertical text-red-600 text-2xl font-bold tracking-widest"
@@ -318,15 +409,84 @@
       </div>
     </div>
 
-    <!-- Main Content -->
     <main class="pt-24 pb-20 px-4 md:px-8 bg-effect min-h-screen">
-      <div
-        id="project-content"
-        class="max-w-7xl mx-auto bg-gray-0 rounded-lg flex flex-col gap-8 bgred-500"
-      >
-        <!-- Project details will be dynamically added here -->
+      <h1
+        id="project-title"
+        class="text-4xl font-bold text-center mt-8 mb-12 animate-fade-in title-underline"
+      ></h1>
+
+      <div id="project-content" class="max-w-7xl mx-auto flex flex-col gap-8">
+        <section id="brief-info" class="text-gray-300">
+          <h2 class="text-2xl font-semibold mb-2 text-white">
+            Brief Information
+          </h2>
+          <p id="project-description"></p>
+        </section>
+
+        <section id="technology-used">
+          <h2 class="text-2xl font-semibold mb-2 text-white">
+            Technology Used
+          </h2>
+          <div id="technologies" class="flex flex-wrap gap-2"></div>
+        </section>
+
+        <section id="features">
+          <h2 class="text-2xl font-semibold mb-2 text-white">Features</h2>
+          <ul
+            id="feature-list"
+            class="list-disc list-inside text-gray-300"
+          ></ul>
+        </section>
+
+        <section id="developers">
+          <h2 class="text-2xl font-semibold mb-2 text-white">Developers</h2>
+          <p id="team-members" class="text-gray-300"></p>
+          <a href="team.html" class="text-red-400 hover:underline">View Team</a>
+        </section>
+
+        <section id="image-gallery">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Image Gallery</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Images will be dynamically added here -->
+          </div>
+        </section>
+
+        <div class="text-center mt-8">
+          <a
+            href="projects.html"
+            class="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors"
+            >Back to Projects</a
+          >
+        </div>
       </div>
     </main>
+
+    <!-- Gallery Section -->
+    <div
+      id="gallery-section"
+      class="gallery-section hidden fixed inset-0 bg-black/70 backdrop-blur-lg flex justify-center items-center"
+    >
+      <div
+        id="gallery-content"
+        class="w-[1100px] h-[600px] flex justify-center items-center border border-red-500/50 bg-black/30 rounded-xl shadow-lg overflow-hidden"
+      >
+        <img
+          id="gallery-image"
+          src=""
+          alt="Gallery Image"
+          class="w-full h-full object-cover transition-opacity duration-500 rounded-lg"
+        />
+      </div>
+      <div class="circular-nav mt-4">
+        <!-- Thumbnails will be added here -->
+      </div>
+      <button
+        id="close-gallery"
+        class="absolute top-4 right-4 text-4xl text-gray-400 hover:text-white"
+      >
+        &times;
+      </button>
+    </div>
 
     <script>
       // Navigation active state
@@ -370,13 +530,24 @@
         overlay.classList.add("hidden");
       });
 
-       // Navbar scroll functionality
-       const navbar = document.getElementById('navbar');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 1) {
-          navbar.classList.add('bg-gray-900');
+      // Navbar Scroll Effect
+      window.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+
+        if (window.scrollY > 50) {
+          navbar.classList.add(
+            "bg-black",
+            "bg-opacity-20",
+            "backdrop-blur-md",
+            "shadow-lg"
+          );
         } else {
-          navbar.classList.remove('bg-gray-900');
+          navbar.classList.remove(
+            "bg-black",
+            "bg-opacity-20",
+            "backdrop-blur-md",
+            "shadow-lg"
+          );
         }
       });
 
@@ -398,84 +569,128 @@
       });
 
       function displayProjectDetails(project) {
-        const projectContent = `
+        document.getElementById("project-title").textContent = project.title;
+        document.getElementById("project-description").textContent =
+          project.description;
 
-                <h1 class="text-4xl font-bold text-center animate-fade-in relative bg-ed-500 flex flex-col gap-2">
-                    ${project.title}
-<span class="text-gray-400 text-base font-normal">${project.subtitle}</span>
+        const techContainer = document.getElementById("technologies");
+        techContainer.innerHTML = "";
+        project.technologies.forEach((tech) => {
+          const techSpan = document.createElement("span");
+          techSpan.className = "bg-red-500/20 text-red-400 px-2 py-1 rounded";
+          techSpan.textContent = tech;
+          techContainer.appendChild(techSpan);
+        });
 
-                    <a href="/sonny/projects.html" class="left-4 inset-y- md:absolute text-base font-normal hidden ">Back to projects</a>
+        const featureList = document.getElementById("feature-list");
+        featureList.innerHTML = "";
+        project.features.forEach((feature) => {
+          const li = document.createElement("li");
+          li.textContent = feature;
+          featureList.appendChild(li);
+        });
 
-                </h1>
+        document.getElementById("team-members").textContent =
+          project.teamMembers.join(", ");
 
-                <div class="bg-red-00 flex flex-col xl:flex-row gap-6 items-center xl:items-start">
-                    <div class="image bg-green-500 h-96 w-full md:w-5/6 lg:w-3/4 xl:max-w-lg rounded-lg overflow-hidden">
-                        <img src="${project.image}" alt="${
-          project.title
-        }" class="w-full h-full object-cover">
-                    </div>
-                    <div class="content flex flex-col gap-8 p-6 md:p-8 bg-gray-800 rounded-lg flex-grow w-full md:w-5/6 lg:w-3/4">
-                        <!-- description -->
-                        <div class="flex flex-col gap-2">
-                            <div class="text-2xl font-medium">
-                                Project Description
-                            </div>
-                            <p class="indent-8 text-justify text-gray-400">
-                                ${project.description}
-                            </p>
-                        </div>
-                        <!-- technologies -->
-                        <div class="flex flex-col gap-2">
-                            <div class="text-2xl font-medium">
-                                Technologies
-                            </div>
-                            <div class="flex flex-wrap gap-2">
-                                ${project.technologies
-                                  .map(
-                                    (tech) =>
-                                      `<span class="bg-gray-700 px-2 py-1 rounded">${tech}</span>`
-                                  )
-                                  .join("")}
-                            </div>
-                        </div>
-
-                        <!-- features -->
-                        <div class="flex flex-col gap-2">
-                            <div class="text-2xl font-medium">
-                                Features
-                            </div>
-                            <ul class="list-disc list-inside text-gray-400">
-                                ${project.features
-                                  .map((feature) => `<li>${feature}</li>`)
-                                  .join("")}
-                            </ul>
-                        </div>
-
-                        <!-- Developers -->
-                        <div class="flex flex-col gap-2">
-                            <div class="text-2xl font-medium">
-                                Developers
-                            </div>
-                            <p class="text-gray-400">${project.teamMembers.join(
-                              ", "
-                            )}</p>
-                        </div>
-
-                        <div class="flex items-center md:justify-end gap-2">
-                            <a
-                                href="#"
-                                class="px-6 py-2 rounded border border-gray-700 hover:bg-gray-700/20 w-full md:w-auto text-center "
-                            >GitHub</a>
-                            <a
-                                href="#"
-                                class="px-6 py-2 rounded border border-gray-700 hover:bg-gray-700/20 w-full md:w-auto text-center"
-                            >Website</a>
-                        </div>
-                    </div>
-                </div>
-            `;
-        document.getElementById("project-content").innerHTML = projectContent;
+        const gallery = document
+          .getElementById("image-gallery")
+          .querySelector("div");
+        gallery.innerHTML = "";
+        project.images.forEach((imgSrc, index) => {
+          const img = document.createElement("img");
+          img.src = imgSrc;
+          img.alt = `Project Image ${index + 1}`;
+          img.className =
+            "w-full h-48 object-cover rounded-lg transition-transform duration-300 hover:scale-105 cursor-pointer";
+          img.addEventListener("click", () =>
+            showGallery(project.images, index)
+          );
+          gallery.appendChild(img);
+        });
       }
+
+      function showGallery(images, startIndex) {
+        const gallerySection = document.getElementById("gallery-section");
+        const galleryContent = document.getElementById("gallery-content");
+        const circularNav = document.querySelector(".circular-nav");
+
+        galleryContent.innerHTML = `
+                <img src="${images[startIndex]}" alt="Gallery Image" class="max-w-full max-h-full object-contain animate-extractContentDesktop">
+            `;
+
+        circularNav.innerHTML = "";
+        images.forEach((imgSrc, index) => {
+          const thumbnail = document.createElement("div");
+          thumbnail.className = `thumbnail ${
+            index === startIndex ? "active" : ""
+          }`;
+          thumbnail.innerHTML = `<img src="${imgSrc}" alt="Thumbnail ${
+            index + 1
+          }" class="w-full h-full object-cover">`;
+          thumbnail.addEventListener("click", () =>
+            updateGalleryImage(images, index)
+          );
+          circularNav.appendChild(thumbnail);
+        });
+
+        updateCircularNav(images.length, startIndex);
+        gallerySection.classList.remove("hidden");
+      }
+
+      function updateGalleryImage(images, index) {
+        const galleryContent = document.getElementById("gallery-content");
+        galleryContent.innerHTML = `
+                <img src="${images[index]}" alt="Gallery Image" class="max-w-full max-h-full object-contain animate-extractContentDesktop">
+            `;
+
+        updateCircularNav(images.length, index);
+      }
+
+      function updateCircularNav(totalImages, currentIndex) {
+        const circularNav = document.querySelector(".circular-nav");
+        const thumbnails = circularNav.querySelectorAll(".thumbnail");
+
+        if (window.innerWidth > 768) {
+          // Circular navigation for larger screens
+          const radius = 200; // Adjust this value to change the size of the circle
+          thumbnails.forEach((thumbnail, index) => {
+            const angle = ((index - currentIndex) / totalImages) * 2 * Math.PI;
+            const x = Math.sin(angle) * radius;
+            const y = -Math.cos(angle) * radius;
+            thumbnail.style.transform = `translate(${x}px, ${y}px) ${
+              index === currentIndex ? "scale(1.3)" : "scale(1)"
+            }`;
+            thumbnail.classList.toggle("active", index === currentIndex);
+          });
+        } else {
+          // Horizontal navigation for smaller screens
+          thumbnails.forEach((thumbnail, index) => {
+            thumbnail.style.transform =
+              index === currentIndex ? "scale(1.3)" : "scale(1)";
+            thumbnail.classList.toggle("active", index === currentIndex);
+          });
+        }
+      }
+
+      document
+        .getElementById("close-gallery")
+        .addEventListener("click", function () {
+          document.getElementById("gallery-section").classList.add("hidden");
+        });
+
+      window.addEventListener("resize", function () {
+        const gallerySection = document.getElementById("gallery-section");
+        if (!gallerySection.classList.contains("hidden")) {
+          const currentIndex = Array.from(
+            document.querySelectorAll(".thumbnail")
+          ).findIndex((thumb) => thumb.classList.contains("active"));
+          updateCircularNav(
+            document.querySelectorAll(".thumbnail").length,
+            currentIndex
+          );
+        }
+      });
     </script>
   </body>
 </html>
