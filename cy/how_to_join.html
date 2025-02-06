@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DID - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 100%;
+        }
+        main {
+            min-height: 100vh;
+        } 
+
+        .writing-mode-vertical {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+        }
+
+        .annotation-line::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 1px;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .annotation-line-left::before {
+            right: 100%;
+            top: 50%;
+        }
+
+        .annotation-line-right::before {
+            left: 100%;
+            top: 50%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .hover-scale {
+            transition: transform 0.2s;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.1);
+        }
+
+        /* Updated and additional styles for background effects */
+        .bg-effect {
+            position: fixed; /* Make it persist across all sections */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* Push it behind content */
+        }
+
+
+        .bg-effect::before,
+        .bg-effect::after,
+        .bg-effect .gradient-1,
+        .bg-effect .gradient-2 {
+            content: '';
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.3;
+            filter: blur(30px);
+            pointer-events: none;
+        }
+
+        .bg-effect::before {
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+            top: -50%;
+            left: -50%;
+        }
+
+        .bg-effect::after {
+            background: radial-gradient(circle, rgba(255,0,0,0.4) 0%, rgba(255,0,0,0) 70%);
+            bottom: -50%;
+            right: -50%;
+        }
+
+        .bg-effect .gradient-1 {
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+            top: 0;
+            left: 25%;
+        }
+
+        .bg-effect .gradient-2 {
+            background: radial-gradient(circle, rgba(255,0,0,0.3) 0%, rgba(255,0,0,0) 70%);
+            bottom: 0;
+            right: 25%;
+        }
+        .active {
+            color: white !important;
+            font-weight: bold;
+            border-bottom: 2px solid red;
+        }
+
+        /* Add new styles for the circular navigation */
+        .circular-nav {
+            position: fixed;
+            right: 40px; /* Moved slightly more right to accommodate the curve */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100px;
+            height: 400px; /* Increased height for more thumbnails */
+            z-index: 60;
+            pointer-events: all;
+        }
+
+        .circular-nav::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 150px;
+            height: 300px;
+            background: radial-gradient(ellipse at right, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: translateY(-50%);
+            z-index: -1;
+        }
+
+        .circular-nav .thumbnail {
+            position: absolute;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            transition: all 0.3s ease-out;
+        }
+
+        .circular-nav .thumbnail:hover {
+            transform: scale(1.1) translateX(-10px);
+        }
+
+        .thumbnail img {
+            border: 2px solid rgb(185, 28, 28);
+            border-radius: 50%;
+        }
+
+        /* @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .cursor {
+            display: inline-block;
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: #E31C25; }
+        }
+        .typing {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 10px solid #E31C25;
+            width: 0;
+            animation: typing 2s steps(40, end) forwards, blink 0.75s step-end infinite;
+        }
+        .no-cursor {
+            border-right: none;
+        } */
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .cursor {
+            display: inline-block;
+            animation: blink 0.75s step-end infinite;
+            color: red;
+        }
+
+
+
+        .qualification-section {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .qualification-section.show {
+            opacity: 1;
+        }
+        
+        .qualification-section h1 {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .qualification-section.show h1 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .qualification-section ul li {
+            opacity: 0;
+            transform: translateX(-100%);
+            transition: all 0.5s ease;
+        }
+        
+        .qualification-section ul li:nth-child(even) {
+            transform: translateX(100%);
+        }
+        
+        .qualification-section.show ul li.show-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+
+        .membership-section {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .membership-section.show {
+            opacity: 1;
+        }
+
+        .membership-section img {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.5s ease 0.3s; /* Delay for image */
+        }
+
+        .membership-section.show img {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .membership-section form {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.5s ease 0.6s; /* Delay for form */
+        }
+
+        .membership-section.show form {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .shirt-section {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .shirt-section.show {
+            opacity: 1;
+        }
+
+        .shirt-section form {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.5s ease 0.3s; /* Delay for form */
+        }
+
+        .shirt-section.show form {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .shirt-section .image-container img {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.5s ease 0.6s; /* Delay for images */
+        }
+
+        .shirt-section.show .image-container img {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .contact-footer {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .contact-footer.show {
+            opacity: 1;
+        }
+
+        .contact-footer form {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.5s ease 0.3s; /* Form animation */
+        }
+
+        .contact-footer.show form {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .contact-footer .contact-info {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.5s ease 0.6s; /* Info animation */
+        }
+
+        .contact-footer.show .contact-info {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+    </style>
+    
+</head>
+<body class="bg-black text-white bg-effect overflow-auto" style="overflow-x: hidden;">
+
+        <!-- Navigation -->
+        <nav id="navbar" class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8 transition-all duration-300">
+            <div class="flex justify-between items-center w-full">
+                <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
+                <div class="text-2xl lg:text-4xl xl:text-5xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2">
+                    <span style="display: inline-block; transform: scaleX(-1);">D</span>iD
+                </div>
+            
+                <!-- Left -->
+                <div class="flex items-center gap-4 order-2">
+                    <!-- Mobile Left Section -->
+                </div>
+            
+                <!-- Desktop Menu (Left) -->
+                <div class="hidden lg:text-sm xl:text:md md:flex space-x-8 order-3">
+                    <a href="main.html" class="text-gray-400 hover:text-white">Home</a>
+                    <a href="about.html" class="text-gray-400 hover:text-white">About</a>
+                    <a href="team.html" class="text-gray-400 hover:text-white">Team</a>
+                    <a href="projects.html" class="text-gray-400 hover:text-white">Projects</a>
+                </div>
+        
+                <!-- Desktop Menu (Right) -->
+                <div class="hidden lg:text-sm xl:text-md md:flex space-x-8 order-4">
+                    <a href="portfolio.html" class="text-gray-400 hover:text-white">Portfolio</a>
+                    <a href="gallery.html" class="text-gray-400 hover:text-white">Gallery</a>
+                    <a href="join.html" class="text-gray-400 hover:text-white active">How to Join?</a>
+                </div>
+            
+                <!-- Right -->
+                <div class="flex items-center gap-4 order-5">
+                    <button id="mobile-menu-btn" class="md:hidden text-white text-xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+        <!-- Mobile Sidebar -->
+        <div id="mobile-sidebar" class="fixed inset-y-0 left-0 w-64 bg-black text-white z-50 transform -translate-x-full transition-transform duration-300 md:hidden">
+            <div class="p-6">
+                <button id="close-sidebar" class="text-2xl text-white absolute top-4 right-4">
+                    <i class="fas fa-times"></i>
+                </button>
+                <nav class="mt-10 flex flex-col space-y-4">
+                    <a href="main.html" class="text-md text-gray-400 hover:text-white">Home</a>
+                    <a href="about.html" class="text-md text-gray-400 hover:text-white">About</a>
+                    <a href="team.html" class="text-md text-gray-400 hover:text-white">Team</a>
+                    <a href="projects.html" class="text-md text-gray-400 hover:text-white">Projects</a>
+                    <a href="portfolio.html" class="text-md text-gray-400 hover:text-white">Portfolio</a>
+                    <a href="gallery.html" class="text-md text-gray-400 hover:text-white">Gallery</a>
+                    <a href="join.html" class="text-md text-gray-400 hover:text-white">How to Join?</a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Left info -->
+        <div class="fixed lg:left-2 top-1/2 -translate-y-1/2 z-40">
+            <div class="flex flex-col gap-5 md:gap-8 animate-fade-in text-sm lg:text-md xl:text-lg">
+                <div class="writing-mode-vertical text-red-600 font-bold tracking-widest">
+                    2025-2026
+                </div>
+                <div class="writing-mode-vertical text-gray-600 uppercase tracking-widest space-y-1 md:space-y-3">
+                    <span>Dedicated</span>
+                    <span>IT</span>
+                    <span>Developers</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="px-4 md:px-8 flex items-center justify-center flex-col">
+
+            <section class="w-full mx-auto flex items-center justify-center min-h-screen px-4">
+                <div class="flex justify-center items-center w-full">
+                    <div class="w-full sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/6 p-4 sm:p-8 md:p-10">
+                        <div class="flex justify-center items-center">
+                            <div id="typing-container" class="text-center text-white text-lg lg:text-4xl xl:text-4xl xl:w-full"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="qualification-section w-full py-10 lg:py-8 lg:px-10 xl:py-10 xl:px-32 flex items-center justify-center">
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-4 lg:p-6 xl:p-6 shadow-lg w-full h-full flex justify-center items-center flex-col">
+                    <h1 class="text-center text-md lg:text-2xl xl:text-3xl font-bold text-red-500 mb-8 lg:mb-6">Qualifications</h1>
+                    <div class="flex justify-center items-center">
+                        <ul class="space-y-5 text-white text-xs lg:text-lg xl:text-lg font-semibold text-left">
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-code text-red-400"></i> Skilled and passionate about programming.
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-400"></i> Responsible, with a strong sense of accountability.
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-user-shield text-blue-400"></i> Possesses good moral character and integrity.
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-brain text-yellow-400"></i> Willing to learn and adapt to new technologies and challenges.
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-users text-purple-400"></i> Able to work effectively in a team and collaborate with others.
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-hand-holding-heart text-pink-400"></i> Dedicated to contributing time and effort to projects that benefit the university.
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-share text-indigo-400"></i> Open to sharing knowledge and mentoring peers.
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-book-open text-orange-400"></i> Enthusiastic about continuous personal and professional development.
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-balance-scale text-teal-400"></i> Committed to upholding the ethical standards of the organization and its members.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </section>
+
+            <section class="membership-section w-full py-10 lg:px-10 lg:py-8 xl:py-14 xl:px-32 flex items-center justify-center">
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-4 shadow-lg w-full h-full">
+                    <h1 class="text-center text-md xl:text-3xl font-bold text-red-500 mb-4">Membership Form</h1>
+                    
+                    <div class="flex flex-col lg:flex-row lg:justify-between items-center h-full w-full">
+                        <!-- Image Section -->
+                        <div class="flex justify-center items-center h-full w-full lg:-mt-5">
+                            <img src="../images/did.png" alt="Membership Logo" class="h-28 lg:h-52">
+                        </div>
+                
+                        <!-- Form Section -->
+                        <div class="w-full px-2 lg:px-10 xl:px-14">
+                            <form action="#" method="POST" class="space-y-2 text-xs">
+                                <!-- First Name -->
+                                <div>
+                                    <label for="first-name" class="block text-white font-semibold">First Name</label>
+                                    <input type="text" id="first-name" name="first-name" required
+                                        class="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-red-400 placeholder-gray-300"
+                                        placeholder="Enter your first name">
+                                </div>
+                
+                                <!-- Last Name -->
+                                <div>
+                                    <label for="last-name" class="block text-white font-semibold">Last Name</label>
+                                    <input type="text" id="last-name" name="last-name" required
+                                        class="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-red-400 placeholder-gray-300"
+                                        placeholder="Enter your last name">
+                                </div>
+                
+                                <!-- Student ID -->
+                                <div>
+                                    <label for="student-id" class="block text-white font-semibold">Student ID</label>
+                                    <input type="text" id="student-id" name="student-id" required
+                                        class="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-red-400 placeholder-gray-300"
+                                        placeholder="Enter your student ID">
+                                </div>
+                
+                                <!-- Year Level -->
+                                <div>
+                                    <label for="year" class="block text-white font-semibold">Year Level</label>
+                                    <select id="year" name="year" required
+                                        class="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-red-400">
+                                        <option value="" disabled selected>Select your year</option>
+                                        <option value="1st Year">1st Year</option>
+                                        <option value="2nd Year">2nd Year</option>
+                                        <option value="3rd Year">3rd Year</option>
+                                        <option value="4th Year">4th Year</option>
+                                    </select>
+                                </div>
+                
+                                <!-- Section -->
+                                <div>
+                                    <label for="section" class="block text-white font-semibold">Section</label>
+                                    <input type="text" id="section" name="section" required
+                                        class="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-red-400 placeholder-gray-300"
+                                        placeholder="Enter your section">
+                                </div>
+                
+                                <!-- Submit Button -->
+                                <div class="text-center mt-4">
+                                    <button type="submit"
+                                        class="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="shirt-section w-full py-10 lg:px-10 lg:py-8 xl:py-10 xl:px-32 flex items-center justify-center">
+
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-4 shadow-lg w-full h-full">
+                    <h1 class="text-center text-md xl:text-3xl font-bold text-red-500 mb-4">Get Your Organizational Shirt</h1>
+                    
+                    <div class="flex flex-col-reverse lg:flex-row lg:justify-between justify-between items-center w-full h-full">
+                        <!-- Form Section -->
+                        <div class="w-full px-2 lg:px-10 xl:px-14">
+                            <form action="#" method="POST" class="space-y-2 text-xs">
+                                <!-- Full Name -->
+                                <div>
+                                    <label for="full-name" class="block text-white font-semibold">Full Name</label>
+                                    <input type="text" id="full-name" name="full-name" required
+                                        class="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-red-400 placeholder-gray-300"
+                                        placeholder="Enter your full name">
+                                </div>
+                
+                                <!-- Shirt Size -->
+                                <div>
+                                    <label for="shirt-size" class="block text-white font-semibold">Shirt Size</label>
+                                    <select id="shirt-size" name="shirt-size" required
+                                        class="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-red-400">
+                                        <option value="" disabled selected>Select your shirt size</option>
+                                        <option value="XS">XS</option>
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
+                                        <option value="XL">XL</option>
+                                        <option value="XXL">XXL</option>
+                                    </select>
+                                </div>
+                
+                                <!-- Submit Button -->
+                                <div class="text-center mt-4">
+                                    <button type="submit"
+                                        class="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition">
+                                        Submit Order
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                
+                        <!-- Image Section -->
+                        <div class="flex justify-center items-center space-x-4 mb-10 w-full">
+                            <img src="../images/shirt-front.png" alt="Shirt Front" class="h-32 lg:h-52">
+                            <img src="../images/shirt-back.png" alt="Shirt Back" class="h-32 lg:h-52">
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <footer class="contact-footer flex items-end py-10 w-full xl:py-10 xl:px-32">
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-4 xl:p-10 xl:px-20 shadow-lg w-full">
+                    <h1 class="text-center text-md xl:text-3xl font-bold text-red-500 mb-6">Contact Us</h1>
+            
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Contact Form -->
+                        <div class="w-full px-2 lg:px-10 xl:px-14">
+                            <form action="#" method="POST" class="space-y-2 text-xs">
+                                <!-- Name -->
+                                <div>
+                                    <label for="name" class="block text-white font-semibold">Your Name</label>
+                                    <input type="text" id="name" name="name" required
+                                        class="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-red-400 placeholder-gray-300"
+                                        placeholder="Enter your name">
+                                </div>
+            
+                                <!-- Email -->
+                                <div>
+                                    <label for="email" class="block text-white font-semibold">Your Email</label>
+                                    <input type="email" id="email" name="email" required
+                                        class="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-red-400 placeholder-gray-300"
+                                        placeholder="Enter your email">
+                                </div>
+            
+                                <!-- Message -->
+                                <div>
+                                    <label for="message" class="block text-white font-semibold">Your Message</label>
+                                    <textarea id="message" name="message" rows="4" required
+                                        class="w-full px-4 py-2 bg-white/20 border border-white/30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-red-400 placeholder-gray-300"
+                                        placeholder="Enter your message"></textarea>
+                                </div>
+            
+                                <!-- Submit Button -->
+                                <div class="text-center">
+                                    <button type="submit"
+                                        class="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition">
+                                        Send Message
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+            
+                        <!-- Contact Information -->
+                        <div class="flex flex-col space-y-4 px-4 text-white text-xs">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-map-marker-alt text-red-500"></i>
+                                <span>123 University St, City, Country</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-phone text-red-500"></i>
+                                <span>+123 456 7890</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-envelope text-red-500"></i>
+                                <span>contact@organization.com</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-globe text-red-500"></i>
+                                <span>www.organization.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            
+        </main>
+    
+
+        <script>
+            // Navigation active state
+            document.addEventListener("DOMContentLoaded", function () {
+                const links = document.querySelectorAll("nav a");
+        
+                links.forEach(link => {
+                    link.addEventListener("click", function () {
+                        links.forEach(l => l.classList.remove("active"));
+                        this.classList.add("active");
+                    });
+                });
+        
+                // Optional: Set active based on URL
+                const currentPath = window.location.pathname;
+                links.forEach(link => {
+                    if (link.href.includes(currentPath)) {
+                        link.classList.add("active");
+                    }
+                });
+            });
+    
+            // Mobile menu functionality
+            const menuBtn = document.getElementById("mobile-menu-btn");
+            const sidebar = document.getElementById("mobile-sidebar");
+            const closeBtn = document.getElementById("close-sidebar");
+            const overlay = document.getElementById("overlay");
+    
+            menuBtn.addEventListener("click", function () {
+                sidebar.classList.remove("-translate-x-full");
+                overlay.classList.remove("hidden");
+            });
+    
+            closeBtn.addEventListener("click", function () {
+                sidebar.classList.add("-translate-x-full");
+                overlay.classList.add("hidden");
+            });
+    
+            overlay.addEventListener("click", function () {
+                sidebar.classList.add("-translate-x-full");
+                overlay.classList.add("hidden");
+            });
+    
+            document.addEventListener("DOMContentLoaded", function () {
+                const texts = [
+                    "Are you a passionate coder?",
+                    "Do you want to contribute your skills and knowledge while working on real-world projects?",
+                    "This is your chance to be part of an elite group of IT professionals and developers at our university!"
+                ];
+
+                let container = document.getElementById("typing-container");
+                let index = 0;
+
+                function typeText(line, callback) {
+                    let p = document.createElement("p");
+                    p.classList.add("text-white", "font-bold", "typing-container", "text-center");
+                    container.appendChild(p);
+
+                    let i = 0;
+                    function typeChar() {
+                        if (i < line.length) {
+                            p.innerHTML = line.substring(0, i + 1) + `<span class="cursor">|</span>`; // Cursor follows text
+                            i++;
+                            setTimeout(typeChar, 50); // Typing speed
+                        } else {
+                            // Keep cursor blinking at the end before moving to the next sentence
+                            p.innerHTML = line + `<span class="cursor">|</span>`;
+                            setTimeout(() => {
+                                callback();
+                            }, 1000); // Cursor stays for 1 second before transition
+                        }
+                    }
+                    typeChar();
+                }
+
+                function typeNext() {
+                    container.innerHTML = ""; // Clear previous text
+                    const parts = texts[index].split("\n");
+                    let partIndex = 0;
+
+                    function typePart() {
+                        if (partIndex < parts.length) {
+                            typeText(parts[partIndex], () => {
+                                partIndex++;
+                                setTimeout(typePart, 1000); // Pause before next line
+                            });
+                        } else {
+                            setTimeout(() => {
+                                index = (index + 1) % texts.length; // Loop to next text
+                                setTimeout(typeNext, 1500); // Pause before restarting animation
+                            }, 1000);
+                        }
+                    }
+
+                    typePart();
+                }
+
+                typeNext();
+            });
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const section = document.querySelector('.qualification-section');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Section comes into view
+                            entry.target.classList.add('show');
+                            
+                            // Animate h1
+                            const h1 = entry.target.querySelector('h1');
+                            setTimeout(() => h1.style.opacity = 1, 300);
+                            
+                            // Animate list items with staggered delay
+                            const listItems = entry.target.querySelectorAll('li');
+                            listItems.forEach((item, index) => {
+                                setTimeout(() => {
+                                    item.classList.add('show-item');
+                                }, 500 + (index * 100));
+                            });
+                        } else {
+                            // Section goes out of view
+                            entry.target.classList.remove('show');
+                            
+                            // Reverse h1 animation
+                            const h1 = entry.target.querySelector('h1');
+                            h1.style.opacity = 0;
+                            
+                            // Reverse list items animation
+                            const listItems = entry.target.querySelectorAll('li');
+                            listItems.forEach((item) => {
+                                item.classList.remove('show-item');
+                            });
+                        }
+                    });
+                }, { threshold: 0.25 });
+
+                if (section) {
+                    observer.observe(section);
+                }
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const section = document.querySelector('.membership-section');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Section comes into view
+                            entry.target.classList.add('show');
+                        } else {
+                            // Section goes out of view
+                            entry.target.classList.remove('show');
+                        }
+                    });
+                }, { threshold: 0.25 });
+
+                if (section) {
+                    observer.observe(section);
+                }
+            });
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const section = document.querySelector('.shirt-section');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Section comes into view
+                            entry.target.classList.add('show');
+                        } else {
+                            // Section goes out of view
+                            entry.target.classList.remove('show');
+                        }
+                    });
+                }, { threshold: 0.25 });
+
+                if (section) {
+                    observer.observe(section);
+                }
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const footer = document.querySelector('.contact-footer');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('show');
+                        } else {
+                            entry.target.classList.remove('show');
+                        }
+                    });
+                }, { threshold: 0.25 });
+
+                if (footer) {
+                    observer.observe(footer);
+                }
+            });
+        </script>
+</body>
+</html>
