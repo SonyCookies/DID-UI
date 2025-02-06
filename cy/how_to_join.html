@@ -152,6 +152,16 @@
             border-radius: 50%;
         }
 
+        /* @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .cursor {
+            display: inline-block;
+            animation: blink 0.75s step-end infinite;
+        }
+
         @keyframes typing {
             from { width: 0; }
             to { width: 100%; }
@@ -169,15 +179,147 @@
         }
         .no-cursor {
             border-right: none;
+        } */
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
         }
-        .typing-container {
-            font-size: 4rem;
+
+        .cursor {
+            display: inline-block;
+            animation: blink 0.75s step-end infinite;
+            color: red;
         }
-        .section-1, .section-2, .section-3, .section-4 {
-            height: 52.8rem;
+
+
+
+        .qualification-section {
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
-        .section-5 {
-            height: 35rem;
+        
+        .qualification-section.show {
+            opacity: 1;
+        }
+        
+        .qualification-section h1 {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .qualification-section.show h1 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .qualification-section ul li {
+            opacity: 0;
+            transform: translateX(-100%);
+            transition: all 0.5s ease;
+        }
+        
+        .qualification-section ul li:nth-child(even) {
+            transform: translateX(100%);
+        }
+        
+        .qualification-section.show ul li.show-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+
+        .membership-section {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .membership-section.show {
+            opacity: 1;
+        }
+
+        .membership-section img {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.5s ease 0.3s; /* Delay for image */
+        }
+
+        .membership-section.show img {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .membership-section form {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.5s ease 0.6s; /* Delay for form */
+        }
+
+        .membership-section.show form {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .shirt-section {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .shirt-section.show {
+            opacity: 1;
+        }
+
+        .shirt-section form {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.5s ease 0.3s; /* Delay for form */
+        }
+
+        .shirt-section.show form {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .shirt-section .image-container img {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.5s ease 0.6s; /* Delay for images */
+        }
+
+        .shirt-section.show .image-container img {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .contact-footer {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .contact-footer.show {
+            opacity: 1;
+        }
+
+        .contact-footer form {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.5s ease 0.3s; /* Form animation */
+        }
+
+        .contact-footer.show form {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .contact-footer .contact-info {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.5s ease 0.6s; /* Info animation */
+        }
+
+        .contact-footer.show .contact-info {
+            opacity: 1;
+            transform: translateX(0);
         }
 
     </style>
@@ -189,7 +331,7 @@
         <nav id="navbar" class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8 transition-all duration-300">
             <div class="flex justify-between items-center w-full">
                 <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
-                <div class="text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2">
+                <div class="text-2xl lg:text-4xl xl:text-5xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2">
                     <span style="display: inline-block; transform: scaleX(-1);">D</span>iD
                 </div>
             
@@ -199,23 +341,23 @@
                 </div>
             
                 <!-- Desktop Menu (Left) -->
-                <div class="hidden md:flex space-x-8 order-3">
-                    <a href="main.html" class="text-md text-gray-400 hover:text-white">Home</a>
-                    <a href="about.html" class="text-md text-gray-400 hover:text-white">About</a>
-                    <a href="team.html" class="text-md text-gray-400 hover:text-white">Team</a>
-                    <a href="projects.html" class="text-md text-gray-400 hover:text-white">Projects</a>
+                <div class="hidden lg:text-sm xl:text:md md:flex space-x-8 order-3">
+                    <a href="main.html" class="text-gray-400 hover:text-white">Home</a>
+                    <a href="about.html" class="text-gray-400 hover:text-white">About</a>
+                    <a href="team.html" class="text-gray-400 hover:text-white">Team</a>
+                    <a href="projects.html" class="text-gray-400 hover:text-white">Projects</a>
                 </div>
         
                 <!-- Desktop Menu (Right) -->
-                <div class="hidden md:flex space-x-8 order-4">
-                    <a href="portfolio.html" class="text-md text-gray-400 hover:text-white">Portfolio</a>
-                    <a href="gallery.html" class="text-md text-gray-400 hover:text-white">Gallery</a>
-                    <a href="join.html" class="text-md text-gray-400 hover:text-white active">How to Join?</a>
+                <div class="hidden lg:text-sm xl:text-md md:flex space-x-8 order-4">
+                    <a href="portfolio.html" class="text-gray-400 hover:text-white">Portfolio</a>
+                    <a href="gallery.html" class="text-gray-400 hover:text-white">Gallery</a>
+                    <a href="join.html" class="text-gray-400 hover:text-white active">How to Join?</a>
                 </div>
             
                 <!-- Right -->
                 <div class="flex items-center gap-4 order-5">
-                    <button id="mobile-menu-btn" class="md:hidden text-white text-2xl">
+                    <button id="mobile-menu-btn" class="md:hidden text-white text-xl">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
@@ -231,24 +373,24 @@
                     <i class="fas fa-times"></i>
                 </button>
                 <nav class="mt-10 flex flex-col space-y-4">
-                    <a href="main.html" class="text-lg text-gray-400 hover:text-white">Home</a>
-                    <a href="about.html" class="text-lg text-gray-400 hover:text-white">About</a>
-                    <a href="team.html" class="text-lg text-gray-400 hover:text-white">Team</a>
-                    <a href="projects.html" class="text-lg text-gray-400 hover:text-white">Projects</a>
-                    <a href="portfolio.html" class="text-lg text-gray-400 hover:text-white">Portfolio</a>
-                    <a href="gallery.html" class="text-lg text-gray-400 hover:text-white">Gallery</a>
-                    <a href="join.html" class="text-lg text-gray-400 hover:text-white">How to Join?</a>
+                    <a href="main.html" class="text-md text-gray-400 hover:text-white">Home</a>
+                    <a href="about.html" class="text-md text-gray-400 hover:text-white">About</a>
+                    <a href="team.html" class="text-md text-gray-400 hover:text-white">Team</a>
+                    <a href="projects.html" class="text-md text-gray-400 hover:text-white">Projects</a>
+                    <a href="portfolio.html" class="text-md text-gray-400 hover:text-white">Portfolio</a>
+                    <a href="gallery.html" class="text-md text-gray-400 hover:text-white">Gallery</a>
+                    <a href="join.html" class="text-md text-gray-400 hover:text-white">How to Join?</a>
                 </nav>
             </div>
         </div>
 
         <!-- Left info -->
-        <div class="fixed left-8 top-1/2 -translate-y-1/2 z-40">
-            <div class="flex flex-col gap-20 animate-fade-in">
-                <div class="writing-mode-vertical text-red-600 text-2xl font-bold tracking-widest">
+        <div class="fixed lg:left-2 top-1/2 -translate-y-1/2 z-40">
+            <div class="flex flex-col gap-5 md:gap-8 animate-fade-in text-sm lg:text-md xl:text-lg">
+                <div class="writing-mode-vertical text-red-600 font-bold tracking-widest">
                     2025-2026
                 </div>
-                <div class="writing-mode-vertical text-gray-600 uppercase tracking-widest space-y-8">
+                <div class="writing-mode-vertical text-gray-600 uppercase tracking-widest space-y-1 md:space-y-3">
                     <span>Dedicated</span>
                     <span>IT</span>
                     <span>Developers</span>
@@ -258,22 +400,22 @@
 
         <!-- Main Content -->
         <main class="px-4 md:px-8 flex items-center justify-center flex-col">
-            <section class="w-full mx-auto flex items-center justify-center section-1">
-                <div class="flex justify-center items-center">
-                    <div class="w-11/12 sm:w-10/12 md:w-8/12 p-6 sm:p-10 md:p-12">
+
+            <section class="w-full mx-auto flex items-center justify-center min-h-screen px-4">
+                <div class="flex justify-center items-center w-full">
+                    <div class="w-full sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/6 p-4 sm:p-8 md:p-10">
                         <div class="flex justify-center items-center">
-                            <div id="typing-container" class="text-center text-white"></div>
+                            <div id="typing-container" class="text-center text-white text-lg lg:text-4xl xl:text-4xl xl:w-full"></div>
                         </div>
                     </div>
                 </div>
             </section>
-    
-            <section class="w-full section-2 py-10 px-32 flex items-center justify-center">
-                <!-- <h1 class="text-3xl text-center">Section 2 Content Here</h1> -->
-                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-6 shadow-lg w-full h-full flex justify-center items-center flex-col">
-                    <h1 class="text-center text-4xl font-bold text-red-500 mb-8">Qualifications</h1>
+            
+            <section class="qualification-section w-full py-10 lg:py-8 lg:px-10 xl:py-10 xl:px-32 flex items-center justify-center">
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-4 lg:p-6 xl:p-6 shadow-lg w-full h-full flex justify-center items-center flex-col">
+                    <h1 class="text-center text-md lg:text-2xl xl:text-3xl font-bold text-red-500 mb-8 lg:mb-6">Qualifications</h1>
                     <div class="flex justify-center items-center">
-                        <ul class="space-y-5 text-white text-2xl font-semibold text-center">
+                        <ul class="space-y-5 text-white text-xs lg:text-lg xl:text-lg font-semibold text-left">
                             <li class="flex items-center gap-3">
                                 <i class="fas fa-code text-red-400"></i> Skilled and passionate about programming.
                             </li>
@@ -307,20 +449,19 @@
                 
             </section>
 
-            <section class="section-3 w-full py-10 px-32 flex items-center justify-center">
-
-                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-10 px-14 shadow-lg w-full h-full">
-                    <h1 class="text-center text-3xl font-bold text-red-500 mb-4">Membership Form</h1>
+            <section class="membership-section w-full py-10 lg:px-10 lg:py-8 xl:py-14 xl:px-32 flex items-center justify-center">
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-4 shadow-lg w-full h-full">
+                    <h1 class="text-center text-md xl:text-3xl font-bold text-red-500 mb-4">Membership Form</h1>
                     
-                    <div class="flex flex-row justify-between items-center h-full">
+                    <div class="flex flex-col lg:flex-row lg:justify-between items-center h-full w-full">
                         <!-- Image Section -->
-                        <div class="flex justify-center items-center h-full -mt-10">
-                            <img src="../images/did.png" alt="Membership Logo" style="height: 25rem;">
+                        <div class="flex justify-center items-center h-full w-full lg:-mt-5">
+                            <img src="../images/did.png" alt="Membership Logo" class="h-28 lg:h-52">
                         </div>
                 
                         <!-- Form Section -->
-                        <div class="w-1/2 px-10">
-                            <form action="#" method="POST" class="space-y-6">
+                        <div class="w-full px-2 lg:px-10 xl:px-14">
+                            <form action="#" method="POST" class="space-y-2 text-xs">
                                 <!-- First Name -->
                                 <div>
                                     <label for="first-name" class="block text-white font-semibold">First Name</label>
@@ -377,19 +518,17 @@
                         </div>
                     </div>
                 </div>
-                
-
             </section>
 
-            <section class="section-4 w-full py-10 px-32 flex items-center justify-center">
+            <section class="shirt-section w-full py-10 lg:px-10 lg:py-8 xl:py-10 xl:px-32 flex items-center justify-center">
 
-                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-10 px-14 shadow-lg w-full h-full">
-                    <h1 class="text-center text-3xl font-bold text-red-500 mb-4">Get Your Organizational Shirt</h1>
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-4 shadow-lg w-full h-full">
+                    <h1 class="text-center text-md xl:text-3xl font-bold text-red-500 mb-4">Get Your Organizational Shirt</h1>
                     
-                    <div class="flex flex-row justify-between items-center h-full">
+                    <div class="flex flex-col-reverse lg:flex-row lg:justify-between justify-between items-center w-full h-full">
                         <!-- Form Section -->
-                        <div class="w-1/2 px-10">
-                            <form action="#" method="POST" class="space-y-6">
+                        <div class="w-full px-2 lg:px-10 xl:px-14">
+                            <form action="#" method="POST" class="space-y-2 text-xs">
                                 <!-- Full Name -->
                                 <div>
                                     <label for="full-name" class="block text-white font-semibold">Full Name</label>
@@ -424,24 +563,23 @@
                         </div>
                 
                         <!-- Image Section -->
-                        <div class="flex justify-center items-center h-full -mt-10 space-x-4">
-                            <img src="../images/shirt-front.png" alt="Shirt Front" class="h-96">
-                            <img src="../images/shirt-back.png" alt="Shirt Back" class="h-96">
+                        <div class="flex justify-center items-center space-x-4 mb-10 w-full">
+                            <img src="../images/shirt-front.png" alt="Shirt Front" class="h-32 lg:h-52">
+                            <img src="../images/shirt-back.png" alt="Shirt Back" class="h-32 lg:h-52">
                         </div>
                     </div>
                 </div>
-                
 
             </section>
 
-            <footer class="section-5 flex items-end w-full py-10 px-32">
-                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-10 px-20 shadow-lg w-full">
-                    <h1 class="text-center text-3xl font-bold text-red-500 mb-6">Contact Us</h1>
+            <footer class="contact-footer flex items-end py-10 w-full xl:py-10 xl:px-32">
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-4 xl:p-10 xl:px-20 shadow-lg w-full">
+                    <h1 class="text-center text-md xl:text-3xl font-bold text-red-500 mb-6">Contact Us</h1>
             
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Contact Form -->
-                        <div>
-                            <form action="#" method="POST" class="space-y-4">
+                        <div class="w-full px-2 lg:px-10 xl:px-14">
+                            <form action="#" method="POST" class="space-y-2 text-xs">
                                 <!-- Name -->
                                 <div>
                                     <label for="name" class="block text-white font-semibold">Your Name</label>
@@ -477,21 +615,21 @@
                         </div>
             
                         <!-- Contact Information -->
-                        <div class="flex flex-col space-y-4 text-white">
+                        <div class="flex flex-col space-y-4 px-4 text-white text-xs">
                             <div class="flex items-center space-x-3">
-                                <i class="fas fa-map-marker-alt text-red-500 text-xl"></i>
+                                <i class="fas fa-map-marker-alt text-red-500"></i>
                                 <span>123 University St, City, Country</span>
                             </div>
                             <div class="flex items-center space-x-3">
-                                <i class="fas fa-phone text-red-500 text-xl"></i>
+                                <i class="fas fa-phone text-red-500"></i>
                                 <span>+123 456 7890</span>
                             </div>
                             <div class="flex items-center space-x-3">
-                                <i class="fas fa-envelope text-red-500 text-xl"></i>
+                                <i class="fas fa-envelope text-red-500"></i>
                                 <span>contact@organization.com</span>
                             </div>
                             <div class="flex items-center space-x-3">
-                                <i class="fas fa-globe text-red-500 text-xl"></i>
+                                <i class="fas fa-globe text-red-500"></i>
                                 <span>www.organization.com</span>
                             </div>
                         </div>
@@ -547,44 +685,157 @@
             document.addEventListener("DOMContentLoaded", function () {
                 const texts = [
                     "Are you a passionate coder?",
-                    "Do you want to contribute your skills and\nknowledge while working on real-world projects?",
-                    "This is your chance to be part of an elite group of\nIT professionals and developers at our university!"
+                    "Do you want to contribute your skills and knowledge while working on real-world projects?",
+                    "This is your chance to be part of an elite group of IT professionals and developers at our university!"
                 ];
-    
+
                 let container = document.getElementById("typing-container");
                 let index = 0;
-    
-                function typeNext() {
-                    container.innerHTML = "";
-                    const parts = texts[index].split("\n");
-                    let delay = 0;
-                    
-                    parts.forEach((line, i) => {
-                        setTimeout(() => {
-                            let p = document.createElement("p");
-                            p.classList.add("text-white", "font-bold", "typing", "typing-container");
-                            p.textContent = line;
-                            
-                            if (i === 0 && parts.length > 1) {
-                                setTimeout(() => p.classList.add("no-cursor"), 2200); // Remove cursor after first line
-                            }
-    
-                            container.appendChild(p);
-                        }, delay);
-    
-                        delay += 2200; // Delay before showing next line
-                    });
-    
-                    setTimeout(() => {
-                        index = (index + 1) % texts.length; // Loop to the next text
-                        setTimeout(typeNext, 1500); // Pause before the next text starts
-                    }, delay + 2000);
+
+                function typeText(line, callback) {
+                    let p = document.createElement("p");
+                    p.classList.add("text-white", "font-bold", "typing-container", "text-center");
+                    container.appendChild(p);
+
+                    let i = 0;
+                    function typeChar() {
+                        if (i < line.length) {
+                            p.innerHTML = line.substring(0, i + 1) + `<span class="cursor">|</span>`; // Cursor follows text
+                            i++;
+                            setTimeout(typeChar, 50); // Typing speed
+                        } else {
+                            // Keep cursor blinking at the end before moving to the next sentence
+                            p.innerHTML = line + `<span class="cursor">|</span>`;
+                            setTimeout(() => {
+                                callback();
+                            }, 1000); // Cursor stays for 1 second before transition
+                        }
+                    }
+                    typeChar();
                 }
-    
+
+                function typeNext() {
+                    container.innerHTML = ""; // Clear previous text
+                    const parts = texts[index].split("\n");
+                    let partIndex = 0;
+
+                    function typePart() {
+                        if (partIndex < parts.length) {
+                            typeText(parts[partIndex], () => {
+                                partIndex++;
+                                setTimeout(typePart, 1000); // Pause before next line
+                            });
+                        } else {
+                            setTimeout(() => {
+                                index = (index + 1) % texts.length; // Loop to next text
+                                setTimeout(typeNext, 1500); // Pause before restarting animation
+                            }, 1000);
+                        }
+                    }
+
+                    typePart();
+                }
+
                 typeNext();
             });
-            
 
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const section = document.querySelector('.qualification-section');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Section comes into view
+                            entry.target.classList.add('show');
+                            
+                            // Animate h1
+                            const h1 = entry.target.querySelector('h1');
+                            setTimeout(() => h1.style.opacity = 1, 300);
+                            
+                            // Animate list items with staggered delay
+                            const listItems = entry.target.querySelectorAll('li');
+                            listItems.forEach((item, index) => {
+                                setTimeout(() => {
+                                    item.classList.add('show-item');
+                                }, 500 + (index * 100));
+                            });
+                        } else {
+                            // Section goes out of view
+                            entry.target.classList.remove('show');
+                            
+                            // Reverse h1 animation
+                            const h1 = entry.target.querySelector('h1');
+                            h1.style.opacity = 0;
+                            
+                            // Reverse list items animation
+                            const listItems = entry.target.querySelectorAll('li');
+                            listItems.forEach((item) => {
+                                item.classList.remove('show-item');
+                            });
+                        }
+                    });
+                }, { threshold: 0.25 });
+
+                if (section) {
+                    observer.observe(section);
+                }
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const section = document.querySelector('.membership-section');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Section comes into view
+                            entry.target.classList.add('show');
+                        } else {
+                            // Section goes out of view
+                            entry.target.classList.remove('show');
+                        }
+                    });
+                }, { threshold: 0.25 });
+
+                if (section) {
+                    observer.observe(section);
+                }
+            });
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const section = document.querySelector('.shirt-section');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Section comes into view
+                            entry.target.classList.add('show');
+                        } else {
+                            // Section goes out of view
+                            entry.target.classList.remove('show');
+                        }
+                    });
+                }, { threshold: 0.25 });
+
+                if (section) {
+                    observer.observe(section);
+                }
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const footer = document.querySelector('.contact-footer');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('show');
+                        } else {
+                            entry.target.classList.remove('show');
+                        }
+                    });
+                }, { threshold: 0.25 });
+
+                if (footer) {
+                    observer.observe(footer);
+                }
+            });
         </script>
 </body>
 </html>
