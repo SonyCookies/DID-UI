@@ -15,6 +15,11 @@
         text-orientation: mixed;
         transform: rotate(180deg);
       }
+      .active {
+            color: white !important;
+            font-weight: bold;
+            border-bottom: 2px solid red;
+        }
 
       .annotation-line::before {
         content: '';
@@ -93,59 +98,71 @@
       .animate-fade-in {
         animation: fadeIn 1s ease-out forwards;
       }
-
-      .navbar {
-        transition: background-color 0.3s ease;
-      }
-
-      .navbar-scrolled {
-        background-color: rgba(17, 24, 39, 0.8);
-        backdrop-filter: blur(10px);
-      }
     </style>
   </head>
   <body class="bg-black text-white min-h-screen overflow-x-hidden">
     <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8 navbar">
-        <div class="flex justify-between items-center w-full">
-            <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
-            <div class="text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2">
-                <span style="display: inline-block; transform: scaleX(-1);">D</span>iD
-            </div>
-        
-            <!-- Left -->
-            <div class="flex items-center gap-4 order-2">
-                <!-- Mobile Left Section -->
-            </div>
-        
-            <!-- Desktop Menu (Left) -->
-            <div class="hidden md:flex space-x-8 order-3">
-                <a href="main.html" class="text-md text-gray-400 hover:text-white">Home</a>
-                <a href="about.html" class="text-md text-gray-400 hover:text-white">About</a>
-                <a href="team.html" class="text-md text-gray-400 hover:text-white">Team</a>
-                <a href="projects.html" class="text-md text-gray-400 hover:text-white active">Projects</a>
-            </div>
-        
-            <!-- Desktop Menu (Right) -->
-            <div class="hidden md:flex space-x-8 order-4">
-                <a href="portfolio.html" class="text-md text-gray-400 hover:text-white">Portfolio</a>
-                <a href="gallery.html" class="text-md text-gray-400 hover:text-white">Gallery</a>
-                <a href="join.html" class="text-md text-gray-400 hover:text-white">How to Join?</a>
-            </div>
-        
-            <!-- Right -->
-            <div class="flex items-center gap-4 order-5">
-                <button id="mobile-menu-btn" class="md:hidden text-white text-2xl">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
+     <!-- Navigation -->
+     <nav id="navbar" class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8">
+      <div class="flex justify-between items-center w-full">
+        <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
+        <div
+          class="text-4xl md:text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2"
+        >
+          <span style="display: inline-block; transform: scaleX(-1);">D</span>iD
         </div>
+
+        <!-- Left -->
+        <div class="flex items-center gap-4 order-2">
+          <!-- Mobile Left Section -->
+        </div>
+
+        <!-- Desktop Menu (Left) -->
+        <div class="hidden lg:flex space-x-8 order-3">
+          <a href="main.html" class="text-md text-gray-400 hover:text-white"
+            >Home</a
+          >
+          <a href="about.html" class="text-md text-gray-400 hover:text-white"
+            >About</a
+          >
+          <a href="team.html" class="text-md text-gray-400 hover:text-white"
+            >Team</a
+          >
+          <a
+            href="projects.html"
+            class="text-md text-gray-400 hover:text-white active"
+            >Projects</a
+          >
+        </div>
+
+        <!-- Desktop Menu (Right) -->
+        <div class="hidden lg:flex space-x-8 order-4">
+          <a
+            href="portfolio.html"
+            class="text-md text-gray-400 hover:text-white"
+            >Portfolio</a
+          >
+          <a href="gallery.html" class="text-md text-gray-400 hover:text-white"
+            >Gallery</a
+          >
+          <a href="join.html" class="text-md text-gray-400 hover:text-white"
+            >How to Join?</a
+          >
+        </div>
+
+        <!-- Right -->
+        <div class="flex items-center gap-4 order-5">
+          <button id="mobile-menu-btn" class="lg:hidden text-white text-2xl">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
     </nav>
 
-    <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+    <div id="overlay" class="fixed inset-0 bg-black/50 z-50 hidden"></div>
 
     <!-- Mobile Sidebar -->
-    <div id="mobile-sidebar" class="fixed inset-y-0 left-0 w-64 bg-black text-white z-50 transform -translate-x-full transition-transform duration-300 md:hidden">
+    <div id="mobile-sidebar" class="fixed inset-y-0 left-0 w-64 bg-black text-white z-50 transform -translate-x-full transition-transform duration-300 lg:hidden">
         <div class="p-6">
             <button id="close-sidebar" class="text-2xl text-white absolute top-4 right-4">
                 <i class="fas fa-times"></i>
@@ -163,7 +180,7 @@
     </div>
 
     <!-- Left info -->
-    <div class="fixed left-8 top-1/2 -translate-y-1/2 z-40">
+    <div class="fixed left-8 top-1/2 -translate-y-1/2 lg:z-40">
         <div class="flex flex-col gap-20 animate-fade-in">
             <div class="writing-mode-vertical text-red-600 text-2xl font-bold tracking-widest">
                 2025-2026
@@ -229,6 +246,16 @@
       overlay.addEventListener("click", function () {
         sidebar.classList.add("-translate-x-full");
         overlay.classList.add("hidden");
+      });
+
+       // Navbar scroll functionality
+       const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 1) {
+          navbar.classList.add('bg-gray-900');
+        } else {
+          navbar.classList.remove('bg-gray-900');
+        }
       });
 
       // Projects data
@@ -304,15 +331,7 @@
       // Store projects data in localStorage for use in project-details.html
       localStorage.setItem('projectsData', JSON.stringify(projects));
 
-      // Navbar scroll functionality
-      const navbar = document.getElementById('navbar');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-          navbar.classList.add('navbar-scrolled');
-        } else {
-          navbar.classList.remove('navbar-scrolled');
-        }
-      });
+     
     </script>
   </body>
 </html>
