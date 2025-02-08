@@ -10,14 +10,12 @@
       rel="stylesheet"
     />
     <style>
-      /* === Vertical Text === */
       .writing-mode-vertical {
         writing-mode: vertical-rl;
         text-orientation: mixed;
         transform: rotate(180deg);
       }
 
-      /* === Annotation Line === */
       .annotation-line::before {
         content: "";
         position: absolute;
@@ -36,7 +34,6 @@
         top: 50%;
       }
 
-      /* === Fade In Animation === */
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -50,7 +47,6 @@
         animation: fadeIn 1s ease-out forwards;
       }
 
-      /* === Hover Scale Effect === */
       .hover-scale {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
@@ -60,7 +56,6 @@
         box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
       }
 
-      /* === Background Effect === */
       .bg-effect {
         position: relative;
         overflow: hidden;
@@ -97,14 +92,12 @@
         right: -50%;
       }
 
-      /* === Active Navigation Link === */
       nav .active {
         color: white !important;
         font-weight: bold;
         border-bottom: 2px solid red;
       }
 
-      /* === Circular Navigation (Desktop) === */
       .circular-nav {
         position: fixed;
         right: 40px;
@@ -143,7 +136,6 @@
         transition: all 0.3s ease-in-out;
       }
 
-      /* === Mobile Adjustments (Horizontal Bar) === */
       @media (max-width: 768px) {
         .circular-nav {
           position: fixed;
@@ -176,7 +168,6 @@
         }
       }
 
-      /* === Extract Content Animation for Desktop === */
       @keyframes extractContentDesktop {
         0% {
           clip-path: circle(0% at 100% 50%);
@@ -190,7 +181,6 @@
         }
       }
 
-      /* === Extract Content Animation for Mobile and Medium === */
       @keyframes extractContentMobile {
         0% {
           clip-path: circle(0% at 50% 100%);
@@ -212,7 +202,6 @@
         animation: extractContentMobile 0.5s ease-out forwards;
       }
 
-      /* === Team Card Hover Effect === */
       .team-card {
         position: relative;
         overflow: hidden;
@@ -239,7 +228,6 @@
         transform: translateX(100%) skewX(-20deg);
       }
 
-      /* === Card Content Background === */
       .card-content {
         position: relative;
         background: linear-gradient(
@@ -262,30 +250,30 @@
           rgb(185, 28, 28) 50%
         );
       }
+      .flip-text {
+            display: inline-block;
+            transform: scaleX(-1);
+      }
     </style>
   </head>
   <body class="bg-black text-white min-h-screen overflow-x-hidden">
-    <!-- Navigation -->
     <nav
       id="navbar"
       class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8 transition-all duration-300"
     >
       <div class="flex justify-between items-center w-full">
-        <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
         <div
           class="text-5xl md:text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2"
         >
           <span style="display: inline-block; transform: scaleX(-1)">D</span>iD
         </div>
 
-        <!-- Left -->
         <div class="flex items-center gap-4 order-2">
           <!-- Mobile Left Section -->
         </div>
 
-        <!-- Desktop Menu (Left) -->
         <div class="hidden lg:flex space-x-8 order-3">
-          <a href="main.html" class="text-md text-gray-400 hover:text-white"
+          <a href="home.html" class="text-md text-gray-400 hover:text-white"
             >Home</a
           >
           <a href="about.html" class="text-md text-gray-400 hover:text-white"
@@ -296,22 +284,17 @@
           >
         </div>
 
-        <!-- Desktop Menu (Right) -->
         <div class="hidden lg:flex space-x-8 order-4">
           <a
             href="team.html"
             class="text-md text-gray-400 hover:text-white active"
             >Team</a
           >
-          <a href="gallery.html" class="text-md text-gray-400 hover:text-white"
-            >Gallery</a
-          >
-          <a href="join.html" class="text-md text-gray-400 hover:text-white"
+          <a href="how_to_join.html" class="text-md text-gray-400 hover:text-white"
             >How to Join?</a
           >
         </div>
 
-        <!-- Right -->
         <div class="flex items-center gap-4 order-5">
           <button id="mobile-menu-btn" class="lg:hidden text-white text-2xl">
             <i class="fas fa-bars"></i>
@@ -322,42 +305,47 @@
 
     <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
-    <!-- Mobile Sidebar -->
-    <div
-      id="mobile-sidebar"
-      class="fixed inset-y-0 left-0 w-64 bg-black text-white z-50 transform -translate-x-full transition-transform duration-300 lg:hidden"
+    <div id="mobile-sidebar" class="fixed inset-y-0 left-0 w-72 bg-gradient-to-br from-gray-900 to-red-900 text-white z-50 transform -translate-x-full transition-all duration-300 lg:hidden overflow-y-auto"
     >
-      <div class="p-6">
+      <div class="p-6 relative">
         <button
           id="close-sidebar"
-          class="text-2xl text-white absolute top-4 right-4"
+          type="button"
+          aria-label="Close navigation menu"
+          class="absolute top-4 right-4 text-white hover:text-red-400 transition-colors duration-200"
         >
-          <i class="fas fa-times"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
-        <nav class="mt-10 flex flex-col space-y-4">
-          <a href="main.html" class="text-lg text-gray-400 hover:text-white"
-            >Home</a
-          >
-          <a href="about.html" class="text-lg text-gray-400 hover:text-white"
-            >About</a
-          >
-          <a href="projects.html" class="text-lg text-gray-400 hover:text-white"
-            >Projects</a
-          >
-          <a href="team.html" class="text-lg text-gray-400 hover:text-white"
-            >Team</a
-          >
-          <a href="gallery.html" class="text-lg text-gray-400 hover:text-white"
-            >Gallery</a
-          >
-          <a href="join.html" class="text-lg text-gray-400 hover:text-white"
-            >How to Join?</a
-          >
+        <div class="mt-8 mb-6 text-center">
+          <h2 class="text-2xl font-bold text-red-400"><span class="flip-text">D</span>iD
+          </h2>
+        </div>
+        <nav class="space-y-1">
+          <a href="home.html" class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200 ">
+            <i class="fas fa-home mr-2" aria-hidden="true"></i>Home
+          </a>
+          <a href="about.html" class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200 ">
+            <i class="fas fa-info-circle mr-2" aria-hidden="true"></i>About
+          </a>
+          <a href="projects.html" class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200 ">
+            <i class="fas fa-project-diagram mr-2" aria-hidden="true"></i>Projects
+          </a>
+          <a href="team.html" class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200 bg-red-800">
+            <i class="fas fa-users mr-2" aria-hidden="true"></i>Team
+          </a>
+          <a href="how_to_join.html" class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200 ">
+            <i class="fas fa-user-plus mr-2" aria-hidden="true"></i>How to Join?
+          </a>
         </nav>
+      </div>
+      <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-red-900 to-transparent">
+        <p class="text-sm text-center text-gray-300">&copy; 2025 Dedicated IT Developers</p>
       </div>
     </div>
 
-    <!-- Left info -->
+
     <div class="fixed left-8 top-1/2 z-50 -translate-y-1/2 hidden lg:block">
       <div class="flex flex-col gap-20 animate-fade-in">
         <div
@@ -375,13 +363,11 @@
       </div>
     </div>
 
-    <!-- Main Content -->
-    <main class="pt-24 pb-20 px-4 md:px-8 bg-effect min-h-screen bg-effect">
-      <!-- Add these new gradient elements -->
-      <div class="gradient-1"></div>
-      <div class="gradient-2"></div>
-
-      <h1 class="text-4xl font-bold text-center mt-8 mb-12">Our Team</h1>
+    <main class="pt-24 pb-20 px-4 md:px-8 min-h-screen bg-black relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-black via-red-500/30 to-white/20 opacity-40"></div>
+      <h1 class="text-4xl font-bold text-center mt-8 mb-12 animate-fade-in">
+        Our Team
+      </h1>
       <p class="text-lg text-center text-gray-300 max-w-3xl mx-auto mb-8">
         Meet the minds behind
         <span class="text-red-400 font-semibold">DID</span>! Our team is
@@ -395,7 +381,6 @@
         class="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 p-4 sm:p-8"
       ></div>
 
-      <!-- Individual Portfolio Section (NOT a Modal) -->
       <div
         id="portfolio-section"
         class="fixed inset-0 bg-black/60 backdrop-blur-md hidden z-40 flex items-center justify-center p-8"
@@ -404,11 +389,9 @@
           class="bg-black bg-opacity-0 p-8 md:p-12 rounded-lg max-w-6xl w-full"
         >
           <div id="portfolio-content" class="text-white">
-            <!-- Portfolio content dynamically added here -->
           </div>
         </div>
 
-        <!-- Circular Navigation -->
         <div class="circular-nav hidden"></div>
       </div>
     </main>
@@ -452,7 +435,6 @@
         overlay.classList.add("hidden");
       });
 
-      // Navbar Scroll Effect
       window.addEventListener("scroll", function () {
         const navbar = document.getElementById("navbar");
 
@@ -473,7 +455,6 @@
         }
       });
 
-      // Team Members Data and Rendering
       const teamMembers = [
         {
           id: 1,
@@ -517,19 +498,16 @@
         return `
           <div class="team-card relative bg-black/30 backdrop-blur-xl border border-red-500/30 shadow-lg rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.05] hover:shadow-red-500/30" data-member-id="${member.id}">
             
-            <!-- Fixed Image Section -->
             <div class="relative w-full h-56 sm:h-64 md:h-72">
               <img src="${member.image}" alt="${member.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
               <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
             </div>
 
-            <!-- Card Content with Red Accent Border -->
             <div class="absolute bottom-0 w-full p-4 sm:p-6 bg-black/60 backdrop-blur-lg border-t-2 border-red-500/50 rounded-b-2xl transition-all duration-300">
               <h3 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-wide drop-shadow-lg">${member.name}</h3>
               <p class="text-sm sm:text-base md:text-lg font-medium text-red-400 drop-shadow-md">${member.role}</p>
             </div>
 
-            <!-- Animated Red Glow on Hover -->
             <div class="absolute inset-0 border border-transparent rounded-2xl transition-all duration-300 group-hover:border-red-500/60"></div>
           </div>
         `;
@@ -557,7 +535,6 @@
 
       document.addEventListener("DOMContentLoaded", renderTeamMembers);
 
-      // Portfolio Display
       function showPortfolio(memberId) {
         const member = teamMembers.find((m) => m.id === memberId);
         if (!member) {
@@ -568,31 +545,25 @@
         const portfolioSection = document.getElementById("portfolio-section");
         const portfolioContent = document.getElementById("portfolio-content");
 
-        // Determine the screen size
         const isSmallOrMedium = window.innerWidth < 1024;
 
-        // Set the appropriate animation class
         const animationClass = isSmallOrMedium
           ? "animate-extractContentMobile"
           : "animate-extractContentDesktop";
 
         portfolioContent.innerHTML = `
         <div class="relative w-full h-full bg-gray-50/5 backdrop-blur-sm p-4 sm:p-6 md:p-8 shadow-2xl ${animationClass}">
-          <!-- Close Button -->
           <button id="close-portfolio"
               class="absolute top-2 right-2 sm:top-4 sm:right-4 text-3xl sm:text-4xl text-gray-400 hover:text-white transition-transform transform hover:scale-110">
               &times;
           </button>
 
-          <!-- Grid Layout for Profile -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 items-center">
-              <!-- Profile Image -->
               <div class="flex justify-center md:col-span-1">
                   <img src="${member.image}" alt="${member.name}"
                       class="w-40 h-40 sm:w-60 sm:h-60 md:w-80 md:h-80 object-cover rounded-full border-4 border-red-500 shadow-xl">
               </div>
 
-              <!-- Profile Info (Spanning 2 Columns on Medium Screens) -->
               <div class="md:col-span-2">
                   <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-2 sm:mb-3">${member.name}</h2>
                   <p class="text-base sm:text-lg text-red-400 font-semibold mb-3 sm:mb-5">${member.role}</p>
@@ -600,7 +571,6 @@
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   </p>
 
-                  <!-- Projects Section -->
                   <h3 class="text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-2 sm:mb-4">Projects</h3>
                   <ul class="list-none space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                       <li class="text-sm sm:text-base text-gray-300 flex items-center">
@@ -614,7 +584,6 @@
                       </li>
                   </ul>
 
-                  <!-- Skills Section -->
                   <h3 class="text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-2 sm:mb-4">Skills</h3>
                   <div class="flex flex-wrap gap-2 sm:gap-3">
                       <span class="bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-lg text-sm sm:text-base md:text-lg font-medium shadow-md">Skill 1</span>
@@ -639,7 +608,6 @@
           });
       }
 
-      // Circular Navigation
       let currentMemberIdGlobal = null;
 
       function updateCircularNav(currentMemberId) {
@@ -666,7 +634,7 @@
         }
 
         const members = memberIndices.map((i) => teamMembers[i]);
-        const isSmallOrMedium = window.innerWidth < 1024; // Considers screens smaller than 1024px as small or medium
+        const isSmallOrMedium = window.innerWidth < 1024; 
 
         if (isSmallOrMedium) {
           circularNav.classList.add(
@@ -727,7 +695,7 @@
       }
 
 
-      
+
       window.addEventListener("resize", () => {
         if (currentMemberIdGlobal !== null) {
           updateCircularNav(currentMemberIdGlobal);

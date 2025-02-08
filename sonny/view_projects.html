@@ -15,52 +15,10 @@
         text-orientation: mixed;
         transform: rotate(180deg);
       }
-
-      .annotation-line::before {
-        content: "";
-        position: absolute;
-        width: 80px;
-        height: 1px;
-        background: rgba(255, 255, 255, 1);
-      }
-
-      .annotation-line-left::before {
-        right: 100%;
-        top: 50%;
-      }
-
-      .annotation-line-right::before {
-        left: 100%;
-        top: 50%;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-
-      .animate-fade-in {
-        animation: fadeIn 1s ease-out forwards;
-      }
-
-      .hover-scale {
-        transition: transform 0.2s;
-      }
-
-      .hover-scale:hover {
-        transform: scale(1.1);
-      }
-
-      /* Updated and additional styles for background effects */
       .bg-effect {
         position: relative;
         overflow: hidden;
       }
-
       .bg-effect::before,
       .bg-effect::after,
       .bg-effect .gradient-1,
@@ -73,7 +31,6 @@
         filter: blur(30px);
         pointer-events: none;
       }
-
       .bg-effect::before {
         background: radial-gradient(
           circle,
@@ -83,7 +40,6 @@
         top: -50%;
         left: -50%;
       }
-
       .bg-effect::after {
         background: radial-gradient(
           circle,
@@ -93,7 +49,6 @@
         bottom: -50%;
         right: -50%;
       }
-
       .bg-effect .gradient-1 {
         background: radial-gradient(
           circle,
@@ -103,7 +58,6 @@
         top: 0;
         left: 25%;
       }
-
       .bg-effect .gradient-2 {
         background: radial-gradient(
           circle,
@@ -113,79 +67,11 @@
         bottom: 0;
         right: 25%;
       }
-
       .active {
         color: white !important;
         font-weight: bold;
         border-bottom: 2px solid red;
       }
-
-      .hover-scale {
-        transition: transform 0.2s;
-      }
-
-      .hover-scale:hover {
-        transform: scale(1.05);
-      }
-
-      .bg-effect {
-        position: relative;
-        overflow: hidden;
-      }
-
-      .bg-effect::before,
-      .bg-effect::after,
-      .bg-effect .gradient-1,
-      .bg-effect .gradient-2 {
-        content: "";
-        position: absolute;
-        width: 100vw;
-        height: 100vh;
-        opacity: 0.3;
-        filter: blur(30px);
-        pointer-events: none;
-      }
-
-      .bg-effect::before {
-        background: radial-gradient(
-          circle,
-          rgba(255, 255, 255, 0.4) 0%,
-          rgba(255, 255, 255, 0) 70%
-        );
-        top: -50%;
-        left: -50%;
-      }
-
-      .bg-effect::after {
-        background: radial-gradient(
-          circle,
-          rgba(255, 0, 0, 0.4) 0%,
-          rgba(255, 0, 0, 0) 70%
-        );
-        bottom: -50%;
-        right: -50%;
-      }
-
-      .bg-effect .gradient-1 {
-        background: radial-gradient(
-          circle,
-          rgba(255, 255, 255, 0.3) 0%,
-          rgba(255, 255, 255, 0) 70%
-        );
-        top: 0;
-        left: 25%;
-      }
-
-      .bg-effect .gradient-2 {
-        background: radial-gradient(
-          circle,
-          rgba(255, 0, 0, 0.3) 0%,
-          rgba(255, 0, 0, 0) 70%
-        );
-        bottom: 0;
-        right: 25%;
-      }
-
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -194,130 +80,105 @@
           opacity: 1;
         }
       }
-
       .animate-fade-in {
         animation: fadeIn 1s ease-out forwards;
       }
+      .carousel-container {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        overflow: hidden;
+        aspect-ratio: 16 / 9;
+      }
 
-      /* Add these new styles for the gallery and circular/horizontal nav */
-      .gallery-section {
-        position: fixed;
-        top: 0;
-        left: 0;
+      .carousel-slide {
+        display: none;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.9);
-        z-index: 1000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
       }
 
-      /* Circular Navigation (Desktop) */
-      .circular-nav {
-        position: fixed;
-        right: 40px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 100px;
-        height: 400px;
-        z-index: 60;
-        pointer-events: all;
+      .carousel-slide.active {
+        display: block;
       }
 
-      .circular-nav .thumbnail {
-        position: absolute;
-        right: 0;
-        width: 80px;
-        height: 80px;
-        transition: all 0.3s ease-out;
-        border-radius: 50%;
-        overflow: hidden;
-        cursor: pointer;
-      }
-
-      .circular-nav .thumbnail:hover {
-        transform: scale(1.1) translateX(-10px);
-      }
-
-      .thumbnail img {
+      .carousel-slide img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border: none;
+        object-position: center;
       }
 
-      .thumbnail.active img {
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.9);
-        border: 3px solid red;
+      .carousel-nav {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        flex-wrap: wrap;
       }
 
-      .thumbnail.active {
-        transform: scale(1.3);
-        transition: all 0.3s ease-in-out;
+      .carousel-thumbnail {
+        width: 60px;
+        height: 40px;
+        margin: 5px;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity 0.3s ease;
+        object-fit: cover;
       }
 
-      /* Mobile Adjustments (Horizontal Bar) */
-      @media (max-width: 768px) {
-        .circular-nav {
-          position: fixed;
-          bottom: 20px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 90%;
-          height: auto;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 10px;
+      .carousel-thumbnail:hover,
+      .carousel-thumbnail.active {
+        opacity: 1;
+      }
+      .carousel-prev,
+      .carousel-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 10px;
+        text-decoration: none;
+        font-size: 18px;
+      }
+      .carousel-prev {
+        left: 10px;
+      }
+      .carousel-next {
+        right: 10px;
+      }
+      @media (max-width: 640px) {
+        .carousel-thumbnail {
+          width: 40px;
+          height: 30px;
         }
-
-        .circular-nav .thumbnail {
-          position: static;
-          width: 60px;
-          height: 60px;
-          flex-shrink: 0;
+        .carousel-prev,
+        .carousel-next {
+          padding: 5px;
+          font-size: 14px;
         }
       }
-
-      .animate-extractContentDesktop {
-        animation: extractContentDesktop 0.5s ease-out forwards;
-      }
-
-      @keyframes extractContentDesktop {
-        from {
-          transform: scale(0.8);
-          opacity: 0;
-        }
-        to {
-          transform: scale(1);
-          opacity: 1;
-        }
+      .flip-text {
+            display: inline-block;
+            transform: scaleX(-1);
       }
     </style>
   </head>
   <body class="bg-black text-white min-h-screen overflow-x-hidden">
-    <!-- Navigation -->
     <nav
       id="navbar"
-      class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8 transition-all duration-300"
+      class="fixed top-0 w-full z-50 px-4 sm:px-8 py-4 sm:py-8 transition-all duration-300"
     >
       <div class="flex justify-between items-center w-full">
-        <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
         <div
-          class="text-5xl md:text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2"
+          class="text-4xl sm:text-5xl md:text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2"
         >
           <span style="display: inline-block; transform: scaleX(-1)">D</span>iD
         </div>
+        <div class="flex items-center gap-4 order-2"></div>
 
-        <!-- Left -->
-        <div class="flex items-center gap-4 order-2">
-          <!-- Mobile Left Section -->
-        </div>
-
-        <!-- Desktop Menu (Left) -->
         <div class="hidden lg:flex space-x-8 order-3">
-          <a href="main.html" class="text-md text-gray-400 hover:text-white"
+          <a href="home.html" class="text-md text-gray-400 hover:text-white"
             >Home</a
           >
           <a href="about.html" class="text-md text-gray-400 hover:text-white"
@@ -330,20 +191,17 @@
           >
         </div>
 
-        <!-- Desktop Menu (Right) -->
         <div class="hidden lg:flex space-x-8 order-4">
           <a href="team.html" class="text-md text-gray-400 hover:text-white"
             >Team</a
           >
-          <a href="gallery.html" class="text-md text-gray-400 hover:text-white"
-            >Gallery</a
-          >
-          <a href="join.html" class="text-md text-gray-400 hover:text-white"
+          <a
+            href="how_to_join.html"
+            class="text-md text-gray-400 hover:text-white"
             >How to Join?</a
           >
         </div>
 
-        <!-- Right -->
         <div class="flex items-center gap-4 order-5">
           <button id="mobile-menu-btn" class="lg:hidden text-white text-2xl">
             <i class="fas fa-bars"></i>
@@ -354,44 +212,80 @@
 
     <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
-    <!-- Mobile Sidebar -->
     <div
       id="mobile-sidebar"
-      class="fixed inset-y-0 left-0 w-64 bg-black text-white z-50 transform -translate-x-full transition-transform duration-300 lg:hidden"
+      class="fixed inset-y-0 left-0 w-72 bg-gradient-to-br from-gray-900 to-red-900 text-white z-50 transform -translate-x-full transition-all duration-300 lg:hidden overflow-y-auto"
     >
-      <div class="p-6">
+      <div class="p-6 relative">
         <button
           id="close-sidebar"
-          class="text-2xl text-white absolute top-4 right-4"
+          type="button"
+          aria-label="Close navigation menu"
+          class="absolute top-4 right-4 text-white hover:text-red-400 transition-colors duration-200"
         >
-          <i class="fas fa-times"></i>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
         </button>
-        <nav class="mt-10 flex flex-col space-y-4">
-          <a href="main.html" class="text-lg text-gray-400 hover:text-white"
-            >Home</a
+        <div class="mt-8 mb-6 text-center">
+          <h2 class="text-2xl font-bold text-red-400">
+            <span class="flip-text">D</span>iD
+          </h2>
+        </div>
+        <nav class="space-y-1">
+          <a
+            href="home.html"
+            class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200"
           >
-          <a href="about.html" class="text-lg text-gray-400 hover:text-white"
-            >About</a
+            <i class="fas fa-home mr-2" aria-hidden="true"></i>Home
+          </a>
+          <a
+            href="about.html"
+            class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200"
           >
+            <i class="fas fa-info-circle mr-2" aria-hidden="true"></i>About
+          </a>
           <a
             href="projects.html"
-            class="text-lg text-gray-400 hover:text-white active"
-            >Projects</a
+            class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200 bg-red-800"
           >
-          <a href="team.html" class="text-lg text-gray-400 hover:text-white"
-            >Team</a
+            <i class="fas fa-project-diagram mr-2" aria-hidden="true"></i
+            >Projects
+          </a>
+          <a
+            href="team.html"
+            class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200"
           >
-          <a href="gallery.html" class="text-lg text-gray-400 hover:text-white"
-            >Gallery</a
+            <i class="fas fa-users mr-2" aria-hidden="true"></i>Team
+          </a>
+          <a
+            href="how_to_join.html"
+            class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200"
           >
-          <a href="join.html" class="text-lg text-gray-400 hover:text-white"
-            >How to Join?</a
-          >
+            <i class="fas fa-user-plus mr-2" aria-hidden="true"></i>How to Join?
+          </a>
         </nav>
+      </div>
+      <div
+        class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-red-900 to-transparent"
+      >
+        <p class="text-sm text-center text-gray-300">
+          &copy; 2025 Dedicated IT Developers
+        </p>
       </div>
     </div>
 
-    <!-- Left info -->
     <div class="fixed left-8 top-1/2 z-50 -translate-y-1/2 hidden lg:block">
       <div class="flex flex-col gap-20 animate-fade-in">
         <div
@@ -409,87 +303,126 @@
       </div>
     </div>
 
-    <main class="pt-24 pb-20 px-4 md:px-8 bg-effect min-h-screen">
+    <main
+      class="pt-16 pb-12 px-4 sm:px-6 md:px-8 min-h-screen bg-black relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-black via-red-500/30 to-white/20 opacity-40"
+      ></div>
       <h1
         id="project-title"
-        class="text-4xl font-bold text-center mt-8 mb-12 animate-fade-in title-underline"
+        class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mt-4 sm:mt-16 mb-8 sm:mb-12 animate-fade-in title-underline"
       ></h1>
 
-      <div id="project-content" class="max-w-7xl mx-auto flex flex-col gap-8">
-        <section id="brief-info" class="text-gray-300">
-          <h2 class="text-2xl font-semibold mb-2 text-white">
-            Brief Information
-          </h2>
-          <p id="project-description"></p>
-        </section>
-
-        <section id="technology-used">
-          <h2 class="text-2xl font-semibold mb-2 text-white">
-            Technology Used
-          </h2>
-          <div id="technologies" class="flex flex-wrap gap-2"></div>
-        </section>
-
-        <section id="features">
-          <h2 class="text-2xl font-semibold mb-2 text-white">Features</h2>
-          <ul
-            id="feature-list"
-            class="list-disc list-inside text-gray-300"
-          ></ul>
-        </section>
-
-        <section id="developers">
-          <h2 class="text-2xl font-semibold mb-2 text-white">Developers</h2>
-          <p id="team-members" class="text-gray-300"></p>
-          <a href="team.html" class="text-red-400 hover:underline">View Team</a>
-        </section>
-
-        <section id="image-gallery">
-          <h2 class="text-2xl font-semibold mb-4 text-white">Image Gallery</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <!-- Images will be dynamically added here -->
+      <div
+        id="project-content"
+        class="max-w-7xl mx-auto flex flex-col gap-6 sm:gap-8"
+      >
+        <section id="image-gallery" class="mb-8 sm:mb-16">
+          <div class="carousel-container">
+            <div class="carousel-slides"></div>
+            <a href="#" class="carousel-prev">&lt;</a>
+            <a href="#" class="carousel-next">&gt;</a>
           </div>
+
+          <div class="carousel-nav mt-2 sm:mt-4"></div>
         </section>
 
-        <div class="text-center mt-8">
+        <div class="space-y-8 md:space-y-12">
+          <section
+            id="brief-info"
+            class="relative bg-black/30 backdrop-blur-xl border border-red-500/30 shadow-lg rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-red-500/30"
+          >
+            <div class="p-6 sm:p-8">
+              <h2
+                class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-wide drop-shadow-lg mb-4"
+              >
+                About the Project
+              </h2>
+              <p
+                id="project-description"
+                class="text-base sm:text-lg text-gray-300 leading-relaxed"
+              ></p>
+            </div>
+            <div
+              class="absolute inset-0 border border-transparent rounded-2xl transition-all duration-300 hover:border-red-500/60"
+            ></div>
+          </section>
+
+          <section
+            id="technology-used"
+            class="relative bg-black/30 backdrop-blur-xl border border-red-500/30 shadow-lg rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-red-500/30"
+          >
+            <div class="p-6 sm:p-8">
+              <h2
+                class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-wide drop-shadow-lg mb-4"
+              >
+                Technology Used
+              </h2>
+              <div id="technologies" class="flex flex-wrap gap-3 mt-4"></div>
+            </div>
+            <div
+              class="absolute inset-0 border border-transparent rounded-2xl transition-all duration-300 hover:border-red-500/60"
+            ></div>
+          </section>
+
+          <section
+            id="features"
+            class="relative bg-black/30 backdrop-blur-xl border border-red-500/30 shadow-lg rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-red-500/30"
+          >
+            <div class="p-6 sm:p-8">
+              <h2
+                class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-wide drop-shadow-lg mb-4"
+              >
+                Features
+              </h2>
+              <ul
+                id="feature-list"
+                class="space-y-3 text-base sm:text-lg text-gray-300"
+              ></ul>
+            </div>
+            <div
+              class="absolute inset-0 border border-transparent rounded-2xl transition-all duration-300 hover:border-red-500/60"
+            ></div>
+          </section>
+
+          <section
+            id="developers"
+            class="relative bg-black/30 backdrop-blur-xl border border-red-500/30 shadow-lg rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-red-500/30"
+          >
+            <div class="p-6 sm:p-8">
+              <h2
+                class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-wide drop-shadow-lg mb-4"
+              >
+                Developers
+              </h2>
+              <p
+                id="team-members"
+                class="text-base sm:text-lg text-gray-300 mb-6"
+              ></p>
+              <a
+                href="team.html"
+                class="inline-block bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors duration-300 text-base sm:text-lg font-semibold"
+                >View Team</a
+              >
+            </div>
+            <div
+              class="absolute inset-0 border border-transparent rounded-2xl transition-all duration-300 hover:border-red-500/60"
+            ></div>
+          </section>
+        </div>
+
+        <div class="text-center mt-6 sm:mt-8 z-30">
           <a
             href="projects.html"
-            class="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors"
+            class="bg-red-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-red-600 transition-colors inline-block text-sm sm:text-base"
             >Back to Projects</a
           >
         </div>
       </div>
     </main>
 
-    <!-- Gallery Section -->
-    <div
-      id="gallery-section"
-      class="gallery-section hidden fixed inset-0 bg-black/70 backdrop-blur-lg flex justify-center items-center"
-    >
-      <div
-        id="gallery-content"
-        class="w-[1100px] h-[600px] flex justify-center items-center border border-red-500/50 bg-black/30 rounded-xl shadow-lg overflow-hidden"
-      >
-        <img
-          id="gallery-image"
-          src=""
-          alt="Gallery Image"
-          class="w-full h-full object-cover transition-opacity duration-500 rounded-lg"
-        />
-      </div>
-      <div class="circular-nav mt-4">
-        <!-- Thumbnails will be added here -->
-      </div>
-      <button
-        id="close-gallery"
-        class="absolute top-4 right-4 text-4xl text-gray-400 hover:text-white"
-      >
-        &times;
-      </button>
-    </div>
-
     <script>
-      // Navigation active state
       document.addEventListener("DOMContentLoaded", function () {
         const links = document.querySelectorAll("nav a");
 
@@ -500,7 +433,6 @@
           });
         });
 
-        // Optional: Set active based on URL
         const currentPath = window.location.pathname;
         links.forEach((link) => {
           if (link.href.includes(currentPath)) {
@@ -509,7 +441,6 @@
         });
       });
 
-      // Mobile menu functionality
       const menuBtn = document.getElementById("mobile-menu-btn");
       const sidebar = document.getElementById("mobile-sidebar");
       const closeBtn = document.getElementById("close-sidebar");
@@ -530,7 +461,6 @@
         overlay.classList.add("hidden");
       });
 
-      // Navbar Scroll Effect
       window.addEventListener("scroll", function () {
         const navbar = document.getElementById("navbar");
 
@@ -568,6 +498,108 @@
         }
       });
 
+      function initializeGalleryCarousel(images) {
+        const container = document.querySelector(".carousel-slides");
+        const thumbnailContainer = document.querySelector(".carousel-nav");
+        let currentIndex = 0;
+
+        container.innerHTML = "";
+        images.forEach((src, index) => {
+          const slide = document.createElement("div");
+          slide.className = `carousel-slide ${index === 0 ? "active" : ""}`;
+          const img = document.createElement("img");
+          img.src = src;
+          img.alt = `Slide ${index + 1}`;
+          img.onload = () => {
+            if (index === 0) {
+              const aspectRatio = img.naturalWidth / img.naturalHeight;
+              container.parentElement.style.aspectRatio = `${aspectRatio}`;
+            }
+          };
+          slide.appendChild(img);
+          container.appendChild(slide);
+        });
+
+        thumbnailContainer.innerHTML = "";
+        images.forEach((src, index) => {
+          const thumbnail = document.createElement("img");
+          thumbnail.src = src;
+          thumbnail.alt = `Thumbnail ${index + 1}`;
+          thumbnail.className = `carousel-thumbnail ${
+            index === 0 ? "active" : ""
+          }`;
+          thumbnail.addEventListener("click", () => {
+            currentIndex = index;
+            updateCarousel();
+          });
+          thumbnailContainer.appendChild(thumbnail);
+        });
+
+        function updateCarousel() {
+          const slides = document.querySelectorAll(".carousel-slide");
+          const thumbnails = document.querySelectorAll(".carousel-thumbnail");
+
+          slides.forEach((slide, index) => {
+            slide.classList.toggle("active", index === currentIndex);
+          });
+
+          thumbnails.forEach((thumbnail, index) => {
+            thumbnail.classList.toggle("active", index === currentIndex);
+          });
+        }
+
+        document
+          .querySelector(".carousel-prev")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateCarousel();
+          });
+
+        document
+          .querySelector(".carousel-next")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+          });
+
+        let interval = setInterval(() => {
+          currentIndex = (currentIndex + 1) % images.length;
+          updateCarousel();
+        }, 5000);
+
+        container.addEventListener("mouseenter", () => clearInterval(interval));
+        container.addEventListener("mouseleave", () => {
+          interval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+          }, 5000);
+        });
+
+        let startX = null;
+        container.addEventListener("touchstart", (e) => {
+          startX = e.touches[0].clientX;
+        });
+
+        container.addEventListener("touchmove", (e) => {
+          if (!startX) return;
+
+          const diff = startX - e.touches[0].clientX;
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+              currentIndex = (currentIndex + 1) % images.length;
+            } else {
+              currentIndex = (currentIndex - 1 + images.length) % images.length;
+            }
+            updateCarousel();
+            startX = null;
+          }
+        });
+
+        updateCarousel();
+      }
+
       function displayProjectDetails(project) {
         document.getElementById("project-title").textContent = project.title;
         document.getElementById("project-description").textContent =
@@ -586,111 +618,23 @@
         featureList.innerHTML = "";
         project.features.forEach((feature) => {
           const li = document.createElement("li");
-          li.textContent = feature;
+          li.className = "flex items-start";
+          li.innerHTML = `
+                        <svg class="w-5 h-5 text-red-500 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>${feature}</span>
+                    `;
           featureList.appendChild(li);
         });
 
         document.getElementById("team-members").textContent =
           project.teamMembers.join(", ");
 
-        const gallery = document
-          .getElementById("image-gallery")
-          .querySelector("div");
-        gallery.innerHTML = "";
-        project.images.forEach((imgSrc, index) => {
-          const img = document.createElement("img");
-          img.src = imgSrc;
-          img.alt = `Project Image ${index + 1}`;
-          img.className =
-            "w-full h-48 object-cover rounded-lg transition-transform duration-300 hover:scale-105 cursor-pointer";
-          img.addEventListener("click", () =>
-            showGallery(project.images, index)
-          );
-          gallery.appendChild(img);
-        });
-      }
-
-      function showGallery(images, startIndex) {
-        const gallerySection = document.getElementById("gallery-section");
-        const galleryContent = document.getElementById("gallery-content");
-        const circularNav = document.querySelector(".circular-nav");
-
-        galleryContent.innerHTML = `
-                <img src="${images[startIndex]}" alt="Gallery Image" class="max-w-full max-h-full object-contain animate-extractContentDesktop">
-            `;
-
-        circularNav.innerHTML = "";
-        images.forEach((imgSrc, index) => {
-          const thumbnail = document.createElement("div");
-          thumbnail.className = `thumbnail ${
-            index === startIndex ? "active" : ""
-          }`;
-          thumbnail.innerHTML = `<img src="${imgSrc}" alt="Thumbnail ${
-            index + 1
-          }" class="w-full h-full object-cover">`;
-          thumbnail.addEventListener("click", () =>
-            updateGalleryImage(images, index)
-          );
-          circularNav.appendChild(thumbnail);
-        });
-
-        updateCircularNav(images.length, startIndex);
-        gallerySection.classList.remove("hidden");
-      }
-
-      function updateGalleryImage(images, index) {
-        const galleryContent = document.getElementById("gallery-content");
-        galleryContent.innerHTML = `
-                <img src="${images[index]}" alt="Gallery Image" class="max-w-full max-h-full object-contain animate-extractContentDesktop">
-            `;
-
-        updateCircularNav(images.length, index);
-      }
-
-      function updateCircularNav(totalImages, currentIndex) {
-        const circularNav = document.querySelector(".circular-nav");
-        const thumbnails = circularNav.querySelectorAll(".thumbnail");
-
-        if (window.innerWidth > 768) {
-          // Circular navigation for larger screens
-          const radius = 200; // Adjust this value to change the size of the circle
-          thumbnails.forEach((thumbnail, index) => {
-            const angle = ((index - currentIndex) / totalImages) * 2 * Math.PI;
-            const x = Math.sin(angle) * radius;
-            const y = -Math.cos(angle) * radius;
-            thumbnail.style.transform = `translate(${x}px, ${y}px) ${
-              index === currentIndex ? "scale(1.3)" : "scale(1)"
-            }`;
-            thumbnail.classList.toggle("active", index === currentIndex);
-          });
-        } else {
-          // Horizontal navigation for smaller screens
-          thumbnails.forEach((thumbnail, index) => {
-            thumbnail.style.transform =
-              index === currentIndex ? "scale(1.3)" : "scale(1)";
-            thumbnail.classList.toggle("active", index === currentIndex);
-          });
+        if (project.images && project.images.length > 0) {
+          initializeGalleryCarousel(project.images);
         }
       }
-
-      document
-        .getElementById("close-gallery")
-        .addEventListener("click", function () {
-          document.getElementById("gallery-section").classList.add("hidden");
-        });
-
-      window.addEventListener("resize", function () {
-        const gallerySection = document.getElementById("gallery-section");
-        if (!gallerySection.classList.contains("hidden")) {
-          const currentIndex = Array.from(
-            document.querySelectorAll(".thumbnail")
-          ).findIndex((thumb) => thumb.classList.contains("active"));
-          updateCircularNav(
-            document.querySelectorAll(".thumbnail").length,
-            currentIndex
-          );
-        }
-      });
     </script>
   </body>
 </html>

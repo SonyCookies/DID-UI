@@ -49,65 +49,6 @@
           0 4px 6px -2px rgba(0, 0, 0, 0.05);
       }
 
-      /* Updated and additional styles for background effects */
-      .bg-effect {
-        position: relative;
-        overflow: hidden;
-      }
-
-      .bg-effect::before,
-      .bg-effect::after,
-      .bg-effect .gradient-1,
-      .bg-effect .gradient-2 {
-        content: "";
-        position: absolute;
-        width: 100vw;
-        height: 100vh;
-        opacity: 0.3;
-        filter: blur(30px);
-        pointer-events: none;
-      }
-
-      .bg-effect::before {
-        background: radial-gradient(
-          circle,
-          rgba(255, 255, 255, 0.4) 0%,
-          rgba(255, 255, 255, 0) 70%
-        );
-        top: -50%;
-        left: -50%;
-      }
-
-      .bg-effect::after {
-        background: radial-gradient(
-          circle,
-          rgba(255, 0, 0, 0.4) 0%,
-          rgba(255, 0, 0, 0) 70%
-        );
-        bottom: -50%;
-        right: -50%;
-      }
-
-      .bg-effect .gradient-1 {
-        background: radial-gradient(
-          circle,
-          rgba(255, 255, 255, 0.3) 0%,
-          rgba(255, 255, 255, 0) 70%
-        );
-        top: 0;
-        left: 25%;
-      }
-
-      .bg-effect .gradient-2 {
-        background: radial-gradient(
-          circle,
-          rgba(255, 0, 0, 0.3) 0%,
-          rgba(255, 0, 0, 0) 70%
-        );
-        bottom: 0;
-        right: 25%;
-      }
-
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -120,26 +61,26 @@
       .animate-fade-in {
         animation: fadeIn 1s ease-out forwards;
       }
+      .flip-text {
+            display: inline-block;
+            transform: scaleX(-1);
+      }
     </style>
   </head>
   <body class="bg-black text-white min-h-screen overflow-x-hidden">
     <nav id="navbar" class="fixed top-0 w-full z-50 px-8 py-4 sm:py-8">
       <div class="flex justify-between items-center w-full">
-        <!-- Logo (Moves to the left on mobile, stays centered on desktop) -->
         <div
           class="text-4xl md:text-6xl font-bold text-red-500 animate-pulse-slow order-1 md:absolute md:left-1/2 md:-translate-x-1/2"
         >
           <span style="display: inline-block; transform: scaleX(-1)">D</span>iD
         </div>
 
-        <!-- Left -->
         <div class="flex items-center gap-4 order-2">
-          <!-- Mobile Left Section -->
         </div>
 
-        <!-- Desktop Menu (Left) -->
         <div class="hidden lg:flex space-x-8 order-3">
-          <a href="main.html" class="text-md text-gray-400 hover:text-white"
+          <a href="home.html" class="text-md text-gray-400 hover:text-white"
             >Home</a
           >
           <a href="about.html" class="text-md text-gray-400 hover:text-white"
@@ -150,20 +91,15 @@
           >
         </div>
 
-        <!-- Desktop Menu (Right) -->
         <div class="hidden lg:flex space-x-8 order-4">
           <a href="team.html" class="text-md text-gray-400 hover:text-white"
             >Team</a
           >
-          <a href="gallery.html" class="text-md text-gray-400 hover:text-white"
-            >Gallery</a
-          >
-          <a href="join.html" class="text-md text-gray-400 hover:text-white"
+          <a href="how_to_join.html" class="text-md text-gray-400 hover:text-white"
             >How to Join?</a
           >
         </div>
 
-        <!-- Right -->
         <div class="flex items-center gap-4 order-5">
           <button id="mobile-menu-btn" class="lg:hidden text-white text-2xl">
             <i class="fas fa-bars"></i>
@@ -174,42 +110,48 @@
 
     <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
-    <!-- Mobile Sidebar -->
-    <div
-      id="mobile-sidebar"
-      class="fixed inset-y-0 left-0 w-64 bg-black text-white z-50 transform -translate-x-full transition-transform duration-300 lg:hidden"
-    >
-      <div class="p-6">
-        <button
-          id="close-sidebar"
-          class="text-2xl text-white absolute top-4 right-4"
-        >
-          <i class="fas fa-times"></i>
-        </button>
-        <nav class="mt-10 flex flex-col space-y-4">
-          <a href="main.html" class="text-lg text-gray-400 hover:text-white"
-            >Home</a
-          >
-          <a href="about.html" class="text-lg text-gray-400 hover:text-white"
-            >About</a
-          >
-          <a href="projects.html" class="text-lg text-gray-400 hover:text-white"
-            >Projects</a
-          >
-          <a href="team.html" class="text-lg text-gray-400 hover:text-white"
-            >Team</a
-          >
-          <a href="gallery.html" class="text-lg text-gray-400 hover:text-white"
-            >Gallery</a
-          >
-          <a href="join.html" class="text-lg text-gray-400 hover:text-white"
-            >How to Join?</a
-          >
-        </nav>
-      </div>
-    </div>
+<div
+id="mobile-sidebar"
+class="fixed inset-y-0 left-0 w-72 bg-gradient-to-br from-gray-900 to-red-900 text-white z-50 transform -translate-x-full transition-all duration-300 lg:hidden overflow-y-auto"
+>
+<div class="p-6 relative">
+  <button
+    id="close-sidebar"
+    type="button"
+    aria-label="Close navigation menu"
+    class="absolute top-4 right-4 text-white hover:text-red-400 transition-colors duration-200"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+  <div class="mt-8 mb-6 text-center">
+    <h2 class="text-2xl font-bold text-red-400"><span class="flip-text">D</span>iD
+    </h2>
+  </div>
+  <nav class="space-y-1">
+    <a href="home.html" class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200 ">
+      <i class="fas fa-home mr-2" aria-hidden="true"></i>Home
+    </a>
+    <a href="about.html" class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200 ">
+      <i class="fas fa-info-circle mr-2" aria-hidden="true"></i>About
+    </a>
+    <a href="projects.html" class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200 bg-red-800">
+      <i class="fas fa-project-diagram mr-2" aria-hidden="true"></i>Projects
+    </a>
+    <a href="team.html" class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200">
+      <i class="fas fa-users mr-2" aria-hidden="true"></i>Team
+    </a>
+    <a href="how_to_join.html" class="block py-2 px-4 rounded-lg text-white hover:bg-red-700 hover:text-white transition-all duration-200 ">
+      <i class="fas fa-user-plus mr-2" aria-hidden="true"></i>How to Join?
+    </a>
+  </nav>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-red-900 to-transparent">
+  <p class="text-sm text-center text-gray-300">&copy; 2025 Dedicated IT Developers</p>
+</div>
+</div>
 
-    <!-- Left info -->
     <div class="fixed left-8 top-1/2 -translate-y-1/2 lg:z-40">
       <div class="flex flex-col gap-20 animate-fade-in">
         <div
@@ -227,12 +169,8 @@
       </div>
     </div>
 
-    <!-- Main Content -->
-    <main class="pt-24 pb-20 px-4 md:px-8 bg-effect min-h-screen">
-      <div
-        class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"
-      ></div>
-
+    <main class="pt-24 pb-20 px-4 md:px-8 min-h-screen bg-black relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-black via-red-500/30 to-white/20 opacity-40"></div>
       <h1 class="text-4xl font-bold text-center mt-8 mb-12 animate-fade-in">
         Our Projects
       </h1>
@@ -280,17 +218,14 @@
         </button>
       </div>
 
-      <!-- Projects Container -->
       <div
         id="projects-container"
         class="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 p-4 sm:p-8"
       >
-        <!-- Projects will be dynamically added here -->
       </div>
     </main>
 
     <script>
-      // Navigation and Mobile Menu Functionality
       document.addEventListener("DOMContentLoaded", function () {
         const links = document.querySelectorAll("nav a");
 
@@ -329,7 +264,6 @@
         overlay.classList.add("hidden");
       });
 
-      // Navbar Scroll Effect
       window.addEventListener("scroll", function () {
         const navbar = document.getElementById("navbar");
 
@@ -561,7 +495,6 @@
 
       localStorage.setItem("projectsData", JSON.stringify(projects));
 
-      // Function to create a grid card
       function createGridCard(project) {
         const mainImage =
           project.images && project.images.length > 0
@@ -583,7 +516,6 @@
     `;
       }
 
-      // Function to create a list item
       function createListItem(project) {
         const mainImage =
           project.images && project.images.length > 0
@@ -609,7 +541,6 @@
     `;
       }
 
-      // Function to render projects
       function renderProjects(viewType) {
         const projectsContainer = document.getElementById("projects-container");
         projectsContainer.innerHTML = "";
@@ -632,7 +563,6 @@
         projectsContainer.innerHTML = projectsHTML;
       }
 
-      // Event listeners for view toggle buttons
       const gridViewBtn = document.getElementById("grid-view-btn");
       const listViewBtn = document.getElementById("list-view-btn");
 
@@ -656,10 +586,8 @@
         setActiveView(listViewBtn, gridViewBtn, "list")
       );
 
-      // Set initial active view
       setActiveView(gridViewBtn, listViewBtn, "grid");
 
-      // Initial render
       document.addEventListener("DOMContentLoaded", () => {
         renderProjects("grid");
       });
